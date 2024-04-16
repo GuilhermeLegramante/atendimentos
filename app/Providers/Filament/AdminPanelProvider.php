@@ -60,7 +60,7 @@ class AdminPanelProvider extends PanelProvider
         ->widgets([
             Widgets\AccountWidget::class,
         ])
-        ->brandName('Boqueirão Remates')
+        ->brandName('Atendimentos')
         ->sidebarCollapsibleOnDesktop()
         ->brandLogo(asset('img/logo.png'))
         ->brandLogoHeight(fn () => auth()->check() ? '3rem' : '6rem')
@@ -70,6 +70,7 @@ class AdminPanelProvider extends PanelProvider
             ThemesPlugin::make(),
         ])
         ->resources([
+            // 1 == 1 ? '' : '',
             config('filament-logger.activity_resource')
         ])
         ->middleware([
