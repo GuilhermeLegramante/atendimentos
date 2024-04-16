@@ -70,7 +70,6 @@ class AdminPanelProvider extends PanelProvider
             ThemesPlugin::make(),
         ])
         ->resources([
-            // 1 == 1 ? '' : '',
             config('filament-logger.activity_resource')
         ])
         ->middleware([
