@@ -53,24 +53,17 @@
     </table>
 
     <div class="signature_div">
-        <div class="Column">
+        <div>
             <label class="signature-wrapper">
                 <input type="text" class="signature" /><br />
-                Admin1
+                Paciente
             </label>
         </div>
 
-        <div class="Column">
+        <div>
             <label class="signature-wrapper">
                 <input type="text" class="signature" /><br />
-                Admin2
-            </label>
-        </div>
-
-        <div class="Column">
-            <label class="signature-wrapper">
-                <input type="text" class="signature" /><br />
-                Admin3
+                Responsável pelo Atendimento
             </label>
         </div>
     </div>
