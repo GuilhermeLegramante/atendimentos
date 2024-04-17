@@ -46,6 +46,7 @@ class UserResource extends Resource
                     ->required(),
                 TextInput::make('email')
                     ->label('E-mail')
+                    ->required()
                     ->email(),
                 TextInput::make('password')
                     ->label('Senha')

@@ -11,6 +11,7 @@ class Treatment extends Model
     use HasFactory;
 
     protected $fillable = [
+        'user_id',
         'service_id',
         'patient_id',
         'partner_id',

@@ -15,6 +15,7 @@ class ManageTreatments extends ManageRecords
         return [
             Actions\CreateAction::make()
                 ->mutateFormDataUsing(function (array $data): array {
+                    $data['user_id'] = auth()->user()->id;
                     return $data;
                 }),
         ];

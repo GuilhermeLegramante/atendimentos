@@ -12,6 +12,7 @@ use Filament\Support\Enums\Alignment;
 use Filament\Tables;
 use Filament\Tables\Table;
 use Leandrocfe\FilamentPtbrFormFields\Money;
+use Illuminate\Database\Eloquent\Builder;
 
 class TreatmentResource extends Resource
 {
@@ -25,7 +26,7 @@ class TreatmentResource extends Resource
 
     protected static ?string $pluralModelLabel = 'atendimentos';
 
-    protected static ?string $navigationGroup = 'Parâmetros';
+    // protected static ?string $navigationGroup = 'Parâmetros';
 
     protected static ?string $slug = 'atendimento';
 
@@ -33,6 +34,11 @@ class TreatmentResource extends Resource
     {
         return $form
             ->schema([
+                Forms\Components\Select::make('partner_id')
+                    ->columnSpanFull()
+                    ->label('Conveniado')
+                    ->relationship('partner', 'name')
+                    ->required(),
                 Forms\Components\DatePicker::make('date')
                     ->label('Data do Atendimento')
                     ->columnSpanFull()
@@ -46,11 +52,6 @@ class TreatmentResource extends Resource
                     ->label('Paciente')
                     ->relationship('patient', 'name')
                     ->columnSpanFull()
-                    ->required(),
-                Forms\Components\Select::make('partner_id')
-                    ->columnSpanFull()
-                    ->label('Conveniado')
-                    ->relationship('partner', 'name')
                     ->required(),
                 Money::make('value')
                     ->label('Valor'),
@@ -78,6 +79,7 @@ class TreatmentResource extends Resource
     public static function table(Table $table): Table
     {
         return $table
+            ->modifyQueryUsing(fn (Builder $query) => auth()->user()->is_admin ? $query : $query->where('user_id', auth()->user()->id))
             ->columns([
                 Tables\Columns\TextColumn::make('service.name')
                     ->label('Serviço')
@@ -140,6 +142,10 @@ class TreatmentResource extends Resource
 
     public static function getNavigationBadge(): ?string
     {
-        return static::getModel()::count();
+        if(auth()->user()->is_admin){
+           return static::getModel()::count();
+        } else {
+            return static::getModel()::where('user_id', auth()->user()->id)->count();
+        }
     }
 }
