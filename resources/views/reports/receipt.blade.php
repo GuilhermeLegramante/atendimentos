@@ -9,7 +9,8 @@
         background-color: #f0f0f0;
     }
 
-    .center {
+    .signature {
+        margin-top: 30%;
         text-align: center;
     }
 </style>
@@ -39,7 +40,10 @@
         </tbody>
     </table>
 
-    <div class="center">
+    <div class="signature">
+        <p>
+            <hr>
+        </p>
         <p>This text is centered.</p>
     </div>
 @endsection
