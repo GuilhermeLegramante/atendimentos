@@ -3,7 +3,7 @@
         <table style="width: 120%;">
             <tbody>
                 <tr>
-                    <td style="height: 170px; vertical-align: middle;">
+                    <td style="height: 170px; vertical-align: middle; width: 12%;">
                         <img src="{{ public_path('img/logo.png') }}" style="width: 170px; height: 75px;">
                     </td>
                     <td style="height: 64px; width: 30%;">
