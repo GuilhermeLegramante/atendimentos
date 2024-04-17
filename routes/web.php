@@ -20,7 +20,7 @@ Livewire::setUpdateRoute(function ($handle) {
 
 Route::get('/', function () {
     // dd(env('LOGIN_ROUTE'));
-    // return redirect()->route('login');
+    return redirect('/admin/login');
 });
 
 Route::get('/sync-data', [ApiController::class, 'syncData']);
