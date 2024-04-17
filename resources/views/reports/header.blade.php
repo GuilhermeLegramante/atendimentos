@@ -3,14 +3,14 @@
         <table style="width: 120%;">
             <tbody>
                 <tr>
-                    <td style="height: 100px; vertical-align: middle; width: 10%;">
-                        <img src="{{ public_path('img/logo.png') }}" style="width: 100px; height: 75px;">
+                    <td style="height: 110px; vertical-align: middle; width: 12%;">
+                        <img src="{{ public_path('img/logo.png') }}" style="width: 110px; height: 75px;">
                     </td>
-                    <td style="height: 64px; width: 50%;">
+                    <td style="height: 64px; width: 30%;">
                         <table>
                             <tbody>
                                 <tr>
-                                    <td style="font-size: 23px; font-weight: bold;">{{ $title }}</td>
+                                    <td style="font-size: 18px; font-weight: bold;">{{ $title }}</td>
                                 </tr>
                             </tbody>
                         </table>
