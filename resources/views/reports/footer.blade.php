@@ -5,6 +5,8 @@
                 <tr>
                     <td>
                         <span style="font-weight: bold;">SISPREM</span> - Santana do Livramento/RS - HardSoft Sistemas ©
+                        <span style="font-weight: bold;"> Emitido em:</span>
+                        {{ date('d/m/Y \à\s H:i:s') }}
                     </td>
                 </tr>
             </tbody>

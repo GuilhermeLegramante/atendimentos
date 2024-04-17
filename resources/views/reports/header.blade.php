@@ -27,13 +27,6 @@
                                             alt="qrCode" style="width: 60px; height: 60px;">
                                     </td>
                                 </tr>
-                                <tr>
-                                    <td
-                                        style="font-size: 12px; height: 10px; text-align: right; vertical-align: bottom;">
-                                        <span style="font-weight: bold;">Emitido em:</span>
-                                        {{ date('d/m/Y \à\s H:i:s') }}
-                                    </td>
-                                </tr>
                             </tbody>
                         </table>
                     </td>
