@@ -11,9 +11,9 @@
 </style>
 
 @section('content')
-    <table class="striped">
+    <table style="width: 100%;" class="striped">
         <tbody>
-            <tr class="" style="font-size: 13px;">
+            <tr class="" style="font-size: 13px; width: 100%;">
                 <td class=""><strong>Data do Atendimento:</strong>
                     {{ date('d/m/Y', strtotime($treatment->date)) }}</td>
             </tr>
