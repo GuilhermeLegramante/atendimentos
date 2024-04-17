@@ -10,7 +10,19 @@
     }
 
     .signature {
+        border: 0;
+        border-bottom: 1px solid #000;
+    }
+
+    .signature_div {
         margin-top: 30%;
+        display: flex;
+        justify-content: space-between;
+        width: 100%;
+    }
+
+    .signature-wrapper {
+        display: block;
         text-align: center;
     }
 </style>
@@ -40,11 +52,27 @@
         </tbody>
     </table>
 
-    <div class="signature">
-        <p>
-            <hr>
-        </p>
-        <p>This text is centered.</p>
+    <div class="signature_div">
+        <div class="Column">
+            <label class="signature-wrapper">
+                <input type="text" class="signature" /><br />
+                Admin1
+            </label>
+        </div>
+
+        <div class="Column">
+            <label class="signature-wrapper">
+                <input type="text" class="signature" /><br />
+                Admin2
+            </label>
+        </div>
+
+        <div class="Column">
+            <label class="signature-wrapper">
+                <input type="text" class="signature" /><br />
+                Admin3
+            </label>
+        </div>
     </div>
 @endsection
 
