@@ -8,6 +8,12 @@
     .striped tr:nth-child(even) {
         background-color: #f0f0f0;
     }
+
+    .signature {
+        font-size: 16px;
+        margin-top: 30%;
+        text-align: center;
+    }
 </style>
 
 @section('content')
@@ -35,21 +41,22 @@
         </tbody>
     </table>
 
-    <div style="margin-top: 30%; font-size: 16px;">
-        <div>
-            <label>
-                <input type="text" /><br />
-                Paciente
-            </label>
-        </div>
-        <br>
-        <br>
-        <div>
-            <label>
-                <input type="text" /><br />
-                Responsável pelo Atendimento
-            </label>
-        </div>
+    <div class="signature">
+        <p style="width: 40%;">
+            <hr>
+        </p>
+        <p>Ass. do Paciente</p>
+    </div>
+
+    <br>
+    <br>
+    <br>
+
+    <div class="signature">
+        <p style="width: 40%;">
+            <hr>
+        </p>
+        <p>Ass. do Responsável pelo Atendimento</p>
     </div>
 @endsection
 
