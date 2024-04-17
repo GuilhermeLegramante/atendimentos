@@ -11,17 +11,26 @@
 </style>
 
 @section('content')
-    <table style="width: 100%;" class="striped">
+    <table style="width: 100%; margin-top: 10%;" class="striped">
         <tbody>
-            <tr style="font-size: 18px;">
+            <tr style="font-size: 16px;">
                 <td class=""><strong>Data do Atendimento:</strong>
                     {{ date('d/m/Y', strtotime($treatment->date)) }}</td>
             </tr>
-            <tr style="font-size: 18px;">
-                <td class=""><strong>Conveniado:</strong> {{ $treatment->partner->name }}</td>
+            <tr style="font-size: 16px;">
+                <td class=""><strong>Conveniado:</strong>
+                    {{ $treatment->partner->registration . ' - ' . $treatment->partner->name }}
+                </td>
             </tr>
-            <tr style="font-size: 18px;">
-                <td class=""><strong>Paciente:</strong> {{ $treatment->patient->name }}</td>
+            <tr style="font-size: 16px;">
+                <td class=""><strong>Paciente:</strong>
+                    {{ $treatment->patient->registration . ' - ' . $treatment->patient->name }}
+                </td>
+            </tr>
+            <tr style="font-size: 16px;">
+                <td class=""><strong>Serviço:</strong>
+                    {{ $treatment->service->code . ' - ' . $treatment->service->name }}
+                </td>
             </tr>
         </tbody>
     </table>
