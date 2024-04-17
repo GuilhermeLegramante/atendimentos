@@ -11,7 +11,7 @@
 </style>
 
 @section('content')
-    <table style="width: 100%; margin-top: 10%;" class="striped">
+    <table style="width: 100%; margin-top: 5%;" class="striped">
         <tbody>
             <tr style="font-size: 16px;">
                 <td class=""><strong>Data do Atendimento:</strong>
