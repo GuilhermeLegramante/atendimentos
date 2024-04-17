@@ -132,7 +132,7 @@ class TreatmentResource extends Resource
             ->actions([
                 Tables\Actions\EditAction::make(),
                 Action::make('report')
-                    ->label('Ficha')
+                    ->label('Comprovante')
                     ->icon('heroicon-o-document-text')
                     ->color('info')
                     ->url(fn (Treatment $record): string => route('receipt-pdf', $record->id))
