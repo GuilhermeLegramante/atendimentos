@@ -16,7 +16,7 @@ Livewire::setUpdateRoute(function ($handle) {
  * Ao trocar a senha do usuário, o Laravel exige um novo login.
  * Para isso, é necessário informar a rota de login
  */
-Route::redirect('/admin/login', '/admin/login')->name('login');
+Route::redirect(env('LOGIN_ROUTE'), env('LOGIN_ROUTE'))->name('login');
 
 Route::get('/', function () {
     return redirect()->route('login');
