@@ -18,5 +18,5 @@ Livewire::setUpdateRoute(function ($handle) {
 Route::redirect('/atendimentos/public/admin/login', '/atendimentos/public/admin/login')->name('login');
 
 Route::get('/', function () {
-    return view('welcome');
+    return redirect('/admin');
 });
