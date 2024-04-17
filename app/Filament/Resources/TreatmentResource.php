@@ -95,7 +95,7 @@ class TreatmentResource extends Resource
                     ->sortable(),
                 Tables\Columns\TextColumn::make('value')
                     ->label('Valor')
-                    ->numeric()
+                    ->money('BRL')
                     ->sortable(),
                 Tables\Columns\TextColumn::make('quantity')
                     ->label('Quantidade')
