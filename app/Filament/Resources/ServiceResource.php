@@ -36,6 +36,7 @@ class ServiceResource extends Resource
                 Forms\Components\TextInput::make('code')
                     ->label('Código')
                     ->required()
+                    ->unique()
                     ->maxLength(255),
                 Forms\Components\TextInput::make('name')
                     ->label('Nome')

@@ -36,6 +36,7 @@ class PersonResource extends Resource
                 Forms\Components\TextInput::make('registration')
                     ->label('Inscrição Municipal')
                     ->required()
+                    ->unique()
                     ->maxLength(255),
                 Forms\Components\TextInput::make('name')
                     ->label('Nome')
