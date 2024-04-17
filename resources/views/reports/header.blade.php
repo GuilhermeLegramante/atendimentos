@@ -1,4 +1,4 @@
-<header style="position: fixed; margin-top: -22%;">
+<header style="position: fixed; margin-top: -20%;">
     <div style="height: 100px;">
         <table style="width: 100%;">
             <tbody>
@@ -38,5 +38,5 @@
             </tbody>
         </table>
     </div>
-    <hr style="margin-top: 45px; width: 110%;" />
+    <hr style="margin-top: 60px; width: 110%;" />
 </header>
