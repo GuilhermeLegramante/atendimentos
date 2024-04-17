@@ -4,6 +4,8 @@ namespace App\Filament\Resources;
 
 use App\Filament\Resources\TreatmentResource\Pages;
 use App\Filament\Tables\Columns\ReceiptLink;
+use App\Models\Person;
+use App\Models\Service;
 use App\Models\Treatment;
 use Filament\Forms;
 use Filament\Forms\Form;
@@ -38,6 +40,7 @@ class TreatmentResource extends Resource
                     ->columnSpanFull()
                     ->label('Conveniado')
                     ->relationship('partner', 'name')
+                    ->getOptionLabelFromRecordUsing(fn (Person $record) => "{$record->registration} - {$record->name}")
                     ->required(),
                 Forms\Components\DatePicker::make('date')
                     ->label('Data do Atendimento')
@@ -47,11 +50,13 @@ class TreatmentResource extends Resource
                     ->label('Serviço')
                     ->relationship('service', 'name')
                     ->columnSpanFull()
+                    ->getOptionLabelFromRecordUsing(fn (Service $record) => "{$record->code} - {$record->name}")
                     ->required(),
                 Forms\Components\Select::make('patient_id')
                     ->label('Paciente')
                     ->relationship('patient', 'name')
                     ->columnSpanFull()
+                    ->getOptionLabelFromRecordUsing(fn (Person $record) => "{$record->registration} - {$record->name}")
                     ->required(),
                 Money::make('value')
                     ->label('Valor'),
