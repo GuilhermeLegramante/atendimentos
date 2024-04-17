@@ -15,7 +15,7 @@
                             </tbody>
                         </table>
                     </td>
-                    <td style="widht: 50px;">
+                    <td style="width: 50px;">
 
                     </td>
                     <td style="height: 64px; text-align: right;">
@@ -25,6 +25,13 @@
                                     <td style="height: 50px; text-align: right;">
                                         <img src="https://api.qrserver.com/v1/create-qr-code/?size=150x150&data={{ url()->current() }}"
                                             alt="qrCode" style="width: 60px; height: 60px;">
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td
+                                        style="font-size: 12px; height: 10px; text-align: right; vertical-align: bottom;">
+                                        <span style="font-weight: bold;">Emitido em:</span>
+                                        {{ date('d/m/Y \à\s H:i:s') }}
                                     </td>
                                 </tr>
                             </tbody>
