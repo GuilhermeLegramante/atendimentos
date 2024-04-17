@@ -8,6 +8,10 @@
     .striped tr:nth-child(even) {
         background-color: #f0f0f0;
     }
+
+    .center {
+        text-align: center;
+    }
 </style>
 
 @section('content')
@@ -34,6 +38,10 @@
             </tr>
         </tbody>
     </table>
+
+    <div class="center">
+        <p>This text is centered.</p>
+    </div>
 @endsection
 
 @section('footer')
