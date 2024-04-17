@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\ApiController;
+use App\Http\Controllers\TreatmentController;
 use Illuminate\Support\Facades\Route;
 use Livewire\Livewire;
 
@@ -10,6 +11,10 @@ Livewire::setScriptRoute(function ($handle) {
 
 Livewire::setUpdateRoute(function ($handle) {
     return Route::post('/atendimentos/public/livewire/update', $handle);
+});
+
+Route::middleware(['auth'])->group(function () {
+    Route::get('/comprovante-de-atendimento/{treatmentId}', [TreatmentController::class, 'getReceipt'])->name('receipt-pdf');
 });
 
 /**

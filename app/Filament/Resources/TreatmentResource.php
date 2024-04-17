@@ -7,6 +7,7 @@ use App\Filament\Tables\Columns\ReceiptLink;
 use App\Models\Person;
 use App\Models\Service;
 use App\Models\Treatment;
+use Filament\Actions\Action;
 use Filament\Forms;
 use Filament\Forms\Form;
 use Filament\Resources\Resource;
@@ -129,6 +130,12 @@ class TreatmentResource extends Resource
             ])
             ->actions([
                 Tables\Actions\EditAction::make(),
+                Action::make('report')
+                    ->label('Ficha')
+                    ->icon('heroicon-o-document-text')
+                    ->color('info')
+                    ->url(fn (Treatment $record): string => route('receipt-pdf', $record->id))
+                    ->openUrlInNewTab(),
                 Tables\Actions\DeleteAction::make(),
             ])
             ->bulkActions([
@@ -147,8 +154,8 @@ class TreatmentResource extends Resource
 
     public static function getNavigationBadge(): ?string
     {
-        if(auth()->user()->is_admin){
-           return static::getModel()::count();
+        if (auth()->user()->is_admin) {
+            return static::getModel()::count();
         } else {
             return static::getModel()::where('user_id', auth()->user()->id)->count();
         }
