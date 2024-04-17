@@ -5,13 +5,13 @@
 @endsection
 
 <style>
-    tr:nth-child(even) {
-        background-color: #D6EEEE;
+    .striped tr:nth-child(even) {
+        background-color: #b3b3b3;
     }
 </style>
 
 @section('content')
-    <table>
+    <table class="striped">
         <tbody>
             <tr class="" style="font-size: 13px;">
                 <td class=""><strong>Data do Atendimento:</strong>
