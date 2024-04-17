@@ -8,23 +8,6 @@
     .striped tr:nth-child(even) {
         background-color: #f0f0f0;
     }
-
-    .signature {
-        border: 0;
-        border-bottom: 1px solid #000;
-    }
-
-    .signature_div {
-        margin-top: 30%;
-        display: flex;
-        justify-content: space-between;
-        width: 100%;
-    }
-
-    .signature-wrapper {
-        display: block;
-        text-align: center;
-    }
 </style>
 
 @section('content')
@@ -52,17 +35,18 @@
         </tbody>
     </table>
 
-    <div class="signature_div">
+    <div style="margin-top: 30%; font-size: 16px;">
         <div>
-            <label class="signature-wrapper">
-                <input type="text" class="signature" /><br />
+            <label>
+                <input type="text" /><br />
                 Paciente
             </label>
         </div>
-
+        <br>
+        <br>
         <div>
-            <label class="signature-wrapper">
-                <input type="text" class="signature" /><br />
+            <label>
+                <input type="text" /><br />
                 Responsável pelo Atendimento
             </label>
         </div>
