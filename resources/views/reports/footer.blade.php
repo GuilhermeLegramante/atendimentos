@@ -4,7 +4,7 @@
             <tbody style="font-size: 8pt;">
                 <tr>
                     <td>
-                        <span style="font-weight: bold;">SISPREM</span> - Santana do Livramento/RS
+                        <span style="font-weight: bold;">SISPREM</span> - Santana do Livramento/RS - HardSoft Sistemas ©
                     </td>
                 </tr>
             </tbody>
