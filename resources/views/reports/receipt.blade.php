@@ -42,8 +42,8 @@
     </table>
 
     <div class="signature">
-        <p style="width: 40%;">
-            <hr>
+        <p>
+            __________________________________________
         </p>
         <p>Ass. do Paciente</p>
     </div>
@@ -53,8 +53,8 @@
     <br>
 
     <div class="signature">
-        <p style="width: 40%;">
-            <hr>
+        <p>
+            __________________________________________
         </p>
         <p>Ass. do Responsável pelo Atendimento</p>
     </div>
