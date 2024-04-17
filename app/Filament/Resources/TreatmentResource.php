@@ -7,7 +7,6 @@ use App\Filament\Tables\Columns\ReceiptLink;
 use App\Models\Person;
 use App\Models\Service;
 use App\Models\Treatment;
-use Filament\Actions\Action;
 use Filament\Forms;
 use Filament\Forms\Form;
 use Filament\Resources\Resource;
@@ -16,6 +15,8 @@ use Filament\Tables;
 use Filament\Tables\Table;
 use Leandrocfe\FilamentPtbrFormFields\Money;
 use Illuminate\Database\Eloquent\Builder;
+use Filament\Tables\Actions\Action;
+
 
 class TreatmentResource extends Resource
 {
