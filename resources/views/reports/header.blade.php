@@ -3,8 +3,8 @@
         <table style="width: 120%;">
             <tbody>
                 <tr>
-                    <td style="height: 150px; vertical-align: middle; width: 20%;">
-                        <img src="{{ public_path('img/logo.png') }}" style="width: 150px; height: 75px;">
+                    <td style="height: 170px; vertical-align: middle;">
+                        <img src="{{ public_path('img/logo.png') }}" style="width: 170px; height: 75px;">
                     </td>
                     <td style="height: 64px; width: 30%;">
                         <table>
