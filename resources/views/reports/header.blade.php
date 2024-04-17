@@ -3,8 +3,8 @@
         <table style="width: 100%;">
             <tbody>
                 <tr>
-                    <td style="height: 170px; vertical-align: middle; width: 12%;">
-                        <img src="{{ public_path('img/logo.png') }}" style="width: 170px; height: 75px;">
+                    <td style="height: 180px; vertical-align: middle; width: 12%;">
+                        <img src="{{ public_path('img/logo.png') }}" style="width: 180px; height: 75px;">
                     </td>
                     <td style="height: 64px; width: 30%;">
                         <table>
@@ -38,5 +38,5 @@
             </tbody>
         </table>
     </div>
-    <hr style="margin-top: 5px; width: 110%;" />
+    <hr style="margin-top: 25px; width: 110%;" />
 </header>
