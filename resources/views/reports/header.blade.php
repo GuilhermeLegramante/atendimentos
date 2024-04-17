@@ -6,7 +6,7 @@
                     <td style="height: 220px; vertical-align: middle; width: 20%;">
                         <img src="{{ public_path('img/logo.png') }}" style="width: 200px; height: 75px;">
                     </td>
-                    <td style="height: 64px; width: 40%;">
+                    <td style="height: 64px; width: 30%;">
                         <table>
                             <tbody>
                                 <tr>
@@ -30,7 +30,7 @@
                                 </tr>
                                 <tr>
                                     <td
-                                        style="font-size: 12px; height: 10px; text-align: right; vertical-align: bottom;">
+                                        style="font-size: 10px; height: 10px; text-align: right; vertical-align: bottom;">
                                         <span style="font-weight: bold;">Emitido em:</span>
                                         {{ date('d/m/Y \à\s H:i:s') }}
                                     </td>
