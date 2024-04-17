@@ -19,6 +19,7 @@ Livewire::setUpdateRoute(function ($handle) {
 Route::redirect(env('LOGIN_ROUTE'), env('LOGIN_ROUTE'))->name('login');
 
 Route::get('/', function () {
+    dd(env('LOGIN_ROUTE'));
     // return redirect()->route('login');
 });
 
