@@ -4,7 +4,7 @@
             <tbody style="font-size: 8pt;">
                 <tr>
                     <td>
-                        <span style="font-weight: bold;">Boqueirão</span> Negócios e Remates Rurais - www.boqueiraoremates.com.br - Santiago/RS
+                        <span style="font-weight: bold;">SISPREM</span> - Santana do Livramento/RS
                     </td>
                 </tr>
             </tbody>

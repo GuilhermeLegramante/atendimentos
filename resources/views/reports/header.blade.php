@@ -4,16 +4,16 @@
             <tbody>
                 <tr>
                     <td style="height: 100px; vertical-align: middle; width: 10%;">
-                        <img src="{{ asset('img/logo.png') }}" style="width: 100px; height: 100px;">
+                        <img src="{{ public_path('img/logo.png') }}" style="width: 100px; height: 100px;">
                     </td>
-                    <td style="height: 64px; width: 50%;">  
+                    <td style="height: 64px; width: 50%;">
                         <table>
                             <tbody>
                                 <tr>
                                     <td style="font-size: 23px; font-weight: bold;">{{ $title }}</td>
                                 </tr>
                                 <tr>
-                                    <td style="font-size: 17px; font-weight: bold;">Boqueirão Remates e Negócios Rurais</td>
+                                    <td style="font-size: 17px; font-weight: bold;">SISPREM</td>
                                 </tr>
                                 <tr>
                                     <td style="font-size: 12px; padding-top: 10px;">
@@ -22,7 +22,7 @@
                                 </tr>
                                 <tr>
                                     <td style="font-size: 12px;">
-                                        <span style="font-weight: bold;"></span> www.boqueiraoremates.com.br
+                                        {{-- <span style="font-weight: bold;"></span> www.boqueiraoremates.com.br --}}
                                     </td>
                                 </tr>
                             </tbody>
@@ -33,19 +33,20 @@
                             <tbody>
                                 <tr>
                                     <td style="height: 50px; text-align: right;">
-                                    <img src="https://api.qrserver.com/v1/create-qr-code/?size=150x150&data={{url()->current()}}"
+                                        <img src="https://api.qrserver.com/v1/create-qr-code/?size=150x150&data={{ url()->current() }}"
                                             alt="qrCode" style="width: 60px; height: 60px;">
                                     </td>
                                 </tr>
                                 <tr>
                                     <td style="font-size: 12px; height: 15px; text-align: right; vertical-align: top;">
-                                        <span style="font-weight: bold;"></span> contato@boqueiraoremates.com.br
+                                        {{-- <span style="font-weight: bold;"></span> contato@boqueiraoremates.com.br --}}
                                     </td>
                                 </tr>
                                 <tr>
                                     <td
                                         style="font-size: 12px; height: 10px; text-align: right; vertical-align: bottom;">
-                                        <span style="font-weight: bold;">Emitido em:</span> {{ date('d/m/Y \à\s H:i:s') }}
+                                        <span style="font-weight: bold;">Emitido em:</span>
+                                        {{ date('d/m/Y \à\s H:i:s') }}
                                     </td>
                                 </tr>
                             </tbody>
