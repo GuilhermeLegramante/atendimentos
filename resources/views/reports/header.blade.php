@@ -1,6 +1,6 @@
-<header style="position: fixed; margin-top: -15%;">
+<header style="position: fixed; ">
     <div style="height: 100px;">
-        <table style="width: 120%;">
+        <table style="width: 100%;">
             <tbody>
                 <tr>
                     <td style="height: 170px; vertical-align: middle; width: 12%;">
