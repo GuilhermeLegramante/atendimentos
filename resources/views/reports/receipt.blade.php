@@ -6,7 +6,7 @@
 
 <style>
     .striped tr:nth-child(even) {
-        background-color: #b3b3b3;
+        background-color: #f0f0f0;
     }
 </style>
 
