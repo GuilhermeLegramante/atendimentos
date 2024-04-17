@@ -1,9 +1,9 @@
-<header style="position: fixed; margin-top: -25%;">
+<header style="position: fixed; margin-top: -22%;">
     <div style="height: 100px;">
         <table style="width: 100%;">
             <tbody>
                 <tr>
-                    <td style="height: 200px; vertical-align: middle; width: 18%;">
+                    <td style="height: 220px; vertical-align: middle; width: 20%;">
                         <img src="{{ public_path('img/logo.png') }}" style="width: 200px; height: 75px;">
                     </td>
                     <td style="height: 64px; width: 30%;">
