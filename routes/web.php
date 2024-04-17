@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\ApiController;
 use Illuminate\Support\Facades\Route;
 use Livewire\Livewire;
 
@@ -18,6 +19,9 @@ Livewire::setUpdateRoute(function ($handle) {
 Route::redirect('/atendimentos/public/admin/login', '/atendimentos/public/admin/login')->name('login');
 
 Route::get('/', function () {
-    dd(env('ASSET_URL'));
     return redirect('/admin');
 });
+
+Route::get('/sync-data', [ApiController::class, 'syncData']);
+
+
