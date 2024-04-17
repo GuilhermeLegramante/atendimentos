@@ -10,6 +10,7 @@
                         <table>
                             <tbody>
                                 <tr>
+                                    <td>&nbsp;&nbsp;</td>
                                     <td style="font-size: 16px; font-weight: bold;">{{ $title }}</td>
                                 </tr>
                             </tbody>
