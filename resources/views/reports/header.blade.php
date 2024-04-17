@@ -6,7 +6,7 @@
                     <td style="height: 220px; vertical-align: middle; width: 20%;">
                         <img src="{{ public_path('img/logo.png') }}" style="width: 200px; height: 75px;">
                     </td>
-                    <td style="height: 64px; width: 30%;">
+                    <td style="height: 64px; width: 40%;">
                         <table>
                             <tbody>
                                 <tr>
