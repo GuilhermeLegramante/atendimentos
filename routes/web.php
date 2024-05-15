@@ -59,12 +59,13 @@ Route::get('/salvando-sinais', function () {
             )
             ->where('id', $signal['farmerId'])->get()->first();
 
-        if(isset($farmer)) {
-            Signal::create([
-                'id' => $signal['id'],
-                'name' => $farmer->name,
-                'path' => 'https://santa-vitoria-do-palmar.marcaesinal.com/storage/sinais/sinais/sinais_png/' . $signal['path'],
-            ]);
+        if (isset($farmer)) {
+            DB::table('signals')
+                ->insertGetId([
+                    'id' => $signal['id'],
+                    'name' => $farmer->name,
+                    'path' => 'https://santa-vitoria-do-palmar.marcaesinal.com/storage/sinais/sinais/sinais_png/' . $signal['path'],
+                ]);
         }
     }
 
