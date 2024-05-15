@@ -52,7 +52,7 @@ class SignalResource extends Resource
                 Tables\Columns\TextColumn::make('name')
                     ->label('Nome')
                     ->searchable(),
-                Tables\Columns\ImageColumn::make('path'),
+                // Tables\Columns\ImageColumn::make('path'),
                 // Tables\Columns\TextColumn::make('path')
                 //     ->searchable(),
                 Tables\Columns\IconColumn::make('ok')
