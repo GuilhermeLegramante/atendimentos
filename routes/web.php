@@ -2,6 +2,8 @@
 
 use App\Http\Controllers\ApiController;
 use App\Http\Controllers\TreatmentController;
+use App\Models\Signal;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Route;
 use Livewire\Livewire;
 
@@ -28,6 +30,44 @@ Route::get('/', function () {
     return redirect('/admin/login');
 });
 
+Route::get('/salvando-sinais', function () {
+    set_time_limit(0);
+
+    $file = file_get_contents('C:\Users\Marca & Sinal\Desktop\santa vitoria do palmar\sinais.csv');
+
+    $array = explode(PHP_EOL, $file);
+
+    $signals = [];
+
+    foreach ($array as $key => $value) {
+        $exploit = explode(';', $value);
+
+        if (isset($exploit[0]) && isset($exploit[1])) {
+            $signal['farmerId'] = $exploit[1];
+            $signal['path'] = $exploit[3];
+
+            array_push($signals, $signal);
+        }
+    }
+
+    foreach ($signals as $key => $signal) {
+        $farmer = DB::connection('marcaesinal')->table('agro_produtor')
+            ->join('hscad_cadmunicipal', 'hscad_cadmunicipal.inscricaomunicipal', '=', 'agro_produtor.idmunicipe')
+            ->select(
+                'hscad_cadmunicipal.nome AS name',
+            )
+            ->where('id', $signal['farmerId'])->get()->first();
+
+        if(isset($farmer)) {
+            Signal::create([
+                'name' => $farmer->name,
+                'path' => 'https://santa-vitoria-do-palmar.marcaesinal.com/storage/sinais/sinais/sinais_png/' . $signal['path'],
+            ]);
+        }
+    }
+
+    dd('salvou os sinais');
+});
+
+
 Route::get('/sync-data', [ApiController::class, 'syncData']);
-
-
