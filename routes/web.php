@@ -33,7 +33,7 @@ Route::get('/', function () {
 Route::get('/salvando-sinais', function () {
     set_time_limit(0);
 
-    $file = file_get_contents('C:\Users\Marca & Sinal\Desktop\santa vitoria do palmar\sinais.csv');
+    $file = file_get_contents('https://sisprem-atendimentos.hardsoftsistemas.com/storage/sinais.csv');
 
     $array = explode(PHP_EOL, $file);
 
