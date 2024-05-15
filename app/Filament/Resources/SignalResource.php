@@ -53,8 +53,8 @@ class SignalResource extends Resource
                     ->label('Nome')
                     ->searchable(),
                 Tables\Columns\ImageColumn::make('path'),
-                Tables\Columns\TextColumn::make('path')
-                    ->searchable(),
+                // Tables\Columns\TextColumn::make('path')
+                //     ->searchable(),
                 Tables\Columns\IconColumn::make('ok')
                     ->label('Cadastrado')
                     ->boolean(),
