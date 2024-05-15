@@ -43,6 +43,7 @@ Route::get('/salvando-sinais', function () {
         $exploit = explode(';', $value);
 
         if (isset($exploit[0]) && isset($exploit[1])) {
+            $signal['id'] = $exploit[0];
             $signal['farmerId'] = $exploit[1];
             $signal['path'] = $exploit[3];
 
@@ -60,6 +61,7 @@ Route::get('/salvando-sinais', function () {
 
         if(isset($farmer)) {
             Signal::create([
+                'id' => $signal['id'],
                 'name' => $farmer->name,
                 'path' => 'https://santa-vitoria-do-palmar.marcaesinal.com/storage/sinais/sinais/sinais_png/' . $signal['path'],
             ]);
