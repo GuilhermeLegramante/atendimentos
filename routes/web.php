@@ -52,6 +52,8 @@ Route::get('/salvando-sinais', function () {
     }
 
     foreach ($signals as $key => $signal) {
+        dd($signal['id'] > 550);
+        
         $farmer = DB::connection('marcaesinal')->table('agro_produtor')
             ->join('hscad_cadmunicipal', 'hscad_cadmunicipal.inscricaomunicipal', '=', 'agro_produtor.idmunicipe')
             ->select(
