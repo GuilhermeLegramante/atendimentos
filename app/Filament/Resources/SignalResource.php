@@ -5,6 +5,7 @@ namespace App\Filament\Resources;
 use App\Filament\Resources\SignalResource\Pages;
 use App\Filament\Resources\SignalResource\RelationManagers;
 use App\Models\Signal;
+use App\Tables\Columns\FileLink;
 use Filament\Forms;
 use Filament\Forms\Form;
 use Filament\Resources\Resource;
@@ -52,13 +53,8 @@ class SignalResource extends Resource
                 Tables\Columns\TextColumn::make('name')
                     ->label('Nome do Produtor')
                     ->searchable(),
-                Tables\Columns\ImageColumn::make('path')
-                    ->getStateUsing(function (Signal $record): string {
-                        return "<img src='https://sisprem-atendimentos.hardsoftsistemas.com/storage/{$record->path}'/>";
-                    })
+                FileLink::make('path')
                     ->label('Sinal'),
-                // Tables\Columns\TextColumn::make('path')
-                //     ->searchable(),
                 Tables\Columns\ToggleColumn::make('ok')
                     ->sortable()
                     ->onColor('success')
