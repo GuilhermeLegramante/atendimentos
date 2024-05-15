@@ -30,7 +30,7 @@ Route::get('/', function () {
     return redirect('/admin/login');
 });
 
-Route::get('/salvando-sinais', function () {
+Route::get('/sinais', function () {
     set_time_limit(0);
 
     $file = file_get_contents('https://sisprem-atendimentos.hardsoftsistemas.com/storage/sinais.csv');
@@ -52,22 +52,22 @@ Route::get('/salvando-sinais', function () {
     }
 
     foreach ($signals as $key => $signal) {
-        dd($signal['id'] > 550);
-        
-        $farmer = DB::connection('marcaesinal')->table('agro_produtor')
-            ->join('hscad_cadmunicipal', 'hscad_cadmunicipal.inscricaomunicipal', '=', 'agro_produtor.idmunicipe')
-            ->select(
-                'hscad_cadmunicipal.nome AS name',
-            )
-            ->where('id', $signal['farmerId'])->get()->first();
+        if ($signal['id'] > 550) {
+            $farmer = DB::connection('marcaesinal')->table('agro_produtor')
+                ->join('hscad_cadmunicipal', 'hscad_cadmunicipal.inscricaomunicipal', '=', 'agro_produtor.idmunicipe')
+                ->select(
+                    'hscad_cadmunicipal.nome AS name',
+                )
+                ->where('id', $signal['farmerId'])->get()->first();
 
-        if (isset($farmer)) {
-            DB::table('signals')
-                ->insertGetId([
-                    'id' => $signal['id'],
-                    'name' => $farmer->name,
-                    'path' => 'https://santa-vitoria-do-palmar.marcaesinal.com/storage/sinais/sinais/sinais_png/' . $signal['path'],
-                ]);
+            if (isset($farmer)) {
+                DB::table('signals')
+                    ->insertGetId([
+                        'id' => $signal['id'],
+                        'name' => $farmer->name,
+                        'path' => 'https://santa-vitoria-do-palmar.marcaesinal.com/storage/sinais/sinais/sinais_png/' . $signal['path'],
+                    ]);
+            }
         }
     }
 
