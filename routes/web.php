@@ -69,13 +69,13 @@ Route::get('/sinais', function () {
             //         ]);
             // }
 
-            DB::table('signals')
-                ->where('id', $signal['id'])
-                ->update(
-                    [
-                        'path' => $signal['path']
-                    ]
-                );
+            // DB::table('signals')
+            //     ->where('id', $signal['id'])
+            //     ->update(
+            //         [
+            //             'path' => $signal['path']
+            //         ]
+            //     );
         }
     }
 

@@ -50,14 +50,17 @@ class SignalResource extends Resource
         return $table
             ->columns([
                 Tables\Columns\TextColumn::make('name')
-                    ->label('Nome')
+                    ->label('Nome do Produtor')
                     ->searchable(),
-                // Tables\Columns\ImageColumn::make('path'),
+                Tables\Columns\ImageColumn::make('path')
+                    ->label('Sinal'),
                 // Tables\Columns\TextColumn::make('path')
                 //     ->searchable(),
-                Tables\Columns\IconColumn::make('ok')
-                    ->label('Cadastrado')
-                    ->boolean(),
+                Tables\Columns\ToggleColumn::make('ok')
+                    ->sortable()
+                    ->onColor('success')
+                    ->offColor('danger')
+                    ->label('Cadastrado'),
             ])
             ->filters([
                 //
