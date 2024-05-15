@@ -1,3 +1,3 @@
 <div>
-    <img style="width: 200px; height: 100px;" src="{{ asset("storage/{$getRecord()->path}") }}"/>
+    <img style="width: 300px; height: 200px;" src="{{ asset("storage/{$getRecord()->path}") }}"/>
 </div>
