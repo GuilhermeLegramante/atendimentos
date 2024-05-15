@@ -52,7 +52,7 @@ Route::get('/sinais', function () {
     }
 
     foreach ($signals as $key => $signal) {
-        if ($signal['id'] > 5136) {
+        if ($signal['id'] > 5642) {
             $farmer = DB::connection('marcaesinal')->table('agro_produtor')
                 ->join('hscad_cadmunicipal', 'hscad_cadmunicipal.inscricaomunicipal', '=', 'agro_produtor.idmunicipe')
                 ->select(
