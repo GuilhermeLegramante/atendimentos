@@ -53,6 +53,9 @@ class SignalResource extends Resource
                     ->label('Nome do Produtor')
                     ->searchable(),
                 Tables\Columns\ImageColumn::make('path')
+                    ->getStateUsing(function (Signal $record): string {
+                        return "<img src='https://sisprem-atendimentos.hardsoftsistemas.com/storage/" . $record->path . "'/>";
+                    })
                     ->label('Sinal'),
                 // Tables\Columns\TextColumn::make('path')
                 //     ->searchable(),
