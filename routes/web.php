@@ -52,26 +52,34 @@ Route::get('/sinais', function () {
     }
 
     foreach ($signals as $key => $signal) {
-        if ($signal['id'] > 6192) {
-            $farmer = DB::connection('marcaesinal')->table('agro_produtor')
-                ->join('hscad_cadmunicipal', 'hscad_cadmunicipal.inscricaomunicipal', '=', 'agro_produtor.idmunicipe')
-                ->select(
-                    'hscad_cadmunicipal.nome AS name',
-                )
-                ->where('id', $signal['farmerId'])->get()->first();
+        if ($signal['id'] > 1) {
+            // $farmer = DB::connection('marcaesinal')->table('agro_produtor')
+            //     ->join('hscad_cadmunicipal', 'hscad_cadmunicipal.inscricaomunicipal', '=', 'agro_produtor.idmunicipe')
+            //     ->select(
+            //         'hscad_cadmunicipal.nome AS name',
+            //     )
+            //     ->where('id', $signal['farmerId'])->get()->first();
 
-            if (isset($farmer)) {
-                DB::table('signals')
-                    ->insertGetId([
-                        'id' => $signal['id'],
-                        'name' => $farmer->name,
-                        'path' => 'https://santa-vitoria-do-palmar.marcaesinal.com/storage/sinais/sinais/sinais_png/' . $signal['path'],
-                    ]);
-            }
+            // if (isset($farmer)) {
+            //     DB::table('signals')
+            //         ->insertGetId([
+            //             'id' => $signal['id'],
+            //             'name' => $farmer->name,
+            //             'path' => 'https://santa-vitoria-do-palmar.marcaesinal.com/storage/sinais/sinais/sinais_png/' . $signal['path'],
+            //         ]);
+            // }
+
+            DB::table('signals')
+                ->where('id', $signal['id'])
+                ->update(
+                    [
+                        'path' => $signal['path']
+                    ]
+                );
         }
     }
 
-    dd('salvou os sinais');
+    dd('editou os sinais');
 });
 
 
