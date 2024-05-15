@@ -78,4 +78,9 @@ class SignalResource extends Resource
             'index' => Pages\ManageSignals::route('/'),
         ];
     }
+
+    public static function canCreate(): bool
+    {
+        return false;
+    }
 }
