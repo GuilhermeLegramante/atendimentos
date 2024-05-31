@@ -20,6 +20,7 @@
         "njxqlus/filament-progressbar": "^1.0",
         "spatie/laravel-activitylog": "^4.8",
         "swisnl/filament-backgrounds": "^1.1",
+        "symfony/browser-kit": "^7.0",
         "z3d0x/filament-logger": "^0.7.1"
     },
     "require-dev": {

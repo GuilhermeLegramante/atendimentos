@@ -3,9 +3,12 @@
 use App\Http\Controllers\ApiController;
 use App\Http\Controllers\TreatmentController;
 use App\Models\Signal;
+use GuzzleHttp\Client;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Http;
 use Illuminate\Support\Facades\Route;
 use Livewire\Livewire;
+use Symfony\Component\DomCrawler\Crawler;
 
 Livewire::setScriptRoute(function ($handle) {
     return Route::get('/atendimentos/public/livewire/livewire.js', $handle);
@@ -84,3 +87,20 @@ Route::get('/sinais', function () {
 
 
 Route::get('/sync-data', [ApiController::class, 'syncData']);
+
+Route::get('/crawler', function () {
+
+
+    $response = Http::post('https://www.cavalocrioulo.org.br/pesquisa/pesquisar_nome_home.php', [
+        'form_params' => [
+            'nome' => 'zagaia ituzaingo'
+        ],
+    ]);
+
+    $html = (string) $response->getBody();
+
+    $crawler = new Crawler($html);
+
+    dd($crawler);
+
+});
