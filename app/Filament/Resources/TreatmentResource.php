@@ -17,7 +17,9 @@ use Leandrocfe\FilamentPtbrFormFields\Money;
 use Illuminate\Database\Eloquent\Builder;
 use Filament\Tables\Actions\Action;
 use Filament\Tables\Actions\ActionGroup;
+use Filament\Tables\Columns\Summarizers\Sum;
 use Filament\Tables\Enums\ActionsPosition;
+use Filament\Tables\Grouping\Group;
 
 class TreatmentResource extends Resource
 {
@@ -91,30 +93,38 @@ class TreatmentResource extends Resource
             ->columns([
                 Tables\Columns\TextColumn::make('service.name')
                     ->label('Serviço')
-                    ->numeric()
+                    ->toggleable(isToggledHiddenByDefault: false)
+                    ->searchable()
                     ->sortable(),
                 Tables\Columns\TextColumn::make('patient.name')
                     ->label('Paciente')
-                    ->numeric()
+                    ->toggleable(isToggledHiddenByDefault: false)
+                    ->searchable()
                     ->sortable(),
                 Tables\Columns\TextColumn::make('partner.name')
                     ->label('Conveniado')
-                    ->numeric()
+                    ->toggleable(isToggledHiddenByDefault: false)
+                    ->searchable()
                     ->sortable(),
                 Tables\Columns\TextColumn::make('value')
                     ->label('Valor')
+                    ->toggleable(isToggledHiddenByDefault: false)
                     ->money('BRL')
+                    ->summarize(Sum::make()->label('Total')->money('BRL'))
                     ->sortable(),
                 Tables\Columns\TextColumn::make('quantity')
                     ->label('Quantidade')
+                    ->toggleable(isToggledHiddenByDefault: false)
                     ->numeric()
                     ->sortable(),
                 Tables\Columns\TextColumn::make('date')
                     ->label('Data')
+                    ->toggleable(isToggledHiddenByDefault: false)
                     ->date()
                     ->sortable(),
                 ReceiptLink::make('receipt')
                     ->label('Comprovante')
+                    ->toggleable(isToggledHiddenByDefault: false)
                     ->alignment(Alignment::Center),
                 Tables\Columns\TextColumn::make('created_at')
                     ->label('Criado em')
@@ -130,6 +140,23 @@ class TreatmentResource extends Resource
             ->filters([
                 //
             ])
+            ->groups([
+                Group::make('service.name')
+                    ->label('Serviço')
+                    ->collapsible(),
+                Group::make('partner.name')
+                    ->label('Conveniado')
+                    ->collapsible(),
+                Group::make('patient.name')
+                    ->label('Paciente')
+                    ->collapsible(),
+            ])
+            ->deferFilters()
+            ->filtersApplyAction(
+                fn (Action $action) => $action
+                    ->link()
+                    ->label('Aplicar Filtro(s)'),
+            )
             ->actions([
                 ActionGroup::make([
                     Tables\Actions\EditAction::make(),
