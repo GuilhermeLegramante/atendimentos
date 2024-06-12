@@ -24,7 +24,7 @@ class Treatment extends Model
 
     protected $casts = [
         'reviewed' => 'boolean',
-        'value' => 'double',
+        // 'value' => 'double',
     ];
 
     public function service(): BelongsTo
