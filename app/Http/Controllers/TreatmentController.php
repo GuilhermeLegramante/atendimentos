@@ -12,7 +12,7 @@ class TreatmentController extends Controller
     {
         $treatment = Treatment::find($treatmentId);
 
-        $fileName = 'COMPROVANTE_DE_ATENDIMENTO_' . $treatment->id;
+        $fileName = 'COMPROVANTE_DE_ATENDIMENTO_' . $treatment->id . '.pdf';
 
         $args = [
             'treatment' => $treatment,

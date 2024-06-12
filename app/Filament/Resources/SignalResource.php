@@ -22,6 +22,8 @@ class SignalResource extends Resource
 
     protected static ?string $recordTitleAttribute = 'name';
 
+    protected static ?string $navigationGroup = 'Marca & Sinal';
+
     protected static ?string $modelLabel = 'sinal';
 
     protected static ?string $pluralModelLabel = 'sinais';

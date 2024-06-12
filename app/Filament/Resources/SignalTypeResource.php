@@ -24,6 +24,8 @@ class SignalTypeResource extends Resource
 
     protected static ?string $modelLabel = 'tipo de sinal';
 
+    protected static ?string $navigationGroup = 'Marca & Sinal';
+
     protected static ?string $pluralModelLabel = 'tipos de sinais';
 
     protected static ?string $slug = 'tipo-de-sinal';

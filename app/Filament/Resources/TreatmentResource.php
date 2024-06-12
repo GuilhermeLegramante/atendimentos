@@ -16,7 +16,8 @@ use Filament\Tables\Table;
 use Leandrocfe\FilamentPtbrFormFields\Money;
 use Illuminate\Database\Eloquent\Builder;
 use Filament\Tables\Actions\Action;
-
+use Filament\Tables\Actions\ActionGroup;
+use Filament\Tables\Enums\ActionsPosition;
 
 class TreatmentResource extends Resource
 {
@@ -130,15 +131,17 @@ class TreatmentResource extends Resource
                 //
             ])
             ->actions([
-                Tables\Actions\EditAction::make(),
-                Action::make('report')
-                    ->label('Comprovante')
-                    ->icon('heroicon-o-document-text')
-                    ->color('info')
-                    ->url(fn (Treatment $record): string => route('receipt-pdf', $record->id))
-                    ->openUrlInNewTab(),
-                Tables\Actions\DeleteAction::make(),
-            ])
+                ActionGroup::make([
+                    Tables\Actions\EditAction::make(),
+                    Action::make('report')
+                        ->label('Comprovante')
+                        ->icon('heroicon-o-document-text')
+                        ->color('info')
+                        ->url(fn (Treatment $record): string => route('receipt-pdf', $record->id))
+                        ->openUrlInNewTab(),
+                    Tables\Actions\DeleteAction::make(),
+                ]),
+            ], position: ActionsPosition::BeforeColumns)
             ->bulkActions([
                 Tables\Actions\BulkActionGroup::make([
                     Tables\Actions\DeleteBulkAction::make(),
