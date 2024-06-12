@@ -159,7 +159,10 @@ class TreatmentResource extends Resource
             )
             ->actions([
                 ActionGroup::make([
-                    Tables\Actions\EditAction::make(),
+                    Tables\Actions\EditAction::make()
+                        ->mutateFormDataUsing(function (array $data): array {
+                            dd($data);
+                        }),
                     Action::make('report')
                         ->label('Comprovante')
                         ->icon('heroicon-o-document-text')
