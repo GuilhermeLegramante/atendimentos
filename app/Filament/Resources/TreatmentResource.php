@@ -161,7 +161,8 @@ class TreatmentResource extends Resource
                 ActionGroup::make([
                     Tables\Actions\EditAction::make()
                         ->mutateFormDataUsing(function (array $data): array {
-                            dd($data);
+                            $data['value'] = $data['value'] / 10;
+                            return $data;
                         }),
                     Action::make('report')
                         ->label('Comprovante')
