@@ -8,6 +8,7 @@ use App\Models\Person;
 use App\Models\Service;
 use App\Models\Treatment;
 use Filament\Forms;
+use Filament\Forms\Components\TextInput;
 use Filament\Forms\Form;
 use Filament\Resources\Resource;
 use Filament\Support\Enums\Alignment;
@@ -63,7 +64,8 @@ class TreatmentResource extends Resource
                     ->columnSpanFull()
                     ->getOptionLabelFromRecordUsing(fn (Person $record) => "{$record->registration} - {$record->name}")
                     ->required(),
-                Money::make('value')
+                TextInput::make('value')
+                    ->numeric()
                     ->label('Valor'),
                 Forms\Components\TextInput::make('quantity')
                     ->label('Quantidade')
@@ -159,11 +161,11 @@ class TreatmentResource extends Resource
             )
             ->actions([
                 ActionGroup::make([
-                    Tables\Actions\EditAction::make()
-                        ->mutateFormDataUsing(function (array $data): array {
-                            $data['value'] = $data['value'] / 10;
-                            return $data;
-                        }),
+                    Tables\Actions\EditAction::make(),
+                        // ->mutateFormDataUsing(function (array $data): array {
+                        //     $data['value'] = $data['value'] / 10;
+                        //     return $data;
+                        // }),
                     Action::make('report')
                         ->label('Comprovante')
                         ->icon('heroicon-o-document-text')
