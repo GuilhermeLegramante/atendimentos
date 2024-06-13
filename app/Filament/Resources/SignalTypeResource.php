@@ -30,7 +30,7 @@ class SignalTypeResource extends Resource
 
     protected static ?string $slug = 'tipo-de-sinal';
 
-    protected static bool $shouldRegisterNavigation = true;
+    protected static bool $shouldRegisterNavigation = false;
 
     public static function form(Form $form): Form
     {
