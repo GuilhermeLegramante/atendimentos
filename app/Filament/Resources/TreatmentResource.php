@@ -108,6 +108,11 @@ class TreatmentResource extends Resource
                     ->toggleable(isToggledHiddenByDefault: false)
                     ->searchable()
                     ->sortable(),
+                Tables\Columns\TextColumn::make('user.name')
+                    ->label('Usuário')
+                    ->toggleable(isToggledHiddenByDefault: true)
+                    ->searchable()
+                    ->sortable(),
                 Tables\Columns\TextColumn::make('value')
                     ->label('Valor')
                     ->toggleable(isToggledHiddenByDefault: false)
@@ -152,6 +157,9 @@ class TreatmentResource extends Resource
                 Group::make('patient.name')
                     ->label('Paciente')
                     ->collapsible(),
+                Group::make('user.name')
+                    ->label('Usuário')
+                    ->collapsible(),
             ])
             ->deferFilters()
             ->filtersApplyAction(
@@ -162,10 +170,10 @@ class TreatmentResource extends Resource
             ->actions([
                 ActionGroup::make([
                     Tables\Actions\EditAction::make(),
-                        // ->mutateFormDataUsing(function (array $data): array {
-                        //     $data['value'] = $data['value'] / 10;
-                        //     return $data;
-                        // }),
+                    // ->mutateFormDataUsing(function (array $data): array {
+                    //     $data['value'] = $data['value'] / 10;
+                    //     return $data;
+                    // }),
                     Action::make('report')
                         ->label('Comprovante')
                         ->icon('heroicon-o-document-text')
