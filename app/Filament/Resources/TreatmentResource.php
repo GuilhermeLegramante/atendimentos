@@ -85,6 +85,10 @@ class TreatmentResource extends Resource
                         '4:3',
                         '1:1',
                     ]),
+                Forms\Components\Toggle::make('ok')
+                    ->label('Auditado')
+                    ->inline(false)
+                    ->required(),
             ]);
     }
 
@@ -133,6 +137,11 @@ class TreatmentResource extends Resource
                     ->label('Comprovante')
                     ->toggleable(isToggledHiddenByDefault: false)
                     ->alignment(Alignment::Center),
+                Tables\Columns\ToggleColumn::make('ok')
+                    ->sortable()
+                    ->onColor('success')
+                    ->offColor('danger')
+                    ->label('Auditado'),
                 Tables\Columns\TextColumn::make('created_at')
                     ->label('Criado em')
                     ->dateTime()
