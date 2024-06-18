@@ -8,6 +8,7 @@ use App\Models\Person;
 use App\Models\Service;
 use App\Models\Treatment;
 use Filament\Forms;
+use Filament\Forms\Components\Repeater;
 use Filament\Forms\Components\TextInput;
 use Filament\Forms\Form;
 use Filament\Resources\Resource;
@@ -42,34 +43,50 @@ class TreatmentResource extends Resource
     {
         return $form
             ->schema([
-                Forms\Components\Select::make('partner_id')
-                    ->columnSpanFull()
-                    ->label('Conveniado')
-                    ->relationship('partner', 'name')
-                    ->getOptionLabelFromRecordUsing(fn (Person $record) => "{$record->registration} - {$record->name}")
-                    ->required(),
                 Forms\Components\DatePicker::make('date')
                     ->label('Data do Atendimento')
                     ->columnSpanFull()
                     ->required(),
-                Forms\Components\Select::make('service_id')
-                    ->label('Serviço')
-                    ->relationship('service', 'name')
+                Forms\Components\Select::make('partner_id')
                     ->columnSpanFull()
-                    ->getOptionLabelFromRecordUsing(fn (Service $record) => "{$record->code} - {$record->name}")
+                    ->label('Conveniado')
+                    ->relationship(
+                        name: 'partner',
+                        titleAttribute: 'name',
+                        modifyQueryUsing: fn (Builder $query) => $query->where('partner', 1),
+                    )
+                    ->getOptionLabelFromRecordUsing(fn (Person $record) => "{$record->registration} - {$record->name}")
                     ->required(),
                 Forms\Components\Select::make('patient_id')
                     ->label('Paciente')
                     ->relationship('patient', 'name')
+                    ->relationship(
+                        name: 'patient',
+                        titleAttribute: 'name',
+                        modifyQueryUsing: fn (Builder $query) => $query->where('patient', 1)->orWhere('dependent', 1),
+                    )
                     ->columnSpanFull()
                     ->getOptionLabelFromRecordUsing(fn (Person $record) => "{$record->registration} - {$record->name}")
                     ->required(),
-                TextInput::make('value')
-                    ->numeric()
-                    ->label('Valor'),
-                Forms\Components\TextInput::make('quantity')
-                    ->label('Quantidade')
-                    ->numeric(),
+                Repeater::make('providedServices')
+                    ->relationship('providedServices')
+                    ->schema([
+                        Forms\Components\Select::make('service_id')
+                            ->label('Serviço')
+                            ->relationship('service', 'name')
+                            ->columnSpanFull()
+                            ->getOptionLabelFromRecordUsing(fn (Service $record) => "{$record->code} - {$record->name}")
+                            ->required(),
+                        TextInput::make('value')
+                            ->numeric()
+                            ->label('Valor'),
+                        Forms\Components\TextInput::make('quantity')
+                            ->label('Quantidade')
+                            ->numeric(),
+                    ])
+                    ->columnSpanFull()
+                    ->columns(3)
+                    ->label('Serviços prestados'),
                 Forms\Components\FileUpload::make('receipt')
                     ->columnSpanFull()
                     ->label('Comprovante')
@@ -87,8 +104,7 @@ class TreatmentResource extends Resource
                     ]),
                 Forms\Components\Toggle::make('ok')
                     ->label('Auditado')
-                    ->inline(false)
-                    ->required(),
+                    ->inline(false),
             ]);
     }
 
@@ -97,11 +113,6 @@ class TreatmentResource extends Resource
         return $table
             ->modifyQueryUsing(fn (Builder $query) => auth()->user()->is_admin ? $query : $query->where('user_id', auth()->user()->id))
             ->columns([
-                Tables\Columns\TextColumn::make('service.name')
-                    ->label('Serviço')
-                    ->toggleable(isToggledHiddenByDefault: false)
-                    ->searchable()
-                    ->sortable(),
                 Tables\Columns\TextColumn::make('patient.name')
                     ->label('Paciente')
                     ->toggleable(isToggledHiddenByDefault: false)
@@ -116,17 +127,6 @@ class TreatmentResource extends Resource
                     ->label('Usuário')
                     ->toggleable(isToggledHiddenByDefault: true)
                     ->searchable()
-                    ->sortable(),
-                Tables\Columns\TextColumn::make('value')
-                    ->label('Valor')
-                    ->toggleable(isToggledHiddenByDefault: false)
-                    ->money('BRL')
-                    ->summarize(Sum::make()->label('Total')->money('BRL'))
-                    ->sortable(),
-                Tables\Columns\TextColumn::make('quantity')
-                    ->label('Quantidade')
-                    ->toggleable(isToggledHiddenByDefault: false)
-                    ->numeric()
                     ->sortable(),
                 Tables\Columns\TextColumn::make('date')
                     ->label('Data')
@@ -157,9 +157,6 @@ class TreatmentResource extends Resource
                 //
             ])
             ->groups([
-                Group::make('service.name')
-                    ->label('Serviço')
-                    ->collapsible(),
                 Group::make('partner.name')
                     ->label('Conveniado')
                     ->collapsible(),

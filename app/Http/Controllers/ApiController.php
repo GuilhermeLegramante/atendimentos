@@ -13,9 +13,9 @@ class ApiController extends Controller
     {
         $url = 'http://45.4.21.126:8080/web/contracheque/public/';
 
-        $services   = Http::get($url . 'servicos');
+        $services = Http::get($url . 'servicos');
 
-        $people   = Http::get($url . 'pessoas');
+        $people = Http::get($url . 'pessoas');
 
         foreach ($services->json() as $value) {
             if (isset($value['code']) && isset($value['name'])) {
@@ -28,11 +28,17 @@ class ApiController extends Controller
         }
 
         foreach ($people->json() as $value) {
-            if (isset($value['registration']) && isset($value['name'])) {
-                $person = Person::where('registration', $value['registration'])->get()->first();
+            if (isset($value['inscricao'])) {
+                $person = Person::where('registration', $value['inscricao'])->get()->first();
 
                 if (!isset($person)) {
-                    Person::create($value);
+                    Person::create([
+                        'registration' => $value['inscricao'],
+                        'name' => $value['nome'],
+                        'partner' => $value['conveniado'],
+                        'patient' => $value['segurado'],
+                        'dependent' => $value['dependente'],
+                    ]);
                 }
             }
         }

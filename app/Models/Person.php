@@ -13,5 +13,8 @@ class Person extends Model
     protected $fillable = [
         'registration',
         'name',
+        'partner',
+        'patient',
+        'dependent',
     ];
 }

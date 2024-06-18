@@ -5,6 +5,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 
 class Treatment extends Model
 {
@@ -12,12 +13,9 @@ class Treatment extends Model
 
     protected $fillable = [
         'user_id',
-        'service_id',
         'patient_id',
         'partner_id',
         'reviewed',
-        'value',
-        'quantity',
         'date',
         'receipt',
     ];
@@ -27,9 +25,9 @@ class Treatment extends Model
         // 'value' => 'double',
     ];
 
-    public function service(): BelongsTo
+    public function providedServices(): HasMany
     {
-        return $this->belongsTo(Service::class, 'service_id');
+        return $this->hasMany(ProvidedService::class);
     }
 
     public function patient(): BelongsTo

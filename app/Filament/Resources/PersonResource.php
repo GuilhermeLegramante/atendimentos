@@ -9,6 +9,7 @@ use Filament\Forms;
 use Filament\Forms\Form;
 use Filament\Resources\Resource;
 use Filament\Tables;
+use Filament\Tables\Columns\IconColumn;
 use Filament\Tables\Table;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
@@ -50,11 +51,23 @@ class PersonResource extends Resource
         return $table
             ->columns([
                 Tables\Columns\TextColumn::make('registration')
-                ->label('Inscrição Municipal')
+                    ->label('Inscrição Municipal')
                     ->searchable(),
                 Tables\Columns\TextColumn::make('name')
                     ->label('Nome')
                     ->searchable(),
+                IconColumn::make('partner')
+                    ->label('Conveniado')
+                    ->toggleable(isToggledHiddenByDefault: false)
+                    ->boolean(),
+                IconColumn::make('patient')
+                    ->label('Segurado')
+                    ->toggleable(isToggledHiddenByDefault: false)
+                    ->boolean(),
+                IconColumn::make('dependente')
+                    ->label('Dependente')
+                    ->toggleable(isToggledHiddenByDefault: false)
+                    ->boolean(),
                 Tables\Columns\TextColumn::make('created_at')
                     ->label('Criado em')
                     ->dateTime()

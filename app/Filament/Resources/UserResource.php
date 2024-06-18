@@ -2,6 +2,9 @@
 
 namespace App\Filament\Resources;
 
+use App\Filament\Resources\ClientResource\Pages\CreateUser;
+use App\Filament\Resources\ClientResource\Pages\EditUser;
+use App\Filament\Resources\ClientResource\Pages\ListUsers;
 use App\Filament\Resources\UserResource\Pages;
 use App\Filament\Resources\UserResource\RelationManagers;
 use App\Models\User;
@@ -65,6 +68,7 @@ class UserResource extends Resource
                     ->dehydrated(false),
                 Toggle::make('is_admin')
                     ->label('Administrador')
+                    ->inline(false)
                     ->onIcon('heroicon-m-bolt')
                     ->offIcon('heroicon-m-user'),
             ]);
@@ -111,7 +115,15 @@ class UserResource extends Resource
     public static function getPages(): array
     {
         return [
-            'index' => Pages\ManageUsers::route('/'),
+            'index' => ListUsers::route('/'),
+            'create' => CreateUser::route('/criar'),
+            'edit' => EditUser::route('/{record}/editar'),
+        ];
+    }
+
+    public static function getRelations(): array
+    {
+        return [
         ];
     }
 
