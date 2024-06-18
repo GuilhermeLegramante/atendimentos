@@ -9,7 +9,9 @@ use Filament\Forms;
 use Filament\Forms\Form;
 use Filament\Resources\Resource;
 use Filament\Tables;
+use Filament\Tables\Actions\ActionGroup;
 use Filament\Tables\Columns\IconColumn;
+use Filament\Tables\Enums\ActionsPosition;
 use Filament\Tables\Table;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
@@ -52,20 +54,24 @@ class PersonResource extends Resource
             ->columns([
                 Tables\Columns\TextColumn::make('registration')
                     ->label('Inscrição Municipal')
+                    ->alignCenter()
                     ->searchable(),
                 Tables\Columns\TextColumn::make('name')
                     ->label('Nome')
                     ->searchable(),
                 IconColumn::make('partner')
                     ->label('Conveniado')
+                    ->alignCenter()
                     ->toggleable(isToggledHiddenByDefault: false)
                     ->boolean(),
                 IconColumn::make('patient')
                     ->label('Segurado')
+                    ->alignCenter()
                     ->toggleable(isToggledHiddenByDefault: false)
                     ->boolean(),
                 IconColumn::make('dependente')
                     ->label('Dependente')
+                    ->alignCenter()
                     ->toggleable(isToggledHiddenByDefault: false)
                     ->boolean(),
                 Tables\Columns\TextColumn::make('created_at')
@@ -83,9 +89,11 @@ class PersonResource extends Resource
                 //
             ])
             ->actions([
-                Tables\Actions\EditAction::make(),
-                Tables\Actions\DeleteAction::make(),
-            ])
+                // ActionGroup::make([
+                //     Tables\Actions\EditAction::make(),
+                //     Tables\Actions\DeleteAction::make(),
+                // ]),
+            ], position: ActionsPosition::BeforeColumns)
             ->bulkActions([
                 Tables\Actions\BulkActionGroup::make([
                     Tables\Actions\DeleteBulkAction::make(),

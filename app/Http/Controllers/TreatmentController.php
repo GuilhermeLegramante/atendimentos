@@ -10,7 +10,7 @@ class TreatmentController extends Controller
 {
     public function getReceipt($treatmentId)
     {
-        $treatment = Treatment::find($treatmentId);
+        $treatment = Treatment::withSum('providedServices', 'value')->find($treatmentId);
 
         $fileName = 'COMPROVANTE_DE_ATENDIMENTO_' . $treatment->id . '.pdf';
 

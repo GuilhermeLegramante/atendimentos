@@ -19,6 +19,6 @@ class ProvidedService extends Model
 
     public function service(): BelongsTo
     {
-        return $this->belongsTo(Service::class, 'sevice_id');
+        return $this->belongsTo(Service::class, 'service_id');
     }
 }

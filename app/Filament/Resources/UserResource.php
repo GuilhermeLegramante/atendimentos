@@ -15,6 +15,9 @@ use Filament\Forms\Components\Toggle;
 use Filament\Forms\Form;
 use Filament\Resources\Resource;
 use Filament\Tables;
+use Filament\Tables\Actions\ActionGroup;
+use Filament\Tables\Columns\IconColumn;
+use Filament\Tables\Enums\ActionsPosition;
 use Filament\Tables\Table;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
@@ -99,6 +102,11 @@ class UserResource extends Resource
                 Tables\Columns\TextColumn::make('email')
                     ->label('E-mail')
                     ->searchable(),
+                IconColumn::make('is_admin')
+                    ->label('Admin')
+                    ->alignCenter()
+                    ->toggleable(isToggledHiddenByDefault: false)
+                    ->boolean(),
                 Tables\Columns\TextColumn::make('created_at')
                     ->label('Criado em')
                     ->dateTime()
@@ -114,9 +122,11 @@ class UserResource extends Resource
                 //
             ])
             ->actions([
-                Tables\Actions\EditAction::make(),
-                Tables\Actions\DeleteAction::make(),
-            ])
+                ActionGroup::make([
+                    Tables\Actions\EditAction::make(),
+                    Tables\Actions\DeleteAction::make(),
+                ]),
+            ], position: ActionsPosition::BeforeColumns)
             ->bulkActions([
                 Tables\Actions\BulkActionGroup::make([
                     Tables\Actions\DeleteBulkAction::make(),

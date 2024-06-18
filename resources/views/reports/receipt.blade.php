@@ -8,58 +8,66 @@
     .striped tr:nth-child(even) {
         background-color: #f0f0f0;
     }
-
-    .signature {
-        font-size: 16px;
-        margin-top: 30%;
-        text-align: center;
-    }
 </style>
 
 @section('content')
     <table style="width: 100%; margin-top: 1%;" class="striped">
         <tbody>
-            <tr style="font-size: 16px;">
+            <tr style="font-size: 10px;">
                 <td class=""><strong>Data do Atendimento:</strong>
-                    {{ date('d/m/Y', strtotime($treatment->date)) }}</td>
-            </tr>
-            <tr style="font-size: 16px;">
+                    {{ date('d/m/Y', strtotime($treatment->date)) }}
+                </td>
                 <td class=""><strong>Conveniado:</strong>
-                    {{ $treatment->partner->registration . ' - ' . $treatment->partner->name }}
+                    {{ $treatment->partner->name }}
                 </td>
-            </tr>
-            <tr style="font-size: 16px;">
                 <td class=""><strong>Paciente:</strong>
-                    {{ $treatment->patient->registration . ' - ' . $treatment->patient->name }}
-                </td>
-            </tr>
-            <tr style="font-size: 16px;">
-                <td class=""><strong>Serviço:</strong>
-                    {{ $treatment->service->code . ' - ' . $treatment->service->name }}
+                    {{ $treatment->patient->name }}
                 </td>
             </tr>
         </tbody>
     </table>
-
-    <div class="signature">
-        <p>
-            __________________________________________
-        </p>
-        <p>Ass. do Paciente</p>
-    </div>
-
     <br>
-    <br>
-    <br>
+    <hr>
+    <h1>Serviços Prestados</h1>
+    <table style="width: 100%; margin-top: 1%;" class="striped">
+        <tbody>
+            @foreach ($treatment->providedServices as $providedService)
+                <tr style="font-size: 10px;">
+                    <td colspan="3" class=""><strong>Serviço:</strong>
+                        {{ $providedService->service->code }} - {{ $providedService->service->name }}
+                    </td>
+                </tr>
+                <tr style="font-size: 10px;">
+                    <td class=""><strong>Valor Unitário:</strong>
+                        R$ {{ number_format($providedService->value, 2, ',', '.') }}
+                    </td>
+                    <td class=""><strong>Quantidade:</strong>
+                        {{ $providedService->quantity }}
+                    </td>
+                    <td class=""><strong>Valor Total:</strong>
+                        R$ {{ number_format($providedService->quantity * $providedService->value, 2, ',', '.') }}
+                    </td>
+                </tr>
+                <br>
+            @endforeach
+        </tbody>
+    </table>
 
-    <div class="signature">
-        <p>
-            __________________________________________
-        </p>
-        <p>Ass. do Responsável pelo Atendimento</p>
-    </div>
+    <table style="width: 100%;">
+        <tr>
+            <td style="width: 50%;">
+                <h2>Valor Total: R$ {{ number_format($treatment->provided_services_sum_value, 2, ',', '.') }}</h2>
+            </td>
+            {{-- <td style="width: 50%;">
+                <h2>Valor Total para o segurado: R$
+                    {{ number_format($treatment->provided_services_sum_value, 2, ',', '.') }}</h2>
+            </td> --}}
+        </tr>
+    </table>
+
+    <hr>
 @endsection
 
 @section('footer')
-    @include('reports.footer')
+    @include('reports.footer-with-sign')
 @endsection

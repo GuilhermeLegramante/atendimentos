@@ -15,14 +15,13 @@ class Treatment extends Model
         'user_id',
         'patient_id',
         'partner_id',
-        'reviewed',
         'date',
         'receipt',
+        'ok',
     ];
 
     protected $casts = [
-        'reviewed' => 'boolean',
-        // 'value' => 'double',
+        'ok' => 'boolean',
     ];
 
     public function providedServices(): HasMany
