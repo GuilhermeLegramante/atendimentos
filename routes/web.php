@@ -26,12 +26,14 @@ Route::middleware(['auth'])->group(function () {
  * Ao trocar a senha do usuário, o Laravel exige um novo login.
  * Para isso, é necessário informar a rota de login
  */
-// Route::redirect(env('LOGIN_ROUTE'), env('LOGIN_ROUTE'))->name('login');
+Route::get('/login', function () {
+    return redirect(route('filament.admin.auth.login'));
+})->name('login');
 
-Route::get('/', function () {
-    // dd(env('LOGIN_ROUTE'));
-    return redirect('/admin/login');
-});
+// Route::get('/', function () {
+//     // dd(env('LOGIN_ROUTE'));
+//     return redirect('/admin/login');
+// });
 
 Route::get('/sinais', function () {
     set_time_limit(0);
