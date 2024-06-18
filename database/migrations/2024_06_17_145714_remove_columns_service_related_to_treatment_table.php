@@ -12,11 +12,11 @@ return new class extends Migration
     public function up(): void
     {
         Schema::table('treatments', function (Blueprint $table) {
-            // $table->dropForeign('treatments_service_id_foreign');
-            // $table->dropIndex('treatments_service_id_foreign');
-            // $table->dropColumn('service_id');
-            // $table->dropColumn('value');
-            // $table->dropColumn('quantity');
+            $table->dropForeign('treatments_service_id_foreign');
+            $table->dropIndex('treatments_service_id_foreign');
+            $table->dropColumn('service_id');
+            $table->dropColumn('value');
+            $table->dropColumn('quantity');
         });
     }
 
@@ -26,9 +26,9 @@ return new class extends Migration
     public function down(): void
     {
         Schema::table('treatments', function (Blueprint $table) {
-            // $table->foreignId('service_id')->constrained('services')->cascadeOnDelete();
-            // $table->double('value')->nullable();
-            // $table->double('quantity')->nullable();
+            $table->foreignId('service_id')->constrained('services')->cascadeOnDelete();
+            $table->double('value')->nullable();
+            $table->double('quantity')->nullable();
         });
     }
 };
