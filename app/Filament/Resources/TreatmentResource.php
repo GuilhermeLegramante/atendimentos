@@ -53,7 +53,10 @@ class TreatmentResource extends Resource
                     ->relationship(
                         name: 'partner',
                         titleAttribute: 'name',
-                        modifyQueryUsing: fn (Builder $query) => $query->where('partner', 1),
+                        modifyQueryUsing: fn (Builder $query) => $query
+                            ->join('user_people', 'user_people.person_id', 'people.id')
+                            ->where('partner', 1)
+                            ->where('user_people.user_id', auth()->user()->id),
                     )
                     ->getOptionLabelFromRecordUsing(fn (Person $record) => "{$record->registration} - {$record->name}")
                     ->required(),

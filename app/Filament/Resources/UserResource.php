@@ -7,6 +7,7 @@ use App\Filament\Resources\ClientResource\Pages\EditUser;
 use App\Filament\Resources\ClientResource\Pages\ListUsers;
 use App\Filament\Resources\UserResource\Pages;
 use App\Filament\Resources\UserResource\RelationManagers;
+use App\Models\Person;
 use App\Models\User;
 use Filament\Forms;
 use Filament\Forms\Components\TextInput;
@@ -71,6 +72,17 @@ class UserResource extends Resource
                     ->inline(false)
                     ->onIcon('heroicon-m-bolt')
                     ->offIcon('heroicon-m-user'),
+                Forms\Components\Select::make('partners')
+                    ->columnSpanFull()
+                    ->label('Conveniados')
+                    ->multiple()
+                    ->relationship(
+                        name: 'partners',
+                        titleAttribute: 'name',
+                        modifyQueryUsing: fn (Builder $query) => $query->where('partner', 1),
+                    )
+                    ->getOptionLabelFromRecordUsing(fn (Person $record) => "{$record->registration} - {$record->name}")
+                    ->required(),
             ]);
     }
 
@@ -123,8 +135,7 @@ class UserResource extends Resource
 
     public static function getRelations(): array
     {
-        return [
-        ];
+        return [];
     }
 
     public static function getNavigationBadge(): ?string
