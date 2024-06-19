@@ -30,10 +30,9 @@ Route::get('/login', function () {
     return redirect(route('filament.admin.auth.login'));
 })->name('login');
 
-// Route::get('/', function () {
-//     // dd(env('LOGIN_ROUTE'));
-//     return redirect('/admin/login');
-// });
+Route::get('/', function () {
+    return redirect(route('filament.admin.pages.dashboard'));
+});
 
 Route::get('/sinais', function () {
     set_time_limit(0);
