@@ -114,7 +114,7 @@ class TreatmentResource extends Resource
                                         $set('total_value', $total);
                                     })
                                     ->numeric()
-                                    ->min(1),
+                                    ->minValue(1),
                                 TextInput::make('total_value')
                                     ->numeric()
                                     ->readOnly()
