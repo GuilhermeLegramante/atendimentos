@@ -116,10 +116,6 @@ class TreatmentResource extends Resource
                                     ->numeric()
                                     ->minValue(1),
                                 TextInput::make('total_value')
-                                    ->afterStateUpdated(function (Set $set, Get $get) {
-                                        $total = (float) $get('value') * (float) $get('quantity');
-                                        $set('total_value', $total);
-                                    })
                                     ->numeric()
                                     ->readOnly()
                                     ->live()

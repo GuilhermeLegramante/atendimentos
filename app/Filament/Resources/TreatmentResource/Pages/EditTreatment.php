@@ -32,4 +32,11 @@ class EditTreatment extends EditRecord
     {
         return $this->getResource()::getUrl('index');
     }
+
+    protected function mutateFormDataBeforeFill(array $data): array
+    {
+        $data['total_value'] = (float) $data['value'] * (float) $data['quantity'];
+
+        return $data;
+    }
 }
