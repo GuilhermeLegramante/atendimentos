@@ -113,7 +113,8 @@ class TreatmentResource extends Resource
                                         $total = (float) $get('value') * (float) $get('quantity');
                                         $set('total_value', $total);
                                     })
-                                    ->numeric(),
+                                    ->numeric()
+                                    ->min(1),
                                 TextInput::make('total_value')
                                     ->numeric()
                                     ->readOnly()
