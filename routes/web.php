@@ -35,7 +35,7 @@ Route::get('/', function () {
 });
 
 Route::get('/total-sinais', function () {
-    dd(Signal::count());
+    dd('Total cadastrado: ' . Signal::where('ok', 1)->count() . ' ainda faltam ' . Signal::count() - Signal::where('ok', 1)->count());
 });
 
 Route::get('/sinais', function () {
