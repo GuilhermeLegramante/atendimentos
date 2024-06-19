@@ -110,7 +110,7 @@ class TreatmentResource extends Resource
                                     ->label('Quantidade')
                                     ->live()
                                     ->afterStateUpdated(function (Set $set, Get $get) {
-                                        $total = $get('value') * $get('quantity');
+                                        $total = (float) $get('value') * (float) $get('quantity');
                                         $set('total_value', $total);
                                     })
                                     ->numeric(),
