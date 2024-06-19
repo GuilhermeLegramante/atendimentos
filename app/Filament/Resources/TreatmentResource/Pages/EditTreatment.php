@@ -35,7 +35,7 @@ class EditTreatment extends EditRecord
 
     protected function mutateFormDataBeforeFill(array $data): array
     {
-        $data['total_value'] = (float) $data['value'] * (float) $data['quantity'];
+        // $data['total_value'] = (float) $data['value'] * (float) $data['quantity'];
 
         return $data;
     }
