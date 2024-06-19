@@ -34,6 +34,10 @@ Route::get('/', function () {
     return redirect(route('filament.admin.pages.dashboard'));
 });
 
+Route::get('/total-sinais', function () {
+    dd(Signal::count());
+});
+
 Route::get('/sinais', function () {
     set_time_limit(0);
 
