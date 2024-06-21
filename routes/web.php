@@ -52,7 +52,6 @@ Route::get('/ajustar-sinais', function () {
         })
         ->select('s1.*')
         ->get();
-        
 
     dd($duplicatedSignals);
 });
