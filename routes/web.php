@@ -45,7 +45,7 @@ Route::get('/ajustar-sinais', function () {
                 ->on('s1.created_at', '=', 's2.latest');
         })
         ->whereIn('s1.name', function ($query) {
-            $query->select('name', 'path')
+            $query->select('name')
                 ->from('signals')
                 ->groupBy('name')
                 ->havingRaw('COUNT(*) > 1');
