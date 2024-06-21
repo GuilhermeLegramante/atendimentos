@@ -38,6 +38,18 @@ Route::get('/total-sinais', function () {
     dd('Total cadastrado: ' . Signal::where('ok', 1)->count() . ' ainda faltam ' . Signal::count() - Signal::where('ok', 1)->count());
 });
 
+Route::get('/ajustar-sinais', function () {
+    $duplicatedSignals = DB::table('signals')
+        ->select('name', DB::raw('COUNT(*) as duplicados'))
+        ->groupBy('name')
+        ->having(DB::raw('COUNT(*)'), '>', 1)
+        ->get();
+
+    dd($duplicatedSignals);
+});
+
+
+
 Route::get('/sinais', function () {
     set_time_limit(0);
 
