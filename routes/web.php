@@ -39,10 +39,18 @@ Route::get('/total-sinais', function () {
 });
 
 Route::get('/ajustar-sinais', function () {
-    $duplicatedSignals = DB::table('signals')
-        ->select('name', DB::raw('COUNT(*) as duplicados'))
-        ->groupBy('name')
-        ->having(DB::raw('COUNT(*)'), '>', 1)
+    $duplicatedSignals = DB::table('signals as s1')
+        ->join(DB::raw('(SELECT name, MAX(created_at) as latest, path FROM signals GROUP BY name) as s2'), function ($join) {
+            $join->on('s1.name', '=', 's2.name')
+                ->on('s1.created_at', '=', 's2.latest');
+        })
+        ->whereIn('s1.name', function ($query) {
+            $query->select('name')
+                ->from('signals')
+                ->groupBy('name')
+                ->havingRaw('COUNT(*) > 1');
+        })
+        ->select('s1.*')
         ->get();
 
     dd($duplicatedSignals);
