@@ -46,8 +46,6 @@ Route::get('/ajustar-sinais', function () {
         ->havingRaw('COUNT(*) > 1')
         ->pluck('name');
 
-    dd($duplicatedNames);
-
     // Em seguida, obtemos os registros mais recentes para esses nomes duplicados
     $duplicatedSignals = DB::table('signals as s1')
         ->join(DB::raw('(SELECT name, MAX(created_at) as latest FROM signals GROUP BY name) as s2'), function ($join) {
