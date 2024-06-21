@@ -48,12 +48,9 @@ Route::get('/ajustar-sinais', function () {
 
     // Em seguida, obtemos os registros mais recentes para esses nomes duplicados
     $duplicatedSignals = DB::table('signals as s1')
-        ->join(DB::raw('(SELECT name, MAX(created_at) as latest FROM signals GROUP BY name) as s2'), function ($join) {
-            $join->on('s1.name', '=', 's2.name')
-                ->on('s1.created_at', '=', 's2.latest');
-        })
-        ->whereIn('s1.name', $duplicatedNames)
+        ->whereIn('name', $duplicatedNames)
         ->select('s1.*')
+        ->whereRaw('s1.created_at = (SELECT MAX(s2.created_at) FROM signals as s2 WHERE s2.name = s1.name)')
         ->get();
 
     dd($duplicatedSignals);
