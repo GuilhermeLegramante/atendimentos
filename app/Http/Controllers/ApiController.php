@@ -45,4 +45,19 @@ class ApiController extends Controller
 
         dd('Dados sincronizados com sucesso!');
     }
+
+    /**
+     * @param $date (data do atendimento)
+     * @param $serviceCode (codigo do serviço)
+     * @param $type (0 = segurado, 1 = dependente)
+     * @param $citizenId (id do munícipe)
+     */
+    public function serviceValue()
+    {
+        $url = 'http://45.4.21.126:8080/web/contracheque/public/valor-servico?date=2024-06-01&serviceCode=9900020010&type=0&citizenId=2';
+
+        $service = Http::get($url);
+
+        dd($service->json());
+    }
 }

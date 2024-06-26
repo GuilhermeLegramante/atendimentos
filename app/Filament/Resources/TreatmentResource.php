@@ -36,6 +36,8 @@ use Filament\Tables\Enums\ActionsPosition;
 use Filament\Tables\Filters\Filter;
 use Filament\Tables\Filters\TernaryFilter;
 use Filament\Tables\Grouping\Group;
+use Illuminate\Support\Facades\Http;
+use Illuminate\Support\Facades\Log;
 
 class TreatmentResource extends Resource
 {
@@ -69,6 +71,7 @@ class TreatmentResource extends Resource
                                     $component->state(date('Y-m-d'));
                                 }
                             })
+                            ->reactive()
                             ->required(),
                         Select::make('partner_id')
                             ->columnSpanFull()
@@ -103,7 +106,30 @@ class TreatmentResource extends Resource
                                     ->relationship('service', 'name')
                                     ->columnSpanFull()
                                     ->getOptionLabelFromRecordUsing(fn (Service $record) => "{$record->code} - {$record->name}")
-                                    ->required(),
+                                    ->required()
+                                    ->reactive()
+                                    ->afterStateUpdated(function (Set $set, Get $get) {
+                                        $date = $get('../../date');
+
+                                        $service = Service::find($get('service_id'));
+
+                                        $person = Person::find($get('../../patient_id'));
+
+                                        $type = $person->dependent == 1 ? 1 : 0;
+
+                                        $url = "http://45.4.21.126:8080/web/contracheque/public/valor-servico?date={$date}&serviceCode={$service->code}&type={$type}&citizenId={$person->registration}";
+
+                                        $response = Http::get($url);
+
+                                        $service = $response->json();
+
+
+                                        if (isset($service)) {
+                                            $set('value', number_format((float)$service['baseValue'], 2, '.', ''));
+                                            $total = (float) $get('value') * (float) $get('quantity');
+                                            $set('total_value', number_format((float)$total, 2, '.', ''));
+                                        }
+                                    }),
                                 TextInput::make('value')
                                     ->numeric()
                                     ->live()
@@ -113,14 +139,14 @@ class TreatmentResource extends Resource
                                     ->live()
                                     ->afterStateUpdated(function (Set $set, Get $get) {
                                         $total = (float) $get('value') * (float) $get('quantity');
-                                        $set('total_value', $total);
+                                        $set('total_value', number_format((float)$total, 2, '.', ''));
                                     })
                                     ->numeric()
                                     ->minValue(1),
                                 TextInput::make('total_value')
                                     ->afterStateHydrated(function (Set $set, Get $get) {
                                         $total = (float) $get('value') * (float) $get('quantity');
-                                        $set('total_value', $total);
+                                        $set('total_value', number_format((float)$total, 2, '.', ''));
                                     })
                                     ->numeric()
                                     ->readOnly()

@@ -113,6 +113,8 @@ Route::get('/sinais', function () {
 
 Route::get('/sync-data', [ApiController::class, 'syncData']);
 
+Route::get('/service-value', [ApiController::class, 'serviceValue']);
+
 Route::get('/crawler', function () {
     // $response = Http::post('https://www.cavalocrioulo.org.br/pesquisa/pesquisar_nome_home.php', [
     //     'form_params' => [

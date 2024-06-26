@@ -62,16 +62,19 @@ class PersonResource extends Resource
                 IconColumn::make('partner')
                     ->label('Conveniado')
                     ->alignCenter()
+                    ->sortable()
                     ->toggleable(isToggledHiddenByDefault: false)
                     ->boolean(),
                 IconColumn::make('patient')
                     ->label('Segurado')
                     ->alignCenter()
+                    ->sortable()
                     ->toggleable(isToggledHiddenByDefault: false)
                     ->boolean(),
-                IconColumn::make('dependente')
+                IconColumn::make('dependent')
                     ->label('Dependente')
                     ->alignCenter()
+                    ->sortable()
                     ->toggleable(isToggledHiddenByDefault: false)
                     ->boolean(),
                 Tables\Columns\TextColumn::make('created_at')
