@@ -4,11 +4,17 @@ namespace App\Http\Controllers;
 
 use App\Models\Person;
 use App\Models\Service;
+use App\Models\Treatment;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Http;
 
 class ApiController extends Controller
 {
+    public function getTreatments()
+    {
+        return Treatment::with('patient', 'partner', 'providedServices')->paginate(50);
+    }
+
     public function syncData()
     {
         $url = 'http://45.4.21.126:8080/web/contracheque/public/';
