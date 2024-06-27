@@ -31,7 +31,13 @@
     <h1>Serviços Prestados</h1>
     <table style="width: 100%; margin-top: 1%;" class="striped">
         <tbody>
+            @php
+                $totalValue = 0;
+            @endphp
             @foreach ($treatment->providedServices as $providedService)
+                @php
+                    $totalValue += $providedService->total;
+                @endphp
                 <tr style="font-size: 10px;">
                     <td colspan="3" class=""><strong>Serviço:</strong>
                         {{ $providedService->service->code }} - {{ $providedService->service->name }}
@@ -45,7 +51,7 @@
                         {{ $providedService->quantity }}
                     </td>
                     <td class=""><strong>Valor Total:</strong>
-                        R$ {{ number_format($providedService->quantity * $providedService->value, 2, ',', '.') }}
+                        R$ {{ number_format($providedService->total, 2, ',', '.') }}
                     </td>
                 </tr>
                 <br>
@@ -56,12 +62,12 @@
     <table style="width: 100%;">
         <tr>
             <td style="width: 50%;">
-                <h2>Valor Total: R$ {{ number_format($treatment->provided_services_sum_value, 2, ',', '.') }}</h2>
+                <h2>Valor Total: R$ {{ number_format($totalValue, 2, ',', '.') }}</h2>
             </td>
-            {{-- <td style="width: 50%;">
+            <td style="width: 50%;">
                 <h2>Valor Total para o segurado: R$
-                    {{ number_format($treatment->provided_services_sum_value, 2, ',', '.') }}</h2>
-            </td> --}}
+                    {{ number_format($treatment->provided_services_sum_patient_value, 2, ',', '.') }}</h2>
+            </td>
         </tr>
     </table>
 

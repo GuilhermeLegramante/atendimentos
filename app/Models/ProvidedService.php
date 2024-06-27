@@ -17,8 +17,15 @@ class ProvidedService extends Model
         'patient_value',
     ];
 
+    protected $appends = ['total'];
+
     public function service(): BelongsTo
     {
         return $this->belongsTo(Service::class, 'service_id');
+    }
+
+    public function getTotalAttribute()
+    {
+        return $this->value * $this->quantity;
     }
 }

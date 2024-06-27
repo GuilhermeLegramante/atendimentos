@@ -123,11 +123,13 @@ class TreatmentResource extends Resource
 
                                         $service = $response->json();
 
-
                                         if (isset($service)) {
                                             $set('value', number_format((float)$service['baseValue'], 2, '.', ''));
                                             $total = (float) $get('value') * (float) $get('quantity');
                                             $set('total_value', number_format((float)$total, 2, '.', ''));
+
+                                            $patientValue = (float)$service['patientValue'] * (float) $get('quantity');
+                                            $set('patient_value', number_format((float)$patientValue, 2, '.', ''));
                                         }
                                     }),
                                 TextInput::make('value')
@@ -138,9 +140,30 @@ class TreatmentResource extends Resource
                                     ->label('Quantidade')
                                     ->live()
                                     ->afterStateUpdated(function (Set $set, Get $get) {
-                                        $total = (float) $get('value') * (float) $get('quantity');
-                                        $set('total_value', number_format((float)$total, 2, '.', ''));
+                                        $date = $get('../../date');
+
+                                        $service = Service::find($get('service_id'));
+
+                                        $person = Person::find($get('../../patient_id'));
+
+                                        $type = $person->dependent == 1 ? 1 : 0;
+
+                                        $url = "http://45.4.21.126:8080/web/contracheque/public/valor-servico?date={$date}&serviceCode={$service->code}&type={$type}&citizenId={$person->registration}";
+
+                                        $response = Http::get($url);
+
+                                        $service = $response->json();
+
+                                        if (isset($service)) {
+                                            $set('value', number_format((float)$service['baseValue'], 2, '.', ''));
+                                            $total = (float) $get('value') * (float) $get('quantity');
+                                            $set('total_value', number_format((float)$total, 2, '.', ''));
+
+                                            $patientValue = (float)$service['patientValue'] * (float) $get('quantity');
+                                            $set('patient_value', number_format((float)$patientValue, 2, '.', ''));
+                                        }
                                     })
+                                    ->default(1)
                                     ->numeric()
                                     ->minValue(1),
                                 TextInput::make('total_value')
@@ -152,6 +175,10 @@ class TreatmentResource extends Resource
                                     ->readOnly()
                                     ->live()
                                     ->label('Valor Total'),
+                                TextInput::make('patient_value')
+                                    ->numeric()
+                                    ->live()
+                                    ->label('Valor p/ Segurado'),
                             ])
                             ->columnSpanFull()
                             ->columns(3)
