@@ -54,6 +54,7 @@ class SignalResource extends Resource
     public static function table(Table $table): Table
     {
         return $table
+            ->modifyQueryUsing(fn (Builder $query) => $query->groupBy('name')->havingRaw('COUNT(*) > 1'))
             ->columns([
                 Tables\Columns\TextColumn::make('name')
                     ->label('Nome do Produtor')
