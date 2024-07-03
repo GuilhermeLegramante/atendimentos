@@ -56,7 +56,42 @@ Route::get('/ajustar-sinais', function () {
     dd($duplicatedSignals);
 });
 
+Route::get('/salvar-sinais-tabela-nova', function () {
+    // Salvar os sinais dos produtores na tabela new_signals no banco quente de santa vitória
+    set_time_limit(0);
+    $file = file_get_contents('https://sisprem-atendimentos.hardsoftsistemas.com/storage/sinais.csv');
 
+    $array = explode(PHP_EOL, $file);
+
+    $signals = [];
+
+    foreach ($array as $key => $value) {
+        $exploit = explode(';', $value);
+
+        if (isset($exploit[0]) && isset($exploit[1])) {
+            $signal['id'] = $exploit[0];
+            $signal['farmerId'] = $exploit[1];
+            $signal['path'] = $exploit[3];
+
+            array_push($signals, $signal);
+        }
+    }
+
+    foreach ($signals as $key => $signal) {
+        if ($signal['id'] > 1) {
+            DB::connection('marcaesinal')
+                ->table('new_signals')
+                ->insertGetId([
+                    'id' => $signal['id'],
+                    'farmer_id' => $signal['farmerId'],
+                    'filename' => $signal['path'],
+                    'path' => 'https://santa-vitoria-do-palmar.marcaesinal.com/storage/sinais/sinais/sinais_png/' . $signal['path'],
+                ]);
+        }
+    }
+
+    dd('salvou os sinais');
+});
 
 Route::get('/sinais', function () {
     set_time_limit(0);
