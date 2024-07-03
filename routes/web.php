@@ -78,7 +78,7 @@ Route::get('/salvar-sinais-tabela-nova', function () {
     }
 
     foreach ($signals as $key => $signal) {
-        if ($signal['id'] > 4263) {
+        if ($signal['id'] > 4763) {
             DB::connection('marcaesinal')
                 ->table('new_signals')
                 ->insertGetId([
