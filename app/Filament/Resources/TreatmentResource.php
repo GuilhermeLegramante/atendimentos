@@ -107,7 +107,7 @@ class TreatmentResource extends Resource
                                     ->columnSpanFull()
                                     ->getOptionLabelFromRecordUsing(fn (Service $record) => "{$record->code} - {$record->name}")
                                     ->required()
-                                    ->reactive()
+                                    ->live()
                                     ->afterStateUpdated(function (Set $set, Get $get) {
                                         $date = $get('../../date');
 
@@ -155,7 +155,6 @@ class TreatmentResource extends Resource
                                         $service = $response->json();
 
                                         if (isset($service)) {
-                                            $set('value', number_format((float)$service['baseValue'], 2, '.', ''));
                                             $total = (float) $get('value') * (float) $get('quantity');
                                             $set('total_value', number_format((float)$total, 2, '.', ''));
 
