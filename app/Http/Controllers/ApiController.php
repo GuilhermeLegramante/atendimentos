@@ -28,7 +28,14 @@ class ApiController extends Controller
                 $service = Service::where('code', $value['code'])->get()->first();
 
                 if (!isset($service)) {
-                    Service::create($value);
+                    Service::create([
+                        'code' => $value['code'],
+                        'name' => $value['name'],
+                        'value' => (float) $value['value'],
+                        'titular_value' => (float) $value['titularValue'],
+                        'dependent_value' => (float) $value['dependentValue'],
+                        'created_at' => now()
+                    ]);
                 }
             }
         }

@@ -108,73 +108,74 @@ class TreatmentResource extends Resource
                                     ->getOptionLabelFromRecordUsing(fn (Service $record) => "{$record->code} - {$record->name}")
                                     ->required()
                                     ->live()
-                                    ->afterStateUpdated(function (Set $set, Get $get) {
-                                        $date = $get('../../date');
-
+                                    ->afterStateUpdated(function (Set $set, Get $get, Service $service) {
                                         $service = Service::find($get('service_id'));
-
                                         $person = Person::find($get('../../patient_id'));
 
-                                        $type = $person->dependent == 1 ? 1 : 0;
-
-                                        $url = "http://45.4.21.126:8080/web/contracheque/public/valor-servico?date={$date}&serviceCode={$service->code}&type={$type}&citizenId={$person->registration}";
-
-                                        $response = Http::get($url);
-
-                                        $service = $response->json();
-
-                                        if (isset($service)) {
-                                            $set('value', number_format((float)$service['baseValue'], 2, '.', ''));
-                                            $total = (float) $get('value') * (float) $get('quantity');
-                                            $set('total_value', number_format((float)$total, 2, '.', ''));
-
-                                            $patientValue = (float)$service['patientValue'] * (float) $get('quantity');
-                                            $set('patient_value', number_format((float)$patientValue, 2, '.', ''));
+                                        if ($person->dependent == 1) {
+                                            $patientPercentual = $service->dependent_value;
+                                        } else {
+                                            $patientPercentual = $service->titular_value;
                                         }
+
+                                        $set('value', $service->value);
+
+                                        $total = (float) $get('value') * (float) $get('quantity');
+                                        $set('total_value', number_format((float)$total, 2, '.', ''));
+
+                                        $patientValue = ($total * $patientPercentual) / 100;
+                                        $set('patient_value', number_format((float)$patientValue, 2, '.', ''));
                                     }),
                                 TextInput::make('value')
                                     ->numeric()
+                                    ->afterStateUpdated(function (Set $set, Get $get, Service $service) {
+                                        $service = Service::find($get('service_id'));
+                                        $person = Person::find($get('../../patient_id'));
+
+                                        if ($person->dependent == 1) {
+                                            $patientPercentual = $service->dependent_value;
+                                        } else {
+                                            $patientPercentual = $service->titular_value;
+                                        }
+
+                                        $total = (float) $get('value') * (float) $get('quantity');
+                                        $set('total_value', number_format((float)$total, 2, '.', ''));
+
+                                        $patientValue = ($total * $patientPercentual) / 100;
+                                        $set('patient_value', number_format((float)$patientValue, 2, '.', ''));
+                                    })
+                                    ->debounce(1000)
                                     ->live()
                                     ->label('Valor Unitário'),
                                 TextInput::make('quantity')
                                     ->label('Quantidade')
                                     ->live()
                                     ->afterStateUpdated(function (Set $set, Get $get) {
-                                        $date = $get('../../date');
-
                                         $service = Service::find($get('service_id'));
-
                                         $person = Person::find($get('../../patient_id'));
 
-                                        $type = $person->dependent == 1 ? 1 : 0;
-
-                                        $url = "http://45.4.21.126:8080/web/contracheque/public/valor-servico?date={$date}&serviceCode={$service->code}&type={$type}&citizenId={$person->registration}";
-
-                                        $response = Http::get($url);
-
-                                        $service = $response->json();
-
-                                        if (isset($service)) {
-                                            $total = (float) $get('value') * (float) $get('quantity');
-                                            $set('total_value', number_format((float)$total, 2, '.', ''));
-
-                                            $patientValue = (float)$service['patientValue'] * (float) $get('quantity');
-                                            $set('patient_value', number_format((float)$patientValue, 2, '.', ''));
+                                        if ($person->dependent == 1) {
+                                            $patientPercentual = $service->dependent_value;
+                                        } else {
+                                            $patientPercentual = $service->titular_value;
                                         }
+
+                                        $total = (float) $get('value') * (float) $get('quantity');
+                                        $set('total_value', number_format((float)$total, 2, '.', ''));
+
+                                        $patientValue = ($total * $patientPercentual) / 100;
+                                        $set('patient_value', number_format((float)$patientValue, 2, '.', ''));
                                     })
                                     ->default(1)
                                     ->numeric()
                                     ->minValue(1),
                                 TextInput::make('total_value')
-                                    ->afterStateHydrated(function (Set $set, Get $get) {
-                                        $total = (float) $get('value') * (float) $get('quantity');
-                                        $set('total_value', number_format((float)$total, 2, '.', ''));
-                                    })
                                     ->numeric()
                                     ->readOnly()
                                     ->live()
                                     ->label('Valor Total'),
                                 TextInput::make('patient_value')
+                                    ->readOnly()
                                     ->numeric()
                                     ->live()
                                     ->label('Valor p/ Segurado'),

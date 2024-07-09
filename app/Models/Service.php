@@ -13,6 +13,9 @@ class Service extends Model
     protected $fillable = [
         'code',
         'name',
+        'value',
+        'titular_value',
+        'dependent_value',
     ];
 
     public function tratments(): HasMany
