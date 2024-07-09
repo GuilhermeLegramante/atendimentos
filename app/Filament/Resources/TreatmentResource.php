@@ -88,6 +88,7 @@ class TreatmentResource extends Resource
                             ->getOptionLabelFromRecordUsing(fn ($record) => "{$record->registration} - {$record->name}")
                             ->required(),
                         Select::make('patient_id')
+                            ->reactive()
                             ->label('Paciente')
                             ->relationship('patient', 'name')
                             ->relationship(
@@ -99,6 +100,9 @@ class TreatmentResource extends Resource
                             ->getOptionLabelFromRecordUsing(fn (Person $record) => "{$record->registration} - {$record->name}")
                             ->required(),
                         Repeater::make('providedServices')
+                            ->reactive()
+                            ->live()
+                            ->visible(fn (Get $get) => !is_null($get('patient_id')))
                             ->relationship('providedServices')
                             ->schema([
                                 Select::make('service_id')
@@ -127,6 +131,7 @@ class TreatmentResource extends Resource
                                         $set('patient_value', number_format((float)$patientValue, 2, '.', ''));
                                     }),
                                 TextInput::make('value')
+                                    ->visible(fn (Get $get) => !is_null($get('service_id')))
                                     ->numeric()
                                     ->afterStateUpdated(function (Set $set, Get $get, Service $service) {
                                         $service = Service::find($get('service_id'));
@@ -144,10 +149,10 @@ class TreatmentResource extends Resource
                                         $patientValue = ($total * $patientPercentual) / 100;
                                         $set('patient_value', number_format((float)$patientValue, 2, '.', ''));
                                     })
-                                    ->debounce(1000)
-                                    ->live()
+                                    ->live(debounce: 500)
                                     ->label('Valor Unitário'),
                                 TextInput::make('quantity')
+                                    ->visible(fn (Get $get) => !is_null($get('service_id')))
                                     ->label('Quantidade')
                                     ->live()
                                     ->afterStateUpdated(function (Set $set, Get $get) {
@@ -170,11 +175,13 @@ class TreatmentResource extends Resource
                                     ->numeric()
                                     ->minValue(1),
                                 TextInput::make('total_value')
+                                    ->visible(fn (Get $get) => !is_null($get('service_id')))
                                     ->numeric()
                                     ->readOnly()
                                     ->live()
                                     ->label('Valor Total'),
                                 TextInput::make('patient_value')
+                                    ->visible(fn (Get $get) => !is_null($get('service_id')))
                                     ->readOnly()
                                     ->numeric()
                                     ->live()
