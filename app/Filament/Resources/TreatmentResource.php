@@ -16,6 +16,7 @@ use Filament\Forms\Components\FileUpload;
 use Filament\Forms\Components\Repeater;
 use Filament\Forms\Components\Section;
 use Filament\Forms\Components\Select;
+use Filament\Forms\Components\Textarea;
 use Filament\Forms\Components\TextInput;
 use Filament\Forms\Components\Toggle;
 use Filament\Forms\Form;
@@ -130,6 +131,10 @@ class TreatmentResource extends Resource
                                         $patientValue = ($total * $patientPercentual) / 100;
                                         $set('patient_value', number_format((float)$patientValue, 2, '.', ''));
                                     }),
+                               Textarea::make('description')
+                                    ->columnSpanFull()
+                                    ->label('Descrição Detalhada')
+                                    ->hint('Informar somente para serviços genéricos ou lançamentos agrupados'),
                                 TextInput::make('value')
                                     ->visible(fn (Get $get) => !is_null($get('service_id')))
                                     ->numeric()

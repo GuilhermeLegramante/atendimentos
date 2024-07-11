@@ -44,6 +44,11 @@
                     </td>
                 </tr>
                 <tr style="font-size: 10px;">
+                    <td colspan="3" class=""><strong>Descrição Detalhada:</strong>
+                        {{ $providedService->description }}
+                    </td>
+                </tr>
+                <tr style="font-size: 10px;">
                     <td class=""><strong>Valor Unitário:</strong>
                         R$ {{ number_format($providedService->value, 2, ',', '.') }}
                     </td>

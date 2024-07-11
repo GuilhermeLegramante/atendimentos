@@ -15,6 +15,7 @@ class ProvidedService extends Model
         'quantity',
         'value',
         'patient_value',
+        'description',
     ];
 
     protected $appends = ['total'];
