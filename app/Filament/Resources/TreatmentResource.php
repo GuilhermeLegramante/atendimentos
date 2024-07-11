@@ -131,7 +131,8 @@ class TreatmentResource extends Resource
                                         $patientValue = ($total * $patientPercentual) / 100;
                                         $set('patient_value', number_format((float)$patientValue, 2, '.', ''));
                                     }),
-                               Textarea::make('description')
+                                Textarea::make('description')
+                                    ->visible(fn (Get $get) => !is_null($get('service_id')))
                                     ->columnSpanFull()
                                     ->label('Descrição Detalhada')
                                     ->hint('Informar somente para serviços genéricos ou lançamentos agrupados'),
