@@ -25,6 +25,11 @@ class ProvidedService extends Model
         return $this->belongsTo(Service::class, 'service_id');
     }
 
+    public function treatment(): BelongsTo
+    {
+        return $this->belongsTo(Treatment::class, 'treatment_id');
+    }
+
     public function getTotalAttribute()
     {
         return $this->value * $this->quantity;

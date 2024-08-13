@@ -62,7 +62,7 @@ class TreatmentResource extends Resource
             ->schema([
                 Section::make('Dados do Atendimento')
                     ->description(
-                        fn (string $operation): string => $operation === 'create' || $operation === 'edit' ? 'Informe os campos solicitados' : ''
+                        fn(string $operation): string => $operation === 'create' || $operation === 'edit' ? 'Informe os campos solicitados' : ''
                     )
                     ->schema([
                         DatePicker::make('date')
@@ -80,13 +80,13 @@ class TreatmentResource extends Resource
                             ->relationship(
                                 name: 'partner',
                                 titleAttribute: 'name',
-                                modifyQueryUsing: fn (Builder $query) => $query
+                                modifyQueryUsing: fn(Builder $query) => $query
                                     ->join('user_people', 'user_people.person_id', 'people.id')
                                     ->where('partner', 1)
                                     ->where('user_people.user_id', auth()->user()->id)
                                     ->select('people.id', 'people.registration', 'people.name'),
                             )
-                            ->getOptionLabelFromRecordUsing(fn ($record) => "{$record->registration} - {$record->name}")
+                            ->getOptionLabelFromRecordUsing(fn($record) => "{$record->registration} - {$record->name}")
                             ->required(),
                         Select::make('patient_id')
                             ->reactive()
@@ -95,22 +95,22 @@ class TreatmentResource extends Resource
                             ->relationship(
                                 name: 'patient',
                                 titleAttribute: 'name',
-                                modifyQueryUsing: fn (Builder $query) => $query->where('patient', 1)->orWhere('dependent', 1),
+                                modifyQueryUsing: fn(Builder $query) => $query->where('patient', 1)->orWhere('dependent', 1),
                             )
                             ->columnSpanFull()
-                            ->getOptionLabelFromRecordUsing(fn (Person $record) => "{$record->registration} - {$record->name}")
+                            ->getOptionLabelFromRecordUsing(fn(Person $record) => "{$record->registration} - {$record->name}")
                             ->required(),
                         Repeater::make('providedServices')
                             ->reactive()
                             ->live()
-                            ->visible(fn (Get $get) => !is_null($get('patient_id')))
+                            ->visible(fn(Get $get) => !is_null($get('patient_id')))
                             ->relationship('providedServices')
                             ->schema([
                                 Select::make('service_id')
                                     ->label('Serviço')
                                     ->relationship('service', 'name')
                                     ->columnSpanFull()
-                                    ->getOptionLabelFromRecordUsing(fn (Service $record) => "{$record->code} - {$record->name}")
+                                    ->getOptionLabelFromRecordUsing(fn(Service $record) => "{$record->code} - {$record->name}")
                                     ->required()
                                     ->live()
                                     ->afterStateUpdated(function (Set $set, Get $get, Service $service) {
@@ -132,12 +132,12 @@ class TreatmentResource extends Resource
                                         $set('patient_value', number_format((float)$patientValue, 2, '.', ''));
                                     }),
                                 Textarea::make('description')
-                                    ->visible(fn (Get $get) => !is_null($get('service_id')))
+                                    ->visible(fn(Get $get) => !is_null($get('service_id')))
                                     ->columnSpanFull()
                                     ->label('Descrição Detalhada')
                                     ->hint('Informar somente para serviços genéricos ou lançamentos agrupados'),
                                 TextInput::make('value')
-                                    ->visible(fn (Get $get) => !is_null($get('service_id')))
+                                    ->visible(fn(Get $get) => !is_null($get('service_id')))
                                     ->numeric()
                                     ->afterStateUpdated(function (Set $set, Get $get, Service $service) {
                                         $service = Service::find($get('service_id'));
@@ -158,7 +158,7 @@ class TreatmentResource extends Resource
                                     ->live(debounce: 500)
                                     ->label('Valor Unitário'),
                                 TextInput::make('quantity')
-                                    ->visible(fn (Get $get) => !is_null($get('service_id')))
+                                    ->visible(fn(Get $get) => !is_null($get('service_id')))
                                     ->label('Quantidade')
                                     ->live()
                                     ->afterStateUpdated(function (Set $set, Get $get) {
@@ -181,13 +181,13 @@ class TreatmentResource extends Resource
                                     ->numeric()
                                     ->minValue(1),
                                 TextInput::make('total_value')
-                                    ->visible(fn (Get $get) => !is_null($get('service_id')))
+                                    ->visible(fn(Get $get) => !is_null($get('service_id')))
                                     ->numeric()
                                     ->readOnly()
                                     ->live()
                                     ->label('Valor Total'),
                                 TextInput::make('patient_value')
-                                    ->visible(fn (Get $get) => !is_null($get('service_id')))
+                                    ->visible(fn(Get $get) => !is_null($get('service_id')))
                                     ->readOnly()
                                     ->numeric()
                                     ->live()
@@ -215,7 +215,7 @@ class TreatmentResource extends Resource
                         Toggle::make('ok')
                             ->label('Auditado')
                             ->visible(
-                                fn (string $operation): string => $operation === 'edit' && auth()->user()->is_admin
+                                fn(string $operation): string => $operation === 'edit' && auth()->user()->is_admin
                             )
                             ->inline(false),
                     ])
@@ -225,7 +225,7 @@ class TreatmentResource extends Resource
     public static function table(Table $table): Table
     {
         return $table
-            ->modifyQueryUsing(fn (Builder $query) => auth()->user()->is_admin ? $query : $query->where('user_id', auth()->user()->id))
+            ->modifyQueryUsing(fn(Builder $query) => auth()->user()->is_admin ? $query : $query->where('user_id', auth()->user()->id))
             ->columns([
                 TextColumn::make('patient.name')
                     ->label('Paciente')
@@ -251,6 +251,11 @@ class TreatmentResource extends Resource
                     ->label('Comprovante')
                     ->toggleable(isToggledHiddenByDefault: false)
                     ->alignment(Alignment::Center),
+                TextColumn::make('providedServices.value')
+                    ->label('Valor dos Serviços')
+                    ->money('BRL')
+                    ->summarize(Sum::make()->label('Total Valor dos Serviços')->money('BRL'))
+                    ->toggleable(isToggledHiddenByDefault: false),
                 IconColumn::make('ok')
                     ->label('Auditado')
                     ->alignCenter()
@@ -279,11 +284,11 @@ class TreatmentResource extends Resource
                         return $query
                             ->when(
                                 $data['created_from'],
-                                fn (Builder $query, $date): Builder => $query->whereDate('date', '>=', $date),
+                                fn(Builder $query, $date): Builder => $query->whereDate('date', '>=', $date),
                             )
                             ->when(
                                 $data['created_until'],
-                                fn (Builder $query, $date): Builder => $query->whereDate('date', '<=', $date),
+                                fn(Builder $query, $date): Builder => $query->whereDate('date', '<=', $date),
                             );
                     })
             ])
@@ -303,7 +308,7 @@ class TreatmentResource extends Resource
             ])
             ->deferFilters()
             ->filtersApplyAction(
-                fn (Action $action) => $action
+                fn(Action $action) => $action
                     ->link()
                     ->label('Aplicar Filtro(s)'),
             )
@@ -318,7 +323,7 @@ class TreatmentResource extends Resource
                         ->label('Comprovante para Ass.')
                         ->icon('heroicon-o-document-text')
                         ->color('info')
-                        ->url(fn (Treatment $record): string => route('receipt-pdf', $record->id))
+                        ->url(fn(Treatment $record): string => route('receipt-pdf', $record->id))
                         ->openUrlInNewTab(),
                     Tables\Actions\DeleteAction::make(),
                 ]),
