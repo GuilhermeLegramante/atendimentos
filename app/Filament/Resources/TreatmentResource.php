@@ -253,7 +253,13 @@ class TreatmentResource extends Resource
                     ->alignment(Alignment::Center),
                 TextColumn::make('providedServices')
                     ->label('Valor dos Serviços')
-                    ->formatStateUsing(fn($record) => $record->providedServices->sum('value'))
+                    ->formatStateUsing(function ($record) {
+                        // Somar os valores do relacionamento
+                        $totalValue = $record->providedServices->sum('value');
+
+                        // Retornar 0 se o total for nulo ou não for um número
+                        return $totalValue ?: 0;
+                    })
                     ->money('BRL')
                     ->summarize(Sum::make()->label('Total Valor dos Serviços')->money('BRL'))
                     ->toggleable(isToggledHiddenByDefault: false),
