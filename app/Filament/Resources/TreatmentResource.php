@@ -251,14 +251,17 @@ class TreatmentResource extends Resource
                     ->label('Comprovante')
                     ->toggleable(isToggledHiddenByDefault: false)
                     ->alignment(Alignment::Center),
-                TextColumn::make('providedServices')
+                    TextColumn::make('providedServices')
                     ->label('Valor dos Serviços')
                     ->formatStateUsing(function ($record) {
-                        // Somar os valores do relacionamento e garantir que seja um número
+                        // Somar os valores do relacionamento
                         $totalValue = $record->providedServices->sum('value');
-
-                        // Retornar 0.0 se o total for nulo ou não for um número
-                        return (float) $totalValue;
+                        
+                        // Log para verificar o valor antes de formatar
+                        // Log::info('Total Value:', ['value' => $totalValue]);
+                
+                        // Retornar o valor convertido para float, ou 0.0 se não for numérico
+                        return floatval($totalValue);
                     })
                     ->money('BRL')
                     ->summarize(Sum::make()->label('Total Valor dos Serviços')->money('BRL'))
