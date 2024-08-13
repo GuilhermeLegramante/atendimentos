@@ -268,7 +268,12 @@ class TreatmentResource extends Resource
                         Summarizer::make()
                             ->label('Total Serviços')
                             ->using(function ($query) {
+                                // Certifique-se de que você está passando o ID correto para a condição WHERE
+                                $modelId = $query->value('treatment_id'); // Use 'value' para obter um valor escalar
+
+                                // Verifique o nome correto da tabela e a chave estrangeira
                                 return (float) DB::table('provided_services')
+                                    ->where('treatment_id', $modelId) // Substitua 'some_foreign_key' pelo nome da coluna correta
                                     ->sum('value');
                             })
                             ->money('BRL')
