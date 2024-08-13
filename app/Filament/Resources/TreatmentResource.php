@@ -251,12 +251,11 @@ class TreatmentResource extends Resource
                     ->label('Comprovante')
                     ->toggleable(isToggledHiddenByDefault: false)
                     ->alignment(Alignment::Center),
-                TextColumn::make('providedServices.value')
-                    // ->visible(fn(Get $get): bool => true)
-                    ->label('Valor dos Serviços')
-                    // ->money('BRL')
-                    ->summarize(Sum::make()->label('Total Valor dos Serviços')->money('BRL'))
-                    ->toggleable(isToggledHiddenByDefault: false),
+                // TextColumn::make('providedServices.value')
+                //     ->label('Valor dos Serviços')
+                //     ->money('BRL')
+                //     ->summarize(Sum::make()->label('Total Valor dos Serviços')->money('BRL'))
+                //     ->toggleable(isToggledHiddenByDefault: false),
                 IconColumn::make('ok')
                     ->label('Auditado')
                     ->alignCenter()
