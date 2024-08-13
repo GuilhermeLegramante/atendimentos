@@ -254,11 +254,11 @@ class TreatmentResource extends Resource
                 TextColumn::make('providedServices')
                     ->label('Valor dos Serviços')
                     ->formatStateUsing(function ($record) {
-                        // Somar os valores do relacionamento
+                        // Somar os valores do relacionamento e garantir que seja um número
                         $totalValue = $record->providedServices->sum('value');
 
-                        // Retornar 0 se o total for nulo ou não for um número
-                        return $totalValue ?: 0;
+                        // Retornar 0.0 se o total for nulo ou não for um número
+                        return (float) $totalValue;
                     })
                     ->money('BRL')
                     ->summarize(Sum::make()->label('Total Valor dos Serviços')->money('BRL'))
