@@ -32,6 +32,7 @@ use Filament\Tables\Actions\Action;
 use Filament\Tables\Actions\ActionGroup;
 use Filament\Tables\Columns\IconColumn;
 use Filament\Tables\Columns\Summarizers\Sum;
+use Filament\Tables\Columns\Summarizers\Summarizer;
 use Filament\Tables\Columns\TextColumn;
 use Filament\Tables\Enums\ActionsPosition;
 use Filament\Tables\Filters\Filter;
@@ -39,6 +40,8 @@ use Filament\Tables\Filters\TernaryFilter;
 use Filament\Tables\Grouping\Group;
 use Illuminate\Support\Facades\Http;
 use Illuminate\Support\Facades\Log;
+use Illuminate\Database\Query\Builder as DatabaseBuilder;
+use Illuminate\Support\Facades\DB;
 
 class TreatmentResource extends Resource
 {
@@ -251,21 +254,27 @@ class TreatmentResource extends Resource
                     ->label('Comprovante')
                     ->toggleable(isToggledHiddenByDefault: false)
                     ->alignment(Alignment::Center),
-                // TextColumn::make('providedServices')
-                //     ->label('Valor dos Serviços')
-                //     ->formatStateUsing(function ($record) {
-                //         // Somar os valores do relacionamento
-                //         $totalValue = $record->providedServices->sum('value');
 
-                //         // Log para verificar o valor antes de formatar
-                //         // Log::info('Total Value:', ['value' => $totalValue]);
+                TextColumn::make('providedServices.value')
+                    ->label('Valor dos Serviços')
+                    ->formatStateUsing(function ($record) {
+                        // Somar os valores do relacionamento
+                        $totalValue = $record->providedServices->sum('value');
 
-                //         // Retornar o valor convertido para float, ou 0.0 se não for numérico
-                //         return floatval($totalValue);
-                //     })
-                //     ->money('BRL')
-                //     ->summarize(Sum::make()->label('Total Valor dos Serviços')->money('BRL'))
-                //     ->toggleable(isToggledHiddenByDefault: false),
+                        // Formatar o total como moeda BRL
+                        return 'R$ ' . number_format($totalValue, 2, ',', '.');
+                    })
+                    ->summarize(
+                        Summarizer::make()
+                            ->label('Total Serviços')
+                            ->using(function ($query) {
+                                return (float) DB::table('provided_services')
+                                    ->sum('value');
+                            })
+                            ->money('BRL')
+                    )
+                    ->toggleable(isToggledHiddenByDefault: false),
+
                 IconColumn::make('ok')
                     ->label('Auditado')
                     ->alignCenter()
