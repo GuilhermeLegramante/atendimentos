@@ -251,21 +251,21 @@ class TreatmentResource extends Resource
                     ->label('Comprovante')
                     ->toggleable(isToggledHiddenByDefault: false)
                     ->alignment(Alignment::Center),
-                    TextColumn::make('providedServices')
-                    ->label('Valor dos Serviços')
-                    ->formatStateUsing(function ($record) {
-                        // Somar os valores do relacionamento
-                        $totalValue = $record->providedServices->sum('value');
-                        
-                        // Log para verificar o valor antes de formatar
-                        // Log::info('Total Value:', ['value' => $totalValue]);
-                
-                        // Retornar o valor convertido para float, ou 0.0 se não for numérico
-                        return floatval($totalValue);
-                    })
-                    ->money('BRL')
-                    ->summarize(Sum::make()->label('Total Valor dos Serviços')->money('BRL'))
-                    ->toggleable(isToggledHiddenByDefault: false),
+                // TextColumn::make('providedServices')
+                //     ->label('Valor dos Serviços')
+                //     ->formatStateUsing(function ($record) {
+                //         // Somar os valores do relacionamento
+                //         $totalValue = $record->providedServices->sum('value');
+
+                //         // Log para verificar o valor antes de formatar
+                //         // Log::info('Total Value:', ['value' => $totalValue]);
+
+                //         // Retornar o valor convertido para float, ou 0.0 se não for numérico
+                //         return floatval($totalValue);
+                //     })
+                //     ->money('BRL')
+                //     ->summarize(Sum::make()->label('Total Valor dos Serviços')->money('BRL'))
+                //     ->toggleable(isToggledHiddenByDefault: false),
                 IconColumn::make('ok')
                     ->label('Auditado')
                     ->alignCenter()
