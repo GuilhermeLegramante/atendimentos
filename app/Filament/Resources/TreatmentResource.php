@@ -255,30 +255,30 @@ class TreatmentResource extends Resource
                     ->toggleable(isToggledHiddenByDefault: false)
                     ->alignment(Alignment::Center),
 
-                TextColumn::make('providedServices.value')
-                    ->label('Valor dos Serviços')
-                    ->formatStateUsing(function ($record) {
-                        // Somar os valores do relacionamento
-                        $totalValue = $record->providedServices->sum('value');
+                // TextColumn::make('providedServices.value')
+                //     ->label('Valor dos Serviços')
+                //     ->formatStateUsing(function ($record) {
+                //         // Somar os valores do relacionamento
+                //         $totalValue = $record->providedServices->sum('value');
 
-                        // Formatar o total como moeda BRL
-                        return 'R$ ' . number_format($totalValue, 2, ',', '.');
-                    })
-                    ->summarize(
-                        Summarizer::make()
-                            ->label('Total Serviços')
-                            ->using(function ($query) {
-                                // Certifique-se de que você está passando o ID correto para a condição WHERE
-                                $modelId = $query->value('treatment_id'); // Use 'value' para obter um valor escalar
+                //         // Formatar o total como moeda BRL
+                //         return 'R$ ' . number_format($totalValue, 2, ',', '.');
+                //     })
+                //     ->summarize(
+                //         Summarizer::make()
+                //             ->label('Total Serviços')
+                //             ->using(function ($query) {
+                //                 // Certifique-se de que você está passando o ID correto para a condição WHERE
+                //                 $modelId = $query->value('treatment_id'); // Use 'value' para obter um valor escalar
 
-                                // Verifique o nome correto da tabela e a chave estrangeira
-                                return (float) DB::table('provided_services')
-                                    ->where('treatment_id', $modelId) // Substitua 'some_foreign_key' pelo nome da coluna correta
-                                    ->sum('value');
-                            })
-                            ->money('BRL')
-                    )
-                    ->toggleable(isToggledHiddenByDefault: false),
+                //                 // Verifique o nome correto da tabela e a chave estrangeira
+                //                 return (float) DB::table('provided_services')
+                //                     ->where('treatment_id', $modelId) // Substitua 'some_foreign_key' pelo nome da coluna correta
+                //                     ->sum('value');
+                //             })
+                //             ->money('BRL')
+                //     )
+                //     ->toggleable(isToggledHiddenByDefault: false),
 
                 IconColumn::make('ok')
                     ->label('Auditado')
