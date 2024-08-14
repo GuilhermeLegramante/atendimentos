@@ -20,6 +20,8 @@ Livewire::setUpdateRoute(function ($handle) {
 
 Route::middleware(['auth'])->group(function () {
     Route::get('/comprovante-de-atendimento/{treatmentId}', [TreatmentController::class, 'getReceipt'])->name('receipt-pdf');
+    Route::get('/relatorio-atendimentos', [TreatmentController::class, 'treatmentsReport'])->name('treatments-report-pdf');
+
 });
 
 /**
@@ -368,16 +370,4 @@ Route::get('/sync-data', [ApiController::class, 'syncData']);
 
 Route::get('/service-value', [ApiController::class, 'serviceValue']);
 
-Route::get('/crawler', function () {
-    // $response = Http::post('https://www.cavalocrioulo.org.br/pesquisa/pesquisar_nome_home.php', [
-    //     'form_params' => [
-    //         'nome' => 'zagaia ituzaingo'
-    //     ],
-    // ]);
 
-    // $html = (string) $response->getBody();
-
-    // $crawler = new Crawler($html);
-
-    // dd($crawler);
-});
