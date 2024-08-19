@@ -27,7 +27,7 @@ class TreatmentController extends Controller
     {
         $treatments = Treatment::withSum('providedServices', 'patient_value')->get();
 
-        $totalServices = ProvidedService::sum('value');
+        $totalServices = ProvidedService::selectRaw('SUM(value * quantity) as value')->value('value');
 
         $fileName = 'ATENDIMENTOS_REALIZADOS.pdf';
 
