@@ -255,24 +255,24 @@ class TreatmentResource extends Resource
                     ->toggleable(isToggledHiddenByDefault: false)
                     ->alignment(Alignment::Center),
 
-                // TextColumn::make('providedServices.total')
-                //     ->label('Valor dos Serviços')
-                //     ->formatStateUsing(function ($record) {
-                //         // Somar os valores do relacionamento
-                //         $totalValue = $record->providedServices->sum('value');
+                TextColumn::make('providedServices.total')
+                    ->label('Valor dos Serviços')
+                    ->formatStateUsing(function ($record) {
+                        // Somar os valores do relacionamento
+                        $totalValue = $record->providedServices->sum('value');
 
-                //         // Formatar o total como moeda BRL
-                //         return 'R$ ' . number_format($totalValue, 2, ',', '.');
-                //     })
-                //     ->summarize(Summarizer::make()
-                //         ->label('Total Serviços')
-                //         ->money('BRL')
-                //         ->using(
-                //             fn(DatabaseBuilder $query): float =>
-                //             $query
-                //                 ->sum('total')
-                //         ))
-                //     ->toggleable(isToggledHiddenByDefault: false),
+                        // Formatar o total como moeda BRL
+                        return 'R$ ' . number_format($totalValue, 2, ',', '.');
+                    })
+                    ->summarize(Summarizer::make()
+                        ->label('Total Serviços')
+                        ->money('BRL')
+                        ->using(
+                            fn(DatabaseBuilder $query): float =>
+                            $query
+                                ->selectRaw('SUM(value * quantity) as total')->value('total')
+                        ))
+                    ->toggleable(isToggledHiddenByDefault: false),
 
                 IconColumn::make('ok')
                     ->label('Auditado')
