@@ -85,9 +85,6 @@
     </h1>
 @endsection
 
-
-
-
 @section('footer')
     @include('reports.footer-with-single-sign')
 @endsection
