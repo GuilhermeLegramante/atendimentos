@@ -10,6 +10,7 @@ use App\Filament\Tables\Columns\ReceiptLink;
 use App\Models\Person;
 use App\Models\Service;
 use App\Models\Treatment;
+use Carbon\Carbon;
 use Filament\Forms;
 use Filament\Forms\Components\DatePicker;
 use Filament\Forms\Components\FileUpload;
@@ -296,8 +297,12 @@ class TreatmentResource extends Resource
                 TernaryFilter::make('ok')->label('Auditado'),
                 Filter::make('date')
                     ->form([
-                        DatePicker::make('created_from')->label('Data de Atendimento (Inicial)'),
-                        DatePicker::make('created_until')->label('Data de Atendimento (Final)'),
+                        DatePicker::make('created_from')
+                            ->label('Data de Atendimento (Inicial)')
+                            ->default(Carbon::now()->startOfMonth()),
+                        DatePicker::make('created_until')
+                            ->label('Data de Atendimento (Final)')
+                            ->default(Carbon::now()->endOfMonth()),
                     ])
                     ->query(function (Builder $query, array $data): Builder {
                         return $query
