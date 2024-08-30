@@ -5,13 +5,21 @@ namespace App\Http\Controllers;
 use App\Models\ProvidedService;
 use App\Models\Treatment;
 use App\Utils\ReportFactory;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 
 class TreatmentController extends Controller
 {
     public function getReceipt($treatmentId)
     {
-        $treatment = Treatment::withSum('providedServices', 'patient_value')->find($treatmentId);
+        // $treatment = Treatment::withSum('providedServices', 'patient_value')->find($treatmentId);
+
+        $startOfMonth = Carbon::now()->startOfMonth();
+        $endOfMonth = Carbon::now()->endOfMonth();
+
+        $treatment = Treatment::withSum(['providedServices' => function ($query) use ($startOfMonth, $endOfMonth) {
+            $query->whereBetween('date', [$startOfMonth, $endOfMonth]);
+        }], 'patient_value')->find($treatmentId);
 
         $fileName = 'COMPROVANTE_DE_ATENDIMENTO_' . $treatment->id . '.pdf';
 
