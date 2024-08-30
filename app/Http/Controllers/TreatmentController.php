@@ -12,14 +12,7 @@ class TreatmentController extends Controller
 {
     public function getReceipt($treatmentId)
     {
-        // $treatment = Treatment::withSum('providedServices', 'patient_value')->find($treatmentId);
-
-        $startOfMonth = Carbon::now()->startOfMonth();
-        $endOfMonth = Carbon::now()->endOfMonth();
-
-        $treatment = Treatment::withSum(['providedServices' => function ($query) use ($startOfMonth, $endOfMonth) {
-            $query->whereBetween('date', [$startOfMonth, $endOfMonth]);
-        }], 'patient_value')->find($treatmentId);
+        $treatment = Treatment::withSum('providedServices', 'patient_value')->find($treatmentId);
 
         $fileName = 'COMPROVANTE_DE_ATENDIMENTO_' . $treatment->id . '.pdf';
 
@@ -33,9 +26,20 @@ class TreatmentController extends Controller
 
     public function treatmentsReport()
     {
-        $treatments = Treatment::withSum('providedServices', 'patient_value')->get();
+        // $treatments = Treatment::withSum('providedServices', 'patient_value')->get();
+        $startOfMonth = Carbon::now()->startOfMonth();
+        $endOfMonth = Carbon::now()->endOfMonth();
 
-        $totalServices = ProvidedService::selectRaw('SUM(value * quantity) as value')->value('value');
+        $treatments = Treatment::withSum(['providedServices' => function ($query) use ($startOfMonth, $endOfMonth) {
+            $query->whereBetween('date', [$startOfMonth, $endOfMonth]);
+        }], 'patient_value')->get();
+
+
+        // $totalServices = ProvidedService::selectRaw('SUM(value * quantity) as value')->value('value');
+
+        $totalServices = ProvidedService::whereBetween('treatments.date', [$startOfMonth, $endOfMonth])
+            ->selectRaw('SUM(value * quantity) as total_value')
+            ->value('total_value');
 
         $fileName = 'ATENDIMENTOS_REALIZADOS.pdf';
 
