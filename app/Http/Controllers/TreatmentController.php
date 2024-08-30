@@ -30,6 +30,8 @@ class TreatmentController extends Controller
         $startOfMonth = Carbon::now()->startOfMonth();
         $endOfMonth = Carbon::now()->endOfMonth();
 
+        dd($startOfMonth);
+
         $treatments = Treatment::withSum(['providedServices' => function ($query) use ($startOfMonth, $endOfMonth) {
             $query->whereBetween('date', [$startOfMonth, $endOfMonth]);
         }], 'patient_value')->get();
