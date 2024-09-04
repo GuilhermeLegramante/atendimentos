@@ -1,3 +1,10 @@
-<x-filament-panels::page>
+<x-filament::page>
+    <form wire:submit.prevent="submit">
+        {{ $this->form }}
 
-</x-filament-panels::page>
+        <br>
+        <x-filament::button type="submit" form="submit">
+            Gerar Relatório
+        </x-filament::button>
+    </form>
+</x-filament::page>

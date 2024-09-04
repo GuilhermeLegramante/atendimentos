@@ -24,21 +24,23 @@ class TreatmentController extends Controller
         return ReportFactory::getBasicPdf('portrait', 'reports.receipt', $args, $fileName);
     }
 
-    public function treatmentsReport()
+    public function treatmentsReport(Request $request)
     {
         // $treatments = Treatment::withSum('providedServices', 'patient_value')->get();
-        $startOfMonth = Carbon::now()->startOfMonth();
-        $endOfMonth = Carbon::now()->endOfMonth();
+        // $startOfMonth = Carbon::now()->startOfMonth();
+        // $endOfMonth = Carbon::now()->endOfMonth();
+        $startDate = $request->start_date;
+        $endDate = $request->end_date;
 
         $treatments = Treatment::withSum('providedServices', 'patient_value')
-            ->whereBetween('date', [$startOfMonth, $endOfMonth])
+            ->whereBetween('date', [$startDate, $endDate])
             ->get();
 
 
         // $totalServices = ProvidedService::selectRaw('SUM(value * quantity) as value')->value('value');
 
         $totalServices = ProvidedService::join('treatments', 'provided_services.treatment_id', '=', 'treatments.id')
-            ->whereBetween('treatments.date', [$startOfMonth, $endOfMonth])
+            ->whereBetween('treatments.date', [$startDate, $endDate])
             ->selectRaw('SUM(provided_services.value * provided_services.quantity) as total_value')
             ->value('total_value');
 
