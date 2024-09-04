@@ -14,7 +14,7 @@ class TreatmentsReport extends Page
 
     protected static string $view = 'filament.pages.treatments-report';
 
-    protected static ?string $title = 'Atendimentos Realizados no mês';
+    protected static ?string $title = 'Atendimentos do mês';
 
     protected static ?string $slug = 'atendimentos-realizados';
 
