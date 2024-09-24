@@ -91,7 +91,7 @@
         <br>
         <br>
         <h2>
-            Sem lançamentos registrados de {{ $startDate }} a {{ $endDate }}.
+            Sem lançamentos registrados de {{ date('d/m/Y', strtotime($startDate)) }} a {{ $endDate }}.
         </h2>
     @endif
 
