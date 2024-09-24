@@ -31,9 +31,11 @@ class TreatmentController extends Controller
         // $endOfMonth = Carbon::now()->endOfMonth();
         $startDate = $request->start_date;
         $endDate = $request->end_date;
+        $partnerId = $request->partner_id;
 
         $treatments = Treatment::withSum('providedServices', 'patient_value')
             ->whereBetween('date', [$startDate, $endDate])
+            ->where('partner_id', $partnerId)
             ->get();
 
 
