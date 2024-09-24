@@ -15,6 +15,8 @@
         <h1>
             Atendimentos realizados de {{ date('d/m/Y', strtotime($startDate)) }} a {{ date('d/m/Y', strtotime($endDate)) }}
         </h1>
+        <hr>
+        <br>
         @foreach ($treatments as $treatment)
             <table style="width: 100%; margin-top: 1%;" class="striped">
                 <tbody>
