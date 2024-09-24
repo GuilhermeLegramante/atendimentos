@@ -91,7 +91,7 @@
         <br>
         <br>
         <h2>
-            Sem lançamentos registrados no período
+            Sem lançamentos registrados de {{ $startDate }} a {{ $endDate }}.
         </h2>
     @endif
 
