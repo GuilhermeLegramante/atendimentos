@@ -31,6 +31,7 @@ class TreatmentsReport extends Page implements HasForms
     public $data = [];
     public $start_date;
     public $end_date;
+    public $partner_id;
 
     public static function getNavigationGroup(): ?string
     {
@@ -48,7 +49,7 @@ class TreatmentsReport extends Page implements HasForms
                 ->label('Data Final')
                 ->required()
                 ->placeholder('Selecione a data final'),
-                Select::make('partner_id')
+            Select::make('partner_id')
                 ->columnSpanFull()
                 ->label('Conveniado')
                 ->options(function () {
