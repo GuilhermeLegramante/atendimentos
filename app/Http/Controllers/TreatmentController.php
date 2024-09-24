@@ -43,6 +43,7 @@ class TreatmentController extends Controller
 
         $totalServices = ProvidedService::join('treatments', 'provided_services.treatment_id', '=', 'treatments.id')
             ->whereBetween('treatments.date', [$startDate, $endDate])
+            ->where('treatments.partner_id', $partnerId)
             ->selectRaw('SUM(provided_services.value * provided_services.quantity) as total_value')
             ->value('total_value');
 
@@ -52,6 +53,8 @@ class TreatmentController extends Controller
             'treatments' => $treatments,
             'title' => 'ATENDIMENTOS REALIZADOS',
             'totalServices' => $totalServices,
+            'startDate' => $startDate,
+            'endDate' => $endDate,
         ];
 
         return ReportFactory::getBasicPdf('portrait', 'reports.treatments', $args, $fileName);
