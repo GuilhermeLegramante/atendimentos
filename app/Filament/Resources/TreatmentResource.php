@@ -7,6 +7,7 @@ use App\Filament\Resources\ClientResource\Pages\EditTreatment;
 use App\Filament\Resources\ClientResource\Pages\ListTreatments;
 use App\Filament\Resources\TreatmentResource\Pages;
 use App\Filament\Tables\Columns\ReceiptLink;
+use App\Filament\Tables\Columns\RequestLink;
 use App\Models\Person;
 use App\Models\Service;
 use App\Models\Treatment;
@@ -268,6 +269,10 @@ class TreatmentResource extends Resource
                     ->toggleable(isToggledHiddenByDefault: false)
                     ->date()
                     ->sortable(),
+                RequestLink::make('request')
+                    ->label('Solicitação')
+                    ->toggleable(isToggledHiddenByDefault: false)
+                    ->alignment(Alignment::Center),
                 ReceiptLink::make('receipt')
                     ->label('Comprovante')
                     ->toggleable(isToggledHiddenByDefault: false)
