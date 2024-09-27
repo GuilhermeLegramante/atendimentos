@@ -105,6 +105,22 @@ class TreatmentResource extends Resource
                             ->columnSpanFull()
                             ->getOptionLabelFromRecordUsing(fn(Person $record) => "{$record->registration} - {$record->name}")
                             ->required(),
+                        FileUpload::make('request')
+                            ->columnSpanFull()
+                            ->label('Solicitação do procedimento')
+                            ->hint('Anexe o arquivo digitalizado ou uma foto da solicitação')
+                            ->previewable()
+                            ->openable()
+                            ->downloadable()
+                            ->moveFiles()
+                            ->imageEditor()
+                            ->imageEditorEmptyFillColor('#000000')
+                            ->imageEditorAspectRatios([
+                                null,
+                                '16:9',
+                                '4:3',
+                                '1:1',
+                            ]),
                         Repeater::make('providedServices')
                             ->reactive()
                             ->live()

@@ -17,6 +17,7 @@ class Treatment extends Model
         'partner_id',
         'date',
         'receipt',
+        'request',
         'ok',
     ];
 
