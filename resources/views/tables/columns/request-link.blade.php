@@ -1,6 +1,6 @@
-@isset($getRecord()->receipt)
+@isset($getRecord()->request)
     <div>
-        <a href="{{ asset("storage/{$getRecord()->receipt}") }}" target="_blank">
+        <a href="{{ asset("storage/{$getRecord()->request}") }}" target="_blank">
             <svg class="fi-ta-icon-item fi-ta-icon-item-size-lg h-6 w-6 fi-color-gray text-gray-400 dark:text-gray-500"
                 xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"
                 aria-hidden="true" data-slot="icon">
