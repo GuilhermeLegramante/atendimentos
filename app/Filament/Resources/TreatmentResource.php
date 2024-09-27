@@ -37,6 +37,7 @@ use Filament\Tables\Columns\Summarizers\Summarizer;
 use Filament\Tables\Columns\TextColumn;
 use Filament\Tables\Enums\ActionsPosition;
 use Filament\Tables\Filters\Filter;
+use Filament\Tables\Filters\SelectFilter;
 use Filament\Tables\Filters\TernaryFilter;
 use Filament\Tables\Grouping\Group;
 use Illuminate\Support\Facades\Http;
@@ -295,6 +296,10 @@ class TreatmentResource extends Resource
             ])
             ->filters([
                 TernaryFilter::make('ok')->label('Auditado'),
+                SelectFilter::make('partner')
+                    ->label('Conveniado')
+                    ->searchable()
+                    ->relationship('partner', 'name'),
                 Filter::make('date')
                     ->form([
                         DatePicker::make('created_from')
