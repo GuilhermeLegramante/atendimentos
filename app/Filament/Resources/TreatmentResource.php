@@ -36,6 +36,7 @@ use Filament\Tables\Columns\IconColumn;
 use Filament\Tables\Columns\Summarizers\Sum;
 use Filament\Tables\Columns\Summarizers\Summarizer;
 use Filament\Tables\Columns\TextColumn;
+use Filament\Tables\Columns\ToggleColumn;
 use Filament\Tables\Enums\ActionsPosition;
 use Filament\Tables\Filters\Filter;
 use Filament\Tables\Filters\SelectFilter;
@@ -298,12 +299,11 @@ class TreatmentResource extends Resource
                         ))
                     ->toggleable(isToggledHiddenByDefault: false),
 
-                IconColumn::make('ok')
+                ToggleColumn::make('ok')
                     ->label('Auditado')
                     ->alignCenter()
                     ->sortable()
-                    ->toggleable(isToggledHiddenByDefault: false)
-                    ->boolean(),
+                    ->toggleable(isToggledHiddenByDefault: false),
                 TextColumn::make('created_at')
                     ->label('Criado em')
                     ->dateTime()
