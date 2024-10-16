@@ -241,6 +241,11 @@ class TreatmentResource extends Resource
                                 fn(string $operation): string => $operation === 'edit' && auth()->user()->is_admin
                             )
                             ->inline(false),
+                        Textarea::make('ok_note')
+                            ->visible(
+                                fn(string $operation): string => $operation === 'edit' && auth()->user()->is_admin
+                            )->columnSpanFull()
+                            ->label('Observação da auditoria'),
                     ])
             ]);
     }

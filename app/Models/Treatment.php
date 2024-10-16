@@ -19,6 +19,7 @@ class Treatment extends Model
         'receipt',
         'request',
         'ok',
+        'ok_note',
     ];
 
     protected $casts = [
