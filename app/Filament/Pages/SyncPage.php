@@ -45,26 +45,28 @@ class SyncPage extends Page
 
         $url = 'http://45.4.21.126:8080/web/contracheque/public/';
 
-        // $services = Http::timeout(30)->get($url . 'servicos');
+        $services = Http::timeout(30)->get($url . 'servicos');
+
+        dd($services->json());
 
         $people = Http::timeout(30)->get($url . 'pessoas');
 
-        // foreach ($services->json() as $value) {
-        //     if (isset($value['code']) && isset($value['name'])) {
-        //         $service = Service::where('code', $value['code'])->get()->first();
+        foreach ($services->json() as $value) {
+            if (isset($value['code']) && isset($value['name'])) {
+                $service = Service::where('code', $value['code'])->get()->first();
 
-        //         if (!isset($service)) {
-        //             Service::create([
-        //                 'code' => $value['code'],
-        //                 'name' => $value['name'],
-        //                 'value' => (float) $value['value'],
-        //                 'titular_value' => (float) $value['titularValue'],
-        //                 'dependent_value' => (float) $value['dependentValue'],
-        //                 'created_at' => now()
-        //             ]);
-        //         }
-        //     }
-        // }
+                if (!isset($service)) {
+                    Service::create([
+                        'code' => $value['code'],
+                        'name' => $value['name'],
+                        'value' => (float) $value['value'],
+                        'titular_value' => (float) $value['titularValue'],
+                        'dependent_value' => (float) $value['dependentValue'],
+                        'created_at' => now()
+                    ]);
+                }
+            }
+        }
 
         foreach ($people->json() as $value) {
             if (isset($value['inscricao'])) {
