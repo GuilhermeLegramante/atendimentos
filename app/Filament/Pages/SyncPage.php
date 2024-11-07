@@ -47,7 +47,9 @@ class SyncPage extends Page
 
         $services = Http::timeout(30)->get($url . 'servicos');
 
-        dd($services->json());
+        $teste = Http::timeout(30)->get($url . 'teste');
+
+        dd($teste);
 
         $people = Http::timeout(30)->get($url . 'pessoas');
 
