@@ -41,11 +41,11 @@ class SyncPage extends Page
 
     protected function processData()
     {
+        set_time_limit(0);
+
         $url = 'http://45.4.21.126:8080/web/contracheque/public/';
 
         $services = Http::timeout(30)->get($url . 'servicos');
-
-        dd($services);
 
         $people = Http::timeout(30)->get($url . 'pessoas');
 
