@@ -6,6 +6,7 @@ use App\Models\Person;
 use App\Models\Service;
 use Filament\Notifications\Notification;
 use Filament\Pages\Page;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Http;
 use Illuminate\Support\Facades\Redirect;
 
@@ -43,13 +44,15 @@ class SyncPage extends Page
     {
         set_time_limit(0);
 
-        $url = 'http://45.4.21.126:8080/web/contracheque/public/';
-
-
-        $teste = Http::timeout(30)->get($url . 'teste');
+        $teste = Http::timeout(30)->get('contratos.hardsoftsistemas.com');
 
         dd($teste);
 
+
+        $url = 'http://45.4.21.126:8080/web/contracheque/public/';
+
+
+        
         $services = Http::timeout(30)->get($url . 'servicos');
 
 
