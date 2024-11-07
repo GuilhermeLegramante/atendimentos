@@ -21,6 +21,8 @@ class ApiController extends Controller
 
         $services = Http::get($url . 'servicos');
 
+        dd($services);
+
         $people = Http::get($url . 'pessoas');
 
         foreach ($services->json() as $value) {

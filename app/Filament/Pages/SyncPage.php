@@ -43,9 +43,9 @@ class SyncPage extends Page
     {
         $url = 'http://45.4.21.126:8080/web/contracheque/public/';
 
-        $services = Http::get($url . 'servicos');
+        $services = Http::timeout(30)->get($url . 'servicos');
 
-        $people = Http::get($url . 'pessoas');
+        $people = Http::timeout(30)->get($url . 'pessoas');
 
         foreach ($services->json() as $value) {
             if (isset($value['code']) && isset($value['name'])) {
