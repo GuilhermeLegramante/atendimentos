@@ -17,7 +17,7 @@ class ApiController extends Controller
 
     public function syncData()
     {
-        $url = 'http://45.4.21.126:8080/web/contracheque/public/';
+        $url = 'http://45.4.20.6:8080/web/contracheque/public/';
 
         $services = Http::get($url . 'servicos');
 

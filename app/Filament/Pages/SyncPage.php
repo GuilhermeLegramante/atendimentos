@@ -44,17 +44,9 @@ class SyncPage extends Page
     {
         set_time_limit(0);
 
-        $teste = Http::timeout(30)->get('http://45.4.21.126:8080/');
+        $url = 'http://45.4.20.6:8080/web/contracheque/public/';
 
-        dd($teste);
-
-
-        $url = 'http://45.4.21.126:8080/web/contracheque/public/';
-
-
-        
         $services = Http::timeout(30)->get($url . 'servicos');
-
 
         $people = Http::timeout(30)->get($url . 'pessoas');
 
