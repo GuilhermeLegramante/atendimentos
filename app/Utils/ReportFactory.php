@@ -18,8 +18,22 @@ class ReportFactory
 
         $pdf->loadView($view, $args);
 
-        // $pdf->getDomPDF()->get_canvas()->page_text(490, 25, "Página: {PAGE_NUM}/{PAGE_COUNT}", null, 8);
+        // Renderizar o PDF antes de acessar o canvas
+        $pdf->render();
 
+        // Obter altura da página
+        $canvas = $pdf->getDomPDF()->getCanvas();
+        $height = $canvas->get_height();
+
+        // Adicionar número de páginas no rodapé
+        $canvas->page_text(
+            490,                    // Posição X (ajuste se necessário para centralizar)
+            $height - 12,           // Posição Y, próximo ao rodapé
+            "Página: {PAGE_NUM}/{PAGE_COUNT}",
+            null,                   // Fonte padrão
+            6                       // Tamanho da fonte
+        );
+        
         return $pdf->setPaper('a4', $orientation)->stream($fileName);
     }
 }

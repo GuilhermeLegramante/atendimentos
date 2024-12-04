@@ -34,8 +34,10 @@ class TreatmentController extends Controller
         $partnerId = $request->partner_id;
 
         $treatments = Treatment::withSum('providedServices', 'patient_value')
+            ->join('people', 'treatments.patient_id', '=', 'people.id')
             ->whereBetween('date', [$startDate, $endDate])
             ->where('partner_id', $partnerId)
+            ->orderBy('people.name', 'asc')
             ->get();
 
 
