@@ -4,4 +4,8 @@
     - Cadastro de Atendimentos
 - 2.1.0 (16/10/2024)
     - Incluindo campo de obs da auditoria
+- 2.2.0 (04/12/2024)
+    - Relatório de atendimentos
+        - Ordenação alfabética por paciente
+        - Número nas páginas
     
