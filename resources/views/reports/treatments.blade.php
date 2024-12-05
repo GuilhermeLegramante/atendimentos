@@ -35,7 +35,7 @@
             </table>
             <br>
             <hr>
-            <h1>Serviços Prestados</h1>
+            {{-- <h1>Serviços Prestados</h1>
             <table style="width: 100%; margin-top: 1%;" class="striped">
                 <tbody>
                     @php
@@ -69,7 +69,7 @@
                         <br>
                     @endforeach
                 </tbody>
-            </table>
+            </table> --}}
 
             <table style="width: 100%;">
                 <tr>
