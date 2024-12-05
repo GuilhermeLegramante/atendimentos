@@ -72,7 +72,7 @@
             </table>  --}}
 
             <table style="width: 100%;">
-                <tr style="font-size: 10px;">
+                <tr>
                     <td style="width: 50%;">
                         <h2>Valor Total: R$ {{ number_format($totalValue, 2, ',', '.') }}</h2>
                     </td>
