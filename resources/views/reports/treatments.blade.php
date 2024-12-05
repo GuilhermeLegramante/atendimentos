@@ -35,9 +35,9 @@
             </table>
             <br>
             <hr>
-            {{-- <h1>Serviços Prestados</h1>
-            <table style="width: 100%; margin-top: 1%;" class="striped">
-                <tbody>
+            {{-- <h1>Serviços Prestados</h1> --}}
+            {{-- <table style="width: 100%; margin-top: 1%;" class="striped">
+                <tbody> --}}
                     @php
                         $totalValue = 0;
                     @endphp
@@ -45,7 +45,7 @@
                         @php
                             $totalValue += $providedService->total;
                         @endphp
-                        <tr style="font-size: 10px;">
+                        {{-- <tr style="font-size: 10px;">
                             <td colspan="3" class=""><strong>Serviço:</strong>
                                 {{ $providedService->service->code }} - {{ $providedService->service->name }}
                             </td>
@@ -65,11 +65,11 @@
                             <td class=""><strong>Valor Total:</strong>
                                 R$ {{ number_format($providedService->total, 2, ',', '.') }}
                             </td>
-                        </tr>
-                        <br>
-                    @endforeach
-                </tbody>
-            </table> --}}
+                        </tr> --}}
+                        {{-- <br> --}}
+                     @endforeach
+                {{-- </tbody>
+            </table>  --}}
 
             <table style="width: 100%;">
                 <tr>
