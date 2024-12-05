@@ -17,48 +17,45 @@
         </h1>
         <hr>
         <br>
-        @foreach ($treatments as $treatment)
-            <table style="width: 100%; margin-top: 1%;" class="striped">
-                <thead>
+        <table class="striped">
+            <thead>
+                <tr>
+                    <th>Data do Atendimento</th>
+                    <th>Conveniado</th>
+                    <th>Paciente</th>
+                    <th>Valor Total</th>
+                    <th>Valor Total para o Segurado</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach ($treatments as $treatment)
+                    @php
+                        $totalValue = 0;
+                    @endphp
+                    @foreach ($treatment->providedServices as $providedService)
+                        @php
+                            $totalValue += $providedService->total;
+                        @endphp
+                    @endforeach
                     <tr>
-                        <th>
-                            Data do Atendimento
-                        </th>
-                        <th>
-                            Conveniado
-                        </th>
-                        <th>
-                            Paciente
-                        </th>
+                        <td>{{ \Carbon\Carbon::parse($treatment->date)->format('d/m/Y') }}</td>
+                        <td>{{ $treatment->partner->name ?? 'Não informado' }}</td>
+                        <td>{{ $treatment->patient->name ?? 'Não informado' }}</td>
+                        <td>R$ {{ number_format($totalValue, 2, ',', '.') }}</td>
+                        <td>R$ {{ number_format($treatment->provided_services_sum_patient_value, 2, ',', '.') }}</td>
                     </tr>
-                </thead>
-                <tbody>
-                    <tr style="font-size: 10px;">
-                        <td class="">
-                            {{ date('d/m/Y', strtotime($treatment->date)) }}
-                        </td>
-                        <td class="">
-                            {{ $treatment->partner->name }}
-                        </td>
-                        <td class="">
-                            {{ $treatment->patient->name }}
-                        </td>
-                    </tr>
-                </tbody>
-            </table>
-            <br>
-            {{-- <hr> --}}
-            {{-- <h1>Serviços Prestados</h1> --}}
-            {{-- <table style="width: 100%; margin-top: 1%;" class="striped">
+                @endforeach
+            </tbody>
+        </table>
+
+
+        <br>
+        {{-- <hr> --}}
+        {{-- <h1>Serviços Prestados</h1> --}}
+        {{-- <table style="width: 100%; margin-top: 1%;" class="striped">
                 <tbody> --}}
-            @php
-                $totalValue = 0;
-            @endphp
-            @foreach ($treatment->providedServices as $providedService)
-                @php
-                    $totalValue += $providedService->total;
-                @endphp
-                {{-- <tr style="font-size: 10px;">
+
+        {{-- <tr style="font-size: 10px;">
                             <td colspan="3" class=""><strong>Serviço:</strong>
                                 {{ $providedService->service->code }} - {{ $providedService->service->name }}
                             </td>
@@ -79,24 +76,14 @@
                                 R$ {{ number_format($providedService->total, 2, ',', '.') }}
                             </td>
                         </tr> --}}
-                {{-- <br> --}}
-            @endforeach
-            {{-- </tbody>
+        {{-- <br> --}}
+        {{-- </tbody>
             </table>  --}}
 
-            <table style="width: 100%;">
-                <tr>
-                    <td style="width: 50%;">
-                        <h2>Valor Total: R$ {{ number_format($totalValue, 2, ',', '.') }}</h2>
-                    </td>
-                    <td style="width: 50%;">
-                        <h2>Valor Total para o segurado: R$
-                            {{ number_format($treatment->provided_services_sum_patient_value, 2, ',', '.') }}</h2>
-                    </td>
-                </tr>
-            </table>
-            <hr>
-        @endforeach
+        <table style="width: 100%;">
+
+        </table>
+        <hr>
         <br>
         <br>
         <h1>
@@ -110,7 +97,6 @@
             {{ date('d/m/Y', strtotime($endDate)) }}.
         </h2>
     @endif
-
 @endsection
 
 @section('footer')

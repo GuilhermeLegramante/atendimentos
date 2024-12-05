@@ -119,3 +119,24 @@ td.collumn-right {
 .collumn-right {
     width: 365px;
 }
+
+.striped {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 1%;
+}
+
+.striped th, .striped td {
+    border: 1px solid #ddd;
+    padding: 8px;
+}
+
+.striped tr:nth-child(even) {
+    background-color: #f2f2f2;
+}
+
+.striped th {
+    background-color: #4CAF50;
+    color: white;
+    text-align: left;
+}
