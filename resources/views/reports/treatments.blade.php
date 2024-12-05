@@ -19,15 +19,28 @@
         <br>
         @foreach ($treatments as $treatment)
             <table style="width: 100%; margin-top: 1%;" class="striped">
+                <thead>
+                    <tr>
+                        <th>
+                            Data do Atendimento
+                        </th>
+                        <th>
+                            Conveniado
+                        </th>
+                        <th>
+                            Paciente
+                        </th>
+                    </tr>
+                </thead>
                 <tbody>
                     <tr style="font-size: 10px;">
-                        <td class=""><strong>Data do Atendimento:</strong>
+                        <td class="">
                             {{ date('d/m/Y', strtotime($treatment->date)) }}
                         </td>
-                        <td class=""><strong>Conveniado:</strong>
+                        <td class="">
                             {{ $treatment->partner->name }}
                         </td>
-                        <td class=""><strong>Paciente:</strong>
+                        <td class="">
                             {{ $treatment->patient->name }}
                         </td>
                     </tr>
@@ -38,14 +51,14 @@
             {{-- <h1>Serviços Prestados</h1> --}}
             {{-- <table style="width: 100%; margin-top: 1%;" class="striped">
                 <tbody> --}}
-                    @php
-                        $totalValue = 0;
-                    @endphp
-                    @foreach ($treatment->providedServices as $providedService)
-                        @php
-                            $totalValue += $providedService->total;
-                        @endphp
-                        {{-- <tr style="font-size: 10px;">
+            @php
+                $totalValue = 0;
+            @endphp
+            @foreach ($treatment->providedServices as $providedService)
+                @php
+                    $totalValue += $providedService->total;
+                @endphp
+                {{-- <tr style="font-size: 10px;">
                             <td colspan="3" class=""><strong>Serviço:</strong>
                                 {{ $providedService->service->code }} - {{ $providedService->service->name }}
                             </td>
@@ -66,9 +79,9 @@
                                 R$ {{ number_format($providedService->total, 2, ',', '.') }}
                             </td>
                         </tr> --}}
-                        {{-- <br> --}}
-                     @endforeach
-                {{-- </tbody>
+                {{-- <br> --}}
+            @endforeach
+            {{-- </tbody>
             </table>  --}}
 
             <table style="width: 100%;">
@@ -93,7 +106,8 @@
         <br>
         <br>
         <h2>
-            Sem lançamentos registrados de {{ date('d/m/Y', strtotime($startDate)) }} a {{ date('d/m/Y', strtotime($endDate)) }}.
+            Sem lançamentos registrados de {{ date('d/m/Y', strtotime($startDate)) }} a
+            {{ date('d/m/Y', strtotime($endDate)) }}.
         </h2>
     @endif
 
