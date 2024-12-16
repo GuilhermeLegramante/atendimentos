@@ -11,6 +11,7 @@ use Filament\Resources\Resource;
 use Filament\Tables;
 use Filament\Tables\Actions\ActionGroup;
 use Filament\Tables\Columns\IconColumn;
+use Filament\Tables\Columns\ToggleColumn;
 use Filament\Tables\Enums\ActionsPosition;
 use Filament\Tables\Table;
 use Illuminate\Database\Eloquent\Builder;
@@ -56,6 +57,10 @@ class PersonResource extends Resource
                     ->label('Inscrição Municipal')
                     ->alignCenter()
                     ->searchable(),
+                Tables\Columns\TextColumn::make('cpf_cnpj')
+                    ->label('CPF ou CNPJ')
+                    ->alignCenter()
+                    ->searchable(),
                 Tables\Columns\TextColumn::make('name')
                     ->label('Nome')
                     ->searchable(),
@@ -77,6 +82,11 @@ class PersonResource extends Resource
                     ->sortable()
                     ->toggleable(isToggledHiddenByDefault: false)
                     ->boolean(),
+                ToggleColumn::make('is_active')
+                    ->label('Ativo')
+                    ->alignCenter()
+                    ->sortable()
+                    ->toggleable(isToggledHiddenByDefault: false),
                 Tables\Columns\TextColumn::make('created_at')
                     ->label('Criado em')
                     ->dateTime()
@@ -114,5 +124,10 @@ class PersonResource extends Resource
     public static function getNavigationBadge(): ?string
     {
         return static::getModel()::count();
+    }
+
+    public static function canCreate(): bool
+    {
+        return false;
     }
 }

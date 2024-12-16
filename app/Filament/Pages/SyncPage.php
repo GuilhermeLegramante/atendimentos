@@ -68,18 +68,18 @@ class SyncPage extends Page
         }
 
         foreach ($people->json() as $value) {
-            if (isset($value['inscricao'])) {
-                $person = Person::where('registration', $value['inscricao'])->get()->first();
-
-                if (!isset($person)) {
-                    Person::create([
-                        'registration' => $value['inscricao'],
-                        'name' => $value['nome'],
+            if (isset($value['registration'])) {
+                Person::updateOrCreate(
+                    ['registration' => $value['registration']], // Condição de busca
+                    [
+                        'name' => $value['name'],
+                        'cpf_cnpj' => $value['cpfCnpj'],
+                        'is_active' => $value['isActive'],
                         'partner' => $value['conveniado'],
                         'patient' => $value['segurado'],
                         'dependent' => $value['dependente'],
-                    ]);
-                }
+                    ] // Dados para criação ou atualização
+                );
             }
         }
     }
