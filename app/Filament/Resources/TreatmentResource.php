@@ -93,7 +93,7 @@ class TreatmentResource extends Resource
                                     ->where('user_people.user_id', auth()->user()->id)
                                     ->select('people.id', 'people.registration', 'people.name'),
                             )
-                            ->getOptionLabelFromRecordUsing(fn($record) => "{$record->registration} - {$record->name}")
+                            ->getOptionLabelFromRecordUsing(fn($record) => "{$record->cpf_cnpj} - {$record->name}")
                             ->required(),
                         Select::make('patient_id')
                             ->reactive()
@@ -102,10 +102,13 @@ class TreatmentResource extends Resource
                             ->relationship(
                                 name: 'patient',
                                 titleAttribute: 'name',
-                                modifyQueryUsing: fn(Builder $query) => $query->where('patient', 1)->orWhere('dependent', 1),
+                                modifyQueryUsing: fn(Builder $query) => $query->where('is_active', 1)
+                                    ->where(function ($query) {
+                                        $query->where('patient', 1)->orWhere('dependent', 1);
+                                    })
                             )
                             ->columnSpanFull()
-                            ->getOptionLabelFromRecordUsing(fn(Person $record) => "{$record->registration} - {$record->name}")
+                            ->getOptionLabelFromRecordUsing(fn(Person $record) => "{$record->cpf_cnpj} - {$record->name}")
                             ->required(),
                         FileUpload::make('request')
                             ->columnSpanFull()
