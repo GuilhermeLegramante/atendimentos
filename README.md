@@ -8,4 +8,6 @@
     - Relatório de atendimentos
         - Ordenação alfabética por paciente
         - Número nas páginas
+- 2.3.0 (16/12/2024)
+    - Adicionando CPF ou CNPJ e Ativo nas Pessoas
     
