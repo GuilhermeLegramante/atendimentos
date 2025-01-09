@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Person;
 use App\Models\ProvidedService;
 use App\Models\Treatment;
 use App\Utils\ReportFactory;
@@ -49,7 +50,7 @@ class TreatmentController extends Controller
             ->selectRaw('SUM(provided_services.value * provided_services.quantity) as total_value')
             ->value('total_value');
 
-        $fileName = 'ATENDIMENTOS_REALIZADOS.pdf';
+        $fileName = 'ATENDIMENTOS_REALIZADOS' . date('Y-m-d') . '.pdf';
 
         $args = [
             'treatments' => $treatments,
@@ -61,4 +62,23 @@ class TreatmentController extends Controller
 
         return ReportFactory::getBasicPdf('portrait', 'reports.treatments', $args, $fileName);
     }
+
+    public function treatmentsListModel(Request $request)
+    {
+        $fileName = 'MODELO_RELATÓRIO_DE_CONSULTAS_' . date('Y-m-d') . '.pdf';
+
+        $partnerId = $request->partner_id;
+
+        $person = Person::find($partnerId);
+
+        $args = [
+            'title' => 'RELATÓRIO DE CONSULTAS',
+            'person' => $person,
+        ];
+
+        return ReportFactory::getBasicPdf('portrait', 'reports.treatments-list-model', $args, $fileName);
+
+
+    }
+
 }
