@@ -10,4 +10,6 @@
         - Número nas páginas
 - 2.3.0 (16/12/2024)
     - Adicionando CPF ou CNPJ e Ativo nas Pessoas
+- 2.4.0 (09/01/2025)
+    - Modelo de relatório de consultas
     
