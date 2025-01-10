@@ -20,6 +20,7 @@
         <thead>
             <tr>
                 <th style="width: 15%">Data do Atendimento</th>
+                <th style="width: 15%">CPF</th>
                 <th style="width: 50%;">Paciente</th>
                 <th style="width: 25%">Assinatura</th>
             </tr>
@@ -27,6 +28,7 @@
         <tbody>
             @for ($i = 0; $i < 45; $i++)
                 <tr>
+                    <td></td>
                     <td></td>
                     <td></td>
                     <td></td>
