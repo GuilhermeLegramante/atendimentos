@@ -36,6 +36,7 @@ class SyncPage extends Page
             ->body('Dados sincronizados com sucesso!')
             ->success()
             ->send();
+            
 
         return Redirect::route('filament.admin.pages.dashboard');
     }
@@ -44,7 +45,7 @@ class SyncPage extends Page
     {
         set_time_limit(0);
 
-        $url = 'http://45.4.20.6:8080/web/contracheque/public/';
+        $url = 'https://sisprem.hardsoftsfa.com.br/web/contracheque/public/';
 
         $services = Http::timeout(30)->get($url . 'servicos');
 
