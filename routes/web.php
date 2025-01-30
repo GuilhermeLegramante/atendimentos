@@ -57,6 +57,8 @@ Route::get('/salvar-conveniados', function () {
             }
         }
     }
+
+    dd('Feito!');
 });
 
 Route::get('/sync-data', [ApiController::class, 'syncData']);
