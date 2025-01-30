@@ -39,7 +39,7 @@ Route::get('/', function () {
 });
 
 Route::get('/salvar-conveniados', function () {
-    $userId = 1; // Substitua pelo ID do usuário específico
+    $userId = 5; // Substitua pelo ID do usuário específico
 
     $partners = Person::where('partner', 1)->get();
 
