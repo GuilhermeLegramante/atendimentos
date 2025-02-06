@@ -7,6 +7,9 @@
 <style>
     .striped tr:nth-child(even) {
         background-color: #f0f0f0;
+        border-collapse: separate;
+        /* Essencial para que o border-spacing funcione */
+        border-spacing: 30px;
     }
 </style>
 
@@ -26,12 +29,12 @@
             </tr>
         </thead>
         <tbody>
-            @for ($i = 0; $i < 45; $i++)
+            @for ($i = 0; $i < 24; $i++)
                 <tr>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
+                    <td style="padding: 16px;"></td>
+                    <td style="padding: 16px;"></td>
+                    <td style="padding: 16px;"></td>
+                    <td style="padding: 16px;"></td>
                 </tr>
             @endfor
         </tbody>
