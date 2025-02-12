@@ -36,7 +36,7 @@ class SyncPage extends Page
             ->body('Dados sincronizados com sucesso!')
             ->success()
             ->send();
-            
+
 
         return Redirect::route('filament.admin.pages.dashboard');
     }
@@ -64,6 +64,13 @@ class SyncPage extends Page
                         'dependent_value' => (float) $value['dependentValue'],
                         'created_at' => now()
                     ]);
+                } else {
+                    if ($service->value != $value['value']) { // Caso o valor esteja diferente, atualiza o serviço
+                        Service::where('code', $value['code'])
+                            ->update(
+                                ['value' => $value['value']]
+                            );
+                    }
                 }
             }
         }
