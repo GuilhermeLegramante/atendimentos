@@ -24,6 +24,7 @@ Route::middleware(['auth'])->group(function () {
     Route::get('/comprovante-de-atendimento/{treatmentId}', [TreatmentController::class, 'getReceipt'])->name('receipt-pdf');
     Route::get('/relatorio-atendimentos', [TreatmentController::class, 'treatmentsReport'])->name('treatments-report-pdf');
     Route::get('/modelo-relatorio-atendimentos', [TreatmentController::class, 'treatmentsListModel'])->name('treatments-list-model-pdf');
+    Route::get('/guia-tratamento-odontologico', [TreatmentController::class, 'dentalTreatmentGuide'])->name('dental-treatment-guide-pdf');
 });
 
 /**

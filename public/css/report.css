@@ -126,7 +126,8 @@ td.collumn-right {
     margin-top: 1%;
 }
 
-.striped th, .striped td {
+.striped th,
+.striped td {
     border: 1px solid #ddd;
     padding: 8px;
 }
@@ -139,4 +140,9 @@ td.collumn-right {
     background-color: #4CAF50;
     color: white;
     text-align: left;
+}
+
+.fit th,
+.fit td {
+    padding: 3px !important;
 }

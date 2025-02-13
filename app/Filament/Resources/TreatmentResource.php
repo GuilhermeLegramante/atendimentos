@@ -256,7 +256,16 @@ class TreatmentResource extends Resource
     public static function table(Table $table): Table
     {
         return $table
-            ->modifyQueryUsing(fn(Builder $query) => auth()->user()->is_admin ? $query : $query->where('user_id', auth()->user()->id))
+            ->modifyQueryUsing(
+                fn(Builder $query) =>
+                auth()->user()->is_admin
+                    ? $query
+                    : (
+                        auth()->user()->is_manager
+                        ? $query->whereIn('partner_id', auth()->user()->partners()->pluck('id'))  // Filtra pelos partners que o usuário manager está associado
+                        : $query->where('user_id', auth()->user()->id) // Usuário comum vê somente seus próprios tratamentos
+                    )
+            )
             ->columns([
                 TextColumn::make('patient.name')
                     ->label('Paciente')

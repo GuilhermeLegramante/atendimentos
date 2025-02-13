@@ -22,14 +22,11 @@ class TreatmentController extends Controller
             'title' => 'COMPROVANTE DE ATENDIMENTO',
         ];
 
-        return ReportFactory::getBasicPdf('portrait', 'reports.receipt', $args, $fileName);
+        return ReportFactory::getBasicPdf('landscape', 'reports.receipt', $args, $fileName);
     }
 
     public function treatmentsReport(Request $request)
     {
-        // $treatments = Treatment::withSum('providedServices', 'patient_value')->get();
-        // $startOfMonth = Carbon::now()->startOfMonth();
-        // $endOfMonth = Carbon::now()->endOfMonth();
         $startDate = $request->start_date;
         $endDate = $request->end_date;
         $partnerId = $request->partner_id;
@@ -40,9 +37,6 @@ class TreatmentController extends Controller
             ->where('partner_id', $partnerId)
             ->orderBy('people.name', 'asc')
             ->get();
-
-
-        // $totalServices = ProvidedService::selectRaw('SUM(value * quantity) as value')->value('value');
 
         $totalServices = ProvidedService::join('treatments', 'provided_services.treatment_id', '=', 'treatments.id')
             ->whereBetween('treatments.date', [$startDate, $endDate])
@@ -79,6 +73,22 @@ class TreatmentController extends Controller
         return ReportFactory::getBasicPdf('portrait', 'reports.treatments-list-model', $args, $fileName);
 
 
+    }
+
+    public function dentalTreatmentGuide(Request $request)
+    {
+        $fileName = 'GUIA_TRATAMENTO_ODONTOLOGICO_' . date('Y-m-d') . '.pdf';
+
+        $partnerId = $request->partner_id;
+
+        $person = Person::find($partnerId);
+
+        $args = [
+            'title' => 'GUIA TRATAMENTO ODONTOLÓGICO',
+            'person' => $person,
+        ];
+
+        return ReportFactory::getBasicPdf('landscape', 'reports.dental-treatment-guide', $args, $fileName);
     }
 
 }

@@ -47,7 +47,7 @@ class UserResource extends Resource
             ->schema([
                 Section::make('Dados do Usuário')
                     ->description(
-                        fn (string $operation): string => $operation === 'create' || $operation === 'edit' ? 'Informe os campos solicitados' : ''
+                        fn(string $operation): string => $operation === 'create' || $operation === 'edit' ? 'Informe os campos solicitados' : ''
                     )
                     ->schema([
                         TextInput::make('name')
@@ -68,7 +68,7 @@ class UserResource extends Resource
                             ->revealable()
                             ->required()
                             ->rule('min:4')
-                            ->dehydrateStateUsing(fn ($state) => Hash::make($state))
+                            ->dehydrateStateUsing(fn($state) => Hash::make($state))
                             ->same('passwordConfirmation')
                             ->validationAttribute('senha'),
                         TextInput::make('passwordConfirmation')
@@ -82,6 +82,11 @@ class UserResource extends Resource
                             ->inline(false)
                             ->onIcon('heroicon-m-bolt')
                             ->offIcon('heroicon-m-user'),
+                        Toggle::make('is_manager')
+                            ->label('Gerente')
+                            ->inline(false)
+                            ->onIcon('heroicon-m-bolt')
+                            ->offIcon('heroicon-m-user'),
                         Select::make('partners')
                             ->columnSpanFull()
                             ->label('Conveniados')
@@ -89,9 +94,9 @@ class UserResource extends Resource
                             ->relationship(
                                 name: 'partners',
                                 titleAttribute: 'name',
-                                modifyQueryUsing: fn (Builder $query) => $query->where('partner', 1),
+                                modifyQueryUsing: fn(Builder $query) => $query->where('partner', 1),
                             )
-                            ->getOptionLabelFromRecordUsing(fn (Person $record) => "{$record->registration} - {$record->name}")
+                            ->getOptionLabelFromRecordUsing(fn(Person $record) => "{$record->registration} - {$record->name}")
                             ->required(),
                     ])
             ]);
