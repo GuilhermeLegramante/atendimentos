@@ -262,7 +262,7 @@ class TreatmentResource extends Resource
                     ? $query
                     : (
                         auth()->user()->is_manager
-                        ? $query->whereIn('partner_id', auth()->user()->partners()->pluck('id'))  // Filtra pelos partners que o usuário manager está associado
+                        ? $query->whereIn('partner_id', auth()->user()->partners()->pluck('people.id'))  // Filtra pelos partners que o usuário manager está associado
                         : $query->where('user_id', auth()->user()->id) // Usuário comum vê somente seus próprios tratamentos
                     )
             )
