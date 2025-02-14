@@ -37,19 +37,19 @@
                 </th>
             </tr>
             <tr>
-                <th style="background-color:#f2f2f2; color: black; width: 3%;">
+                <th style="background-color:#f2f2f2; color: black; width: 3%; border: 1px solid black;">
                     Data
                 </th>
-                <th style="background-color:#f2f2f2; color: black; width: 10%;">
+                <th style="background-color:#f2f2f2; color: black; width: 10%; border: 1px solid black;">
                     CPF
                 </th>
-                <th style="background-color:#f2f2f2; color: black; width: 40%;">
+                <th style="background-color:#f2f2f2; color: black; width: 40%; border: 1px solid black;">
                     Nome Completo
                 </th>
-                <th style="background-color:#f2f2f2; color: black; width: 5%; text-align: right;">
+                <th style="background-color:#f2f2f2; color: black; width: 7%; text-align: right; border: 1px solid black;">
                     Valor
                 </th>
-                <th style="background-color:#f2f2f2; color: black; width: 5%;">
+                <th style="background-color:#f2f2f2; color: black; width: 7%; border: 1px solid black;">
                     Assinatura
                 </th>
             </tr>
@@ -57,11 +57,11 @@
         <tbody>
             @for ($i = 0; $i < 30; $i++)
                 <tr>
-                    <td>&nbsp;</td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
+                    <td style="border: 1px solid black;">&nbsp;</td>
+                    <td style="border: 1px solid black;"></td>
+                    <td style="border: 1px solid black;"></td>
+                    <td style="border: 1px solid black;"></td>
+                    <td style="border: 1px solid black;"></td>
                 </tr>
             @endfor
         </tbody>
