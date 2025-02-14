@@ -29,10 +29,10 @@
         </tr>
     </table>
 
-    <table class="striped fit" style="width: 100%; float: left; margin-right: 4%;">
+    <table class="striped fit" style="width: 100%; float: left; margin-right: 4%; border: 1px solid black;">
         <thead>
             <tr style="background-color:#f2f2f2; ">
-                <th colspan="7" style="background-color:#f2f2f2; color: black;">
+                <th colspan="5" style="background-color:#f2f2f2; color: black;">
                     Atendimentos Realizados
                 </th>
             </tr>
@@ -40,17 +40,11 @@
                 <th style="background-color:#f2f2f2; color: black; width: 3%;">
                     Data
                 </th>
-                <th style="background-color:#f2f2f2; color: black; width: 5%;">
+                <th style="background-color:#f2f2f2; color: black; width: 10%;">
                     CPF
                 </th>
-                <th style="background-color:#f2f2f2; color: black; width: 20%;">
-                    Nome
-                </th>
-                <th style="background-color:#f2f2f2; color: black; width: 3%;">
-                    Cód.
-                </th>
-                <th style="background-color:#f2f2f2; color: black; width: 20%;">
-                    Serviço
+                <th style="background-color:#f2f2f2; color: black; width: 40%;">
+                    Nome Completo
                 </th>
                 <th style="background-color:#f2f2f2; color: black; width: 5%; text-align: right;">
                     Valor
@@ -68,13 +62,11 @@
                     <td></td>
                     <td></td>
                     <td></td>
-                    <td></td>
-                    <td></td>
                 </tr>
             @endfor
         </tbody>
     </table>
-   
+
     <p>
         &nbsp;
     </p>

@@ -16,16 +16,16 @@ class DentalTreatmentGuide extends Page implements HasForms
 
     protected static string $view = 'filament.pages.dental-treatment-guide';
 
-    protected static ?string $title = 'Guia Tratamento Odontológico';
+    protected static ?string $title = 'Relação de Consultas Odontológicas';
 
-    protected static ?string $slug = 'guia-tratamento-odontologico';
+    protected static ?string $slug = 'relacao-consultas-odontologicas';
 
     public $data = [];
     public $partner_id;
 
     public static function getNavigationGroup(): ?string
     {
-        return 'Modelos';
+        return 'Relatórios';
     }
 
     protected function getFormSchema(): array
@@ -53,9 +53,7 @@ class DentalTreatmentGuide extends Page implements HasForms
     public function submit()
     {
         $data = $this->form->getState();
-        
+
         return redirect()->route('dental-treatment-guide-pdf', $data);
     }
-
-
 }
