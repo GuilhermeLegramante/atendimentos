@@ -32,7 +32,7 @@
     <table class="striped fit" style="width: 100%; float: left; margin-right: 4%;">
         <thead>
             <tr style="background-color:#f2f2f2; ">
-                <th colspan="4" style="background-color:#f2f2f2; color: black;">
+                <th colspan="7" style="background-color:#f2f2f2; color: black;">
                     Atendimentos Realizados
                 </th>
             </tr>
@@ -64,6 +64,9 @@
             @for ($i = 0; $i < 30; $i++)
                 <tr>
                     <td>&nbsp;</td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
                     <td></td>
                     <td></td>
                     <td></td>
