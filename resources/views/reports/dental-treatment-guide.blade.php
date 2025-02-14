@@ -29,7 +29,7 @@
         </tr>
     </table>
 
-    <table class="striped fit" style="width: 48%; float: left; margin-right: 4%;">
+    <table class="striped fit" style="width: 100%; float: left; margin-right: 4%;">
         <thead>
             <tr style="background-color:#f2f2f2; ">
                 <th colspan="4" style="background-color:#f2f2f2; color: black;">
@@ -38,10 +38,19 @@
             </tr>
             <tr>
                 <th style="background-color:#f2f2f2; color: black; width: 3%;">
-                    Código
+                    Data
+                </th>
+                <th style="background-color:#f2f2f2; color: black; width: 3%;">
+                    CPF
                 </th>
                 <th style="background-color:#f2f2f2; color: black; width: 20%;">
-                    Descrição
+                    Nome
+                </th>
+                <th style="background-color:#f2f2f2; color: black; width: 3%;">
+                    Cód.
+                </th>
+                <th style="background-color:#f2f2f2; color: black; width: 20%;">
+                    Serviço
                 </th>
                 <th style="background-color:#f2f2f2; color: black; width: 5%; text-align: right;">
                     Valor
@@ -62,40 +71,7 @@
             @endfor
         </tbody>
     </table>
-    <table class="striped fit" style="width: 48%; float: left; margin-right: 4%;">
-        <thead>
-            <tr style="background-color:#f2f2f2; ">
-                <th colspan="4" style="background-color:#f2f2f2; color: black;">
-                    Atendimentos Realizados
-                </th>
-            </tr>
-            <tr>
-                <th style="background-color:#f2f2f2; color: black; width: 3%;">
-                    Código
-                </th>
-                <th style="background-color:#f2f2f2; color: black; width: 20%;">
-                    Descrição
-                </th>
-                <th style="background-color:#f2f2f2; color: black; width: 5%; text-align: right;">
-                    Valor
-                </th>
-                <th style="background-color:#f2f2f2; color: black; width: 5%;">
-                    Assinatura
-                </th>
-            </tr>
-        </thead>
-        <tbody>
-            @for ($i = 0; $i < 30; $i++)
-                <tr>
-                    <td>&nbsp;</td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                </tr>
-            @endfor
-        </tbody>
-    </table>
-
+   
     <p>
         &nbsp;
     </p>
