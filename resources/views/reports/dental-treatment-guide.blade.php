@@ -40,7 +40,7 @@
                 <th style="background-color:#f2f2f2; color: black; width: 3%;">
                     Data
                 </th>
-                <th style="background-color:#f2f2f2; color: black; width: 3%;">
+                <th style="background-color:#f2f2f2; color: black; width: 5%;">
                     CPF
                 </th>
                 <th style="background-color:#f2f2f2; color: black; width: 20%;">
