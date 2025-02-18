@@ -214,7 +214,7 @@ class TreatmentResource extends Resource
                                     ->label('Valor Total'),
                                 TextInput::make('patient_value')
                                     ->visible(fn(Get $get) => !is_null($get('service_id')))
-                                    ->readOnly()
+                                    ->readOnly(!auth()->user()->is_admin)
                                     ->numeric()
                                     ->live()
                                     ->label('Valor p/ Segurado'),
