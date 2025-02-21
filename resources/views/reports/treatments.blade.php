@@ -14,7 +14,7 @@
     @if (count($treatments) > 0)
         <table class="striped fit" style="">
             <tr>
-                <td style="width: 15%;">
+                <td style="width: 15%; border: 1px solid black;">
                     <strong>Conveniado</strong>
                 </td>
                 <td>
@@ -22,27 +22,27 @@
                 </td>
             </tr>
             <tr>
-                <td style="width: 15%;">
+                <td style="width: 15%; border: 1px solid black;">
                     <strong>Total de Atendimentos</strong>
                 </td>
-                <td>
+                <td style="border: 1px solid black;">
                     <strong>{{ count($treatments) }}</strong>
                 </td>
             </tr>
             <tr>
-                <td style="width: 15%;">
+                <td style="width: 15%; border: 1px solid black;">
                     <strong>Período</strong>
                 </td>
-                <td>
+                <td style="border: 1px solid black;">
                     <strong>{{ date('d/m/Y', strtotime($startDate)) }} a
                         {{ date('d/m/Y', strtotime($endDate)) }}</strong>
                 </td>
             </tr>
             <tr>
-                <td style="width: 15%;">
+                <td style="width: 15%; border: 1px solid black;">
                     <strong>Valor Total</strong>
                 </td>
-                <td>
+                <td style="border: 1px solid black;">
                     <strong>R$ {{ number_format($totalServices, 2, ',', '.') }}</strong>
                 </td>
             </tr>
@@ -125,6 +125,8 @@
             {{ date('d/m/Y', strtotime($endDate)) }}.
         </h2>
     @endif
+
+    <p>&nbsp;</p>
 @endsection
 
 @section('footer')
