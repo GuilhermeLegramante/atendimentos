@@ -15,7 +15,7 @@ class SyncData extends Command
      *
      * @var string
      */
-    protected $signature = 'app:sync-data';
+    protected $signature = 'sync-data';
 
     /**
      * The console command description.
