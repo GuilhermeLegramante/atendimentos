@@ -12,7 +12,7 @@
 
 @section('content')
     @if (count($treatments) > 0)
-        <table class="striped fit" style="margin-top: -2%;">
+        <table class="striped fit" style="">
             <tr>
                 <td style="width: 15%;">
                     <strong>Conveniado</strong>
@@ -117,16 +117,6 @@
         {{-- <br> --}}
         {{-- </tbody>
             </table>  --}}
-
-        <table style="width: 100%;">
-
-        </table>
-        <hr>
-        <br>
-        <br>
-        <h1>
-            Valor Total: R$ {{ number_format($totalServices, 2, ',', '.') }}
-        </h1>
     @else
         <br>
         <br>
