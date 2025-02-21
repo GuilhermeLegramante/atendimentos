@@ -47,7 +47,7 @@
                 </td>
             </tr>
         </table>
-        <table class="striped" style="width: 100%; float: left; margin-right: 4%; border: 1px solid black;">
+        <table class="striped fit" style="width: 100%; float: left; margin-right: 4%; border: 1px solid black;">
             <thead>
                 <tr style="background-color:#f2f2f2; ">
                     <th colspan="4" style="background-color:#f2f2f2; color: black; border: 1px solid black;">
