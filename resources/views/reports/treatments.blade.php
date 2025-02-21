@@ -17,7 +17,7 @@
                 <td style="width: 15%; border: 1px solid black;">
                     <strong>Conveniado</strong>
                 </td>
-                <td>
+                <td style="border: 1px solid black;">
                     <strong>{{ $treatments->first()->partner->name }}</strong>
                 </td>
             </tr>
@@ -127,6 +127,7 @@
     @endif
 
     <p>&nbsp;</p>
+    <br>
 @endsection
 
 @section('footer')
