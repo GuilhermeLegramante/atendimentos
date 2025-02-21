@@ -12,19 +12,38 @@
 
 @section('content')
     @if (count($treatments) > 0)
-        <h1>
-            {{ count($treatments) }} atendimentos realizados de {{ date('d/m/Y', strtotime($startDate)) }} a
-            {{ date('d/m/Y', strtotime($endDate)) }}
-        </h1>
-        <hr>
-        <br>
         <table class="striped fit" style="margin-top: -2%;">
             <tr>
-                <td style="width: 15%; background-color: #f2f2f2;">
+                <td style="width: 15%;">
                     <strong>Conveniado</strong>
                 </td>
                 <td>
                     <strong>{{ $treatments->first()->partner->name }}</strong>
+                </td>
+            </tr>
+            <tr>
+                <td style="width: 15%;">
+                    <strong>Total de Atendimentos</strong>
+                </td>
+                <td>
+                    <strong>{{ count($treatments) }}</strong>
+                </td>
+            </tr>
+            <tr>
+                <td style="width: 15%;">
+                    <strong>Período</strong>
+                </td>
+                <td>
+                    <strong>{{ date('d/m/Y', strtotime($startDate)) }} a
+                        {{ date('d/m/Y', strtotime($endDate)) }}</strong>
+                </td>
+            </tr>
+            <tr>
+                <td style="width: 15%;">
+                    <strong>Valor Total</strong>
+                </td>
+                <td>
+                    <strong>R$ {{ number_format($totalServices, 2, ',', '.') }}</strong>
                 </td>
             </tr>
         </table>
@@ -36,8 +55,7 @@
                     </th>
                 </tr>
                 <tr>
-                    <th style="width: 5%; background-color:#f2f2f2; color: black; border: 1px solid black;">Data do
-                        Atendimento</th>
+                    <th style="width: 5%; background-color:#f2f2f2; color: black; border: 1px solid black;">Data</th>
                     <th style="width: 40%; background-color:#f2f2f2; color: black; border: 1px solid black;">Paciente</th>
                     <th style="width: 15%; background-color:#f2f2f2; color: black; border: 1px solid black;">Valor Total
                     </th>
