@@ -19,13 +19,13 @@ class ApiController extends Controller
 
     public function syncData()
     {
-        $url = 'http://45.4.20.6:8080/web/contracheque/public/';
+        set_time_limit(0);
 
-        $services = Http::get($url . 'servicos');
+        $url = 'https://sisprem.hardsoftsfa.com.br/web/contracheque/public/';
 
-        dd($services);
+        $services = Http::timeout(30)->get($url . 'servicos');
 
-        $people = Http::get($url . 'pessoas');
+        $people = Http::timeout(30)->get($url . 'pessoas');
 
         foreach ($services->json() as $value) {
             if (isset($value['code']) && isset($value['name'])) {
@@ -40,27 +40,32 @@ class ApiController extends Controller
                         'dependent_value' => (float) $value['dependentValue'],
                         'created_at' => now()
                     ]);
+                } else {
+                    if ($service->value != $value['value']) { // Caso o valor esteja diferente, atualiza o serviço
+                        Service::where('code', $value['code'])
+                            ->update(
+                                ['value' => $value['value']]
+                            );
+                    }
                 }
             }
         }
 
         foreach ($people->json() as $value) {
-            if (isset($value['inscricao'])) {
-                $person = Person::where('registration', $value['inscricao'])->get()->first();
-
-                if (!isset($person)) {
-                    Person::create([
-                        'registration' => $value['inscricao'],
-                        'name' => $value['nome'],
+            if (isset($value['registration'])) {
+                Person::updateOrCreate(
+                    ['registration' => $value['registration']], // Condição de busca
+                    [
+                        'name' => $value['name'],
+                        'cpf_cnpj' => $value['cpfCnpj'],
+                        'is_active' => $value['isActive'],
                         'partner' => $value['conveniado'],
                         'patient' => $value['segurado'],
                         'dependent' => $value['dependente'],
-                    ]);
-                }
+                    ] // Dados para criação ou atualização
+                );
             }
         }
-
-        dd('Dados sincronizados com sucesso!');
     }
 
     /**
