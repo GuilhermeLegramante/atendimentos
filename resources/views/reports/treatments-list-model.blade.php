@@ -14,13 +14,24 @@
 </style>
 
 @section('content')
-    <h2>
-        Conveniado: {{ $person->name }}
-    </h2>
-    <hr>
-    <br>
+    <table class="striped fit" style="margin-top: -2%;">
+        <tr>
+            <td style="width: 15%; background-color: #f2f2f2;">
+                <strong>Conveniado</strong>
+            </td>
+            <td>
+                <strong>{{ $person->name }}</strong>
+            </td>
+        </tr>
+    </table>
+
     <table class="striped" style="width: 100%; float: left; margin-right: 4%; border: 1px solid black;">
         <thead>
+            <tr style="background-color:#f2f2f2; ">
+                <th colspan="5" style="background-color:#f2f2f2; color: black; border: 1px solid black;">
+                    Atendimentos Realizados
+                </th>
+            </tr>
             <tr>
                 <th style="width: 1%; background-color:#f2f2f2; color: black; border: 1px solid black;">N°</th>
                 <th style="width: 15%; background-color:#f2f2f2; color: black; border: 1px solid black;">Data do Atendimento

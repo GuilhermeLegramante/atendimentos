@@ -18,14 +18,32 @@
         </h1>
         <hr>
         <br>
-        <table class="striped">
+        <table class="striped fit" style="margin-top: -2%;">
+            <tr>
+                <td style="width: 15%; background-color: #f2f2f2;">
+                    <strong>Conveniado</strong>
+                </td>
+                <td>
+                    <strong>{{ $treatments->first()->partner->name }}</strong>
+                </td>
+            </tr>
+        </table>
+        <table class="striped" style="width: 100%; float: left; margin-right: 4%; border: 1px solid black;">
             <thead>
+                <tr style="background-color:#f2f2f2; ">
+                    <th colspan="5" style="background-color:#f2f2f2; color: black; border: 1px solid black;">
+                        Atendimentos Realizados
+                    </th>
+                </tr>
                 <tr>
-                    <th>Data do Atendimento</th>
-                    <th>Conveniado</th>
-                    <th>Paciente</th>
-                    <th>Valor Total</th>
-                    <th>Valor Total para o Segurado</th>
+                    <th style="width: 5%; background-color:#f2f2f2; color: black; border: 1px solid black;">Data do
+                        Atendimento</th>
+                    <th style="width: 40%; background-color:#f2f2f2; color: black; border: 1px solid black;">Paciente</th>
+                    <th style="width: 15%; background-color:#f2f2f2; color: black; border: 1px solid black;">Valor Total
+                    </th>
+                    <th style="width: 15%; background-color:#f2f2f2; color: black; border: 1px solid black;">Valor Total
+                        para
+                        o Segurado</th>
                 </tr>
             </thead>
             <tbody>
@@ -39,11 +57,12 @@
                         @endphp
                     @endforeach
                     <tr>
-                        <td>{{ \Carbon\Carbon::parse($treatment->date)->format('d/m/Y') }}</td>
-                        <td>{{ $treatment->partner->name ?? 'Não informado' }}</td>
-                        <td>{{ $treatment->patient->name ?? 'Não informado' }}</td>
-                        <td>R$ {{ number_format($totalValue, 2, ',', '.') }}</td>
-                        <td>R$ {{ number_format($treatment->provided_services_sum_patient_value, 2, ',', '.') }}</td>
+                        <td style="border: 1px solid black;">{{ \Carbon\Carbon::parse($treatment->date)->format('d/m/Y') }}
+                        </td>
+                        <td style="border: 1px solid black;">{{ $treatment->patient->name ?? 'Não informado' }}</td>
+                        <td style="border: 1px solid black;">R$ {{ number_format($totalValue, 2, ',', '.') }}</td>
+                        <td style="border: 1px solid black;">R$
+                            {{ number_format($treatment->provided_services_sum_patient_value, 2, ',', '.') }}</td>
                     </tr>
                 @endforeach
             </tbody>
