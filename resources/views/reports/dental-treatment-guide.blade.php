@@ -37,7 +37,10 @@
                 </th>
             </tr>
             <tr>
-                <th style="background-color:#f2f2f2; color: black; width: 3%; border: 1px solid black;">
+                <th style="background-color:#f2f2f2; color: black; width: 1%; border: 1px solid black;">
+                    N°
+                </th>
+                <th style="background-color:#f2f2f2; color: black; width: 5%; border: 1px solid black;">
                     Data
                 </th>
                 <th style="background-color:#f2f2f2; color: black; width: 10%; border: 1px solid black;">
@@ -57,6 +60,7 @@
         <tbody>
             @for ($i = 0; $i < 30; $i++)
                 <tr>
+                    <td style="border: 1px solid black;">{{ $i + 1 }}</td>
                     <td style="border: 1px solid black;">&nbsp;</td>
                     <td style="border: 1px solid black;"></td>
                     <td style="border: 1px solid black;"></td>

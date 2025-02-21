@@ -13,7 +13,8 @@
 @section('content')
     @if (count($treatments) > 0)
         <h1>
-            Atendimentos realizados de {{ date('d/m/Y', strtotime($startDate)) }} a {{ date('d/m/Y', strtotime($endDate)) }}
+            {{ count($treatments) }} atendimentos realizados de {{ date('d/m/Y', strtotime($startDate)) }} a
+            {{ date('d/m/Y', strtotime($endDate)) }}
         </h1>
         <hr>
         <br>
