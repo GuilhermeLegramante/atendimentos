@@ -102,10 +102,10 @@ class TreatmentResource extends Resource
                             ->relationship(
                                 name: 'patient',
                                 titleAttribute: 'name',
-                                // modifyQueryUsing: fn(Builder $query) => $query->where('is_active', 1)
-                                //     ->where(function ($query) {
-                                //         $query->where('patient', 1)->orWhere('dependent', 1);
-                                //     })
+                                modifyQueryUsing: fn(Builder $query) => $query->where('is_active', 1)
+                                    ->where(function ($query) {
+                                        $query->where('patient', 1)->orWhere('dependent', 1);
+                                    })
                             )
                             ->columnSpanFull()
                             ->getOptionLabelFromRecordUsing(fn(Person $record) => "{$record->cpf_cnpj} - {$record->name}")
