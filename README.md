@@ -12,4 +12,6 @@
     - Adicionando CPF ou CNPJ e Ativo nas Pessoas
 - 2.4.0 (09/01/2025)
     - Modelo de relatório de consultas
+- 2.4.1 (25/03/2025)
+    - Correção de bug ao excluir paciente e serviço no select (form de atendimento)
     

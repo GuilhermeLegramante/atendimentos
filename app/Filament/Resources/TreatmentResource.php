@@ -140,22 +140,24 @@ class TreatmentResource extends Resource
                                     ->required()
                                     ->live()
                                     ->afterStateUpdated(function (Set $set, Get $get, Service $service) {
-                                        $service = Service::find($get('service_id'));
-                                        $person = Person::find($get('../../patient_id'));
+                                        if (!is_null($get('../../patient_id')) && !is_null($get('service_id'))) {
+                                            $service = Service::find($get('service_id'));
+                                            $person = Person::find($get('../../patient_id'));
 
-                                        if ($person->dependent == 1) {
-                                            $patientPercentual = $service->dependent_value;
-                                        } else {
-                                            $patientPercentual = $service->titular_value;
+                                            if ($person->dependent == 1) {
+                                                $patientPercentual = $service->dependent_value;
+                                            } else {
+                                                $patientPercentual = $service->titular_value;
+                                            }
+
+                                            $set('value', $service->value);
+
+                                            $total = (float) $get('value') * (float) $get('quantity');
+                                            $set('total_value', number_format((float)$total, 2, '.', ''));
+
+                                            $patientValue = ($total * $patientPercentual) / 100;
+                                            $set('patient_value', number_format((float)$patientValue, 2, '.', ''));
                                         }
-
-                                        $set('value', $service->value);
-
-                                        $total = (float) $get('value') * (float) $get('quantity');
-                                        $set('total_value', number_format((float)$total, 2, '.', ''));
-
-                                        $patientValue = ($total * $patientPercentual) / 100;
-                                        $set('patient_value', number_format((float)$patientValue, 2, '.', ''));
                                     }),
                                 Textarea::make('description')
                                     ->visible(fn(Get $get) => !is_null($get('service_id')))
@@ -166,20 +168,22 @@ class TreatmentResource extends Resource
                                     ->visible(fn(Get $get) => !is_null($get('service_id')))
                                     ->numeric()
                                     ->afterStateUpdated(function (Set $set, Get $get, Service $service) {
-                                        $service = Service::find($get('service_id'));
-                                        $person = Person::find($get('../../patient_id'));
+                                        if (!is_null($get('../../patient_id')) && !is_null($get('service_id'))) {
+                                            $service = Service::find($get('service_id'));
+                                            $person = Person::find($get('../../patient_id'));
 
-                                        if ($person->dependent == 1) {
-                                            $patientPercentual = $service->dependent_value;
-                                        } else {
-                                            $patientPercentual = $service->titular_value;
+                                            if ($person->dependent == 1) {
+                                                $patientPercentual = $service->dependent_value;
+                                            } else {
+                                                $patientPercentual = $service->titular_value;
+                                            }
+
+                                            $total = (float) $get('value') * (float) $get('quantity');
+                                            $set('total_value', number_format((float)$total, 2, '.', ''));
+
+                                            $patientValue = ($total * $patientPercentual) / 100;
+                                            $set('patient_value', number_format((float)$patientValue, 2, '.', ''));
                                         }
-
-                                        $total = (float) $get('value') * (float) $get('quantity');
-                                        $set('total_value', number_format((float)$total, 2, '.', ''));
-
-                                        $patientValue = ($total * $patientPercentual) / 100;
-                                        $set('patient_value', number_format((float)$patientValue, 2, '.', ''));
                                     })
                                     ->live(debounce: 500)
                                     ->label('Valor Unitário'),
@@ -188,20 +192,23 @@ class TreatmentResource extends Resource
                                     ->label('Quantidade')
                                     ->live()
                                     ->afterStateUpdated(function (Set $set, Get $get) {
-                                        $service = Service::find($get('service_id'));
-                                        $person = Person::find($get('../../patient_id'));
+                                        if (!is_null($get('../../patient_id')) && !is_null($get('service_id'))) {
 
-                                        if ($person->dependent == 1) {
-                                            $patientPercentual = $service->dependent_value;
-                                        } else {
-                                            $patientPercentual = $service->titular_value;
+                                            $service = Service::find($get('service_id'));
+                                            $person = Person::find($get('../../patient_id'));
+
+                                            if ($person->dependent == 1) {
+                                                $patientPercentual = $service->dependent_value;
+                                            } else {
+                                                $patientPercentual = $service->titular_value;
+                                            }
+
+                                            $total = (float) $get('value') * (float) $get('quantity');
+                                            $set('total_value', number_format((float)$total, 2, '.', ''));
+
+                                            $patientValue = ($total * $patientPercentual) / 100;
+                                            $set('patient_value', number_format((float)$patientValue, 2, '.', ''));
                                         }
-
-                                        $total = (float) $get('value') * (float) $get('quantity');
-                                        $set('total_value', number_format((float)$total, 2, '.', ''));
-
-                                        $patientValue = ($total * $patientPercentual) / 100;
-                                        $set('patient_value', number_format((float)$patientValue, 2, '.', ''));
                                     })
                                     ->default(1)
                                     ->numeric()
