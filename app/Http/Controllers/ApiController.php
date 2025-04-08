@@ -14,7 +14,7 @@ class ApiController extends Controller
     {
         return Treatment::with('patient', 'partner', 'providedServices', 'providedServices.service')
             // ->where('ok', false)
-            ->paginate(100);
+            ->paginate(200);
     }
 
     public function syncData()
