@@ -16,6 +16,7 @@ class Service extends Model
         'value',
         'titular_value',
         'dependent_value',
+        'is_active'
     ];
 
     public function tratments(): HasMany

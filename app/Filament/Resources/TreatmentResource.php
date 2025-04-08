@@ -134,11 +134,15 @@ class TreatmentResource extends Resource
                             ->schema([
                                 Select::make('service_id')
                                     ->label('Serviço')
-                                    ->relationship('service', 'name')
                                     ->columnSpanFull()
                                     ->getOptionLabelFromRecordUsing(fn(Service $record) => "{$record->code} - {$record->name}")
                                     ->required()
                                     ->live()
+                                    ->relationship(
+                                        name: 'service',
+                                        titleAttribute: 'name',
+                                        modifyQueryUsing: fn(Builder $query) => $query->where('is_active', 1)
+                                    )
                                     ->afterStateUpdated(function (Set $set, Get $get, Service $service) {
                                         if (!is_null($get('../../patient_id')) && !is_null($get('service_id'))) {
                                             $service = Service::find($get('service_id'));
