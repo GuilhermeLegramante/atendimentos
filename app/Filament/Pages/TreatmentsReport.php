@@ -84,12 +84,12 @@ class TreatmentsReport extends Page implements HasForms
 
             DatePicker::make('start_date')
                 ->label('Data Inicial')
-                ->disabled()
+                ->readOnly()
                 ->reactive(),
 
             DatePicker::make('end_date')
                 ->label('Data Final')
-                ->disabled()
+                ->readOnly()
                 ->reactive(),
             Select::make('partner_id')
                 ->columnSpanFull()
