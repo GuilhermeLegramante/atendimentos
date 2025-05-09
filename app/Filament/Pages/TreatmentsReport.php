@@ -92,7 +92,7 @@ class TreatmentsReport extends Page implements HasForms
 
                     Select::make('partner_id')
                         ->columnSpanFull()
-                        ->label('Conveniado (profissional ou empresa que realizou o(s) atendimento(s))')
+                        ->label('Conveniado (profissional ou empresa que realizou o atendimento)')
                         ->options(function () {
                             return DB::table('people')
                                 ->join('user_people', 'user_people.person_id', '=', 'people.id')
