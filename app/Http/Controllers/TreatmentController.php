@@ -27,8 +27,11 @@ class TreatmentController extends Controller
 
     public function treatmentsReport(Request $request)
     {
-        $startDate = $request->start_date;
-        $endDate = $request->end_date;
+        $start = Carbon::createFromDate($request->year, $request->month, 1)->startOfMonth();
+        $end = Carbon::createFromDate($request->year, $request->month, 1)->endOfMonth();
+    
+        $startDate = $start->format('Y-m-d');
+        $endDate = $end->format('Y-m-d');
         $partnerId = $request->partner_id;
 
         $treatments = Treatment::withSum('providedServices', 'patient_value')
