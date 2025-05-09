@@ -33,6 +33,18 @@ class TreatmentsReport extends Page implements HasForms
     public $end_date;
     public $partner_id;
 
+    public function mount()
+    {
+        $ano = now()->year;
+        $mes = now()->month;
+
+        $this->data['year'] = $ano;
+        $this->data['month'] = str_pad($mes, 2, '0', STR_PAD_LEFT);
+        $this->start_date = Carbon::createFromDate($ano, $mes, 1)->startOfMonth()->format('Y-m-d');
+        $this->end_date = Carbon::createFromDate($ano, $mes, 1)->endOfMonth()->format('Y-m-d');
+    }
+
+
     public static function getNavigationGroup(): ?string
     {
         return 'Relatórios';
@@ -85,12 +97,15 @@ class TreatmentsReport extends Page implements HasForms
             DatePicker::make('start_date')
                 ->label('Data Inicial')
                 ->readOnly()
-                ->reactive(),
+                ->reactive()
+                ->default(fn($get) => $this->start_date),
 
             DatePicker::make('end_date')
                 ->label('Data Final')
                 ->readOnly()
-                ->reactive(),
+                ->reactive()
+                ->default(fn($get) => $this->end_date),
+                
             Select::make('partner_id')
                 ->columnSpanFull()
                 ->label('Conveniado')
@@ -114,11 +129,5 @@ class TreatmentsReport extends Page implements HasForms
     {
         $data = $this->form->getState();
         return redirect()->route('treatments-report-pdf', $data);
-    }
-
-
-    public function mount()
-    {
-        // return Redirect::route('treatments-report-pdf');
     }
 }
