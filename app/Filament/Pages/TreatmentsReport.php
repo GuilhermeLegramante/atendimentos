@@ -64,6 +64,15 @@ class TreatmentsReport extends Page implements HasForms
                     $anoAtual - 2 => $anoAtual - 2,
                 ])
                 ->default($anoAtual)
+                ->afterStateUpdated(function ($state, callable $set, callable $get, $livewire) {
+                    $month = $get('month') ?? now()->month;
+
+                    $start = Carbon::createFromDate($state, $month, 1)->startOfMonth();
+                    $end = Carbon::createFromDate($state, $month, 1)->endOfMonth();
+
+                    $livewire->start_date = $start->format('Y-m-d');
+                    $livewire->end_date = $end->format('Y-m-d');
+                })
                 ->reactive(),
 
             Select::make('month')
@@ -84,14 +93,14 @@ class TreatmentsReport extends Page implements HasForms
                 ])
                 ->default($mesAtual)
                 ->reactive()
-                ->afterStateUpdated(function ($state, callable $set, callable $get) {
+                ->afterStateUpdated(function ($state, callable $set, callable $get, $livewire) {
                     $year = $get('year') ?? now()->year;
 
                     $start = Carbon::createFromDate($year, $state, 1)->startOfMonth();
                     $end = Carbon::createFromDate($year, $state, 1)->endOfMonth();
 
-                    $set('start_date', $start->format('Y-m-d'));
-                    $set('end_date', $end->format('Y-m-d'));
+                    $livewire->start_date = $start->format('Y-m-d');
+                    $livewire->end_date = $end->format('Y-m-d');
                 }),
 
             DatePicker::make('start_date')
@@ -105,7 +114,7 @@ class TreatmentsReport extends Page implements HasForms
                 ->readOnly()
                 ->reactive()
                 ->default(fn($get) => $this->end_date),
-                
+
             Select::make('partner_id')
                 ->columnSpanFull()
                 ->label('Conveniado')
