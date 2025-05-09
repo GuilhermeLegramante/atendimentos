@@ -6,6 +6,7 @@ use App\Models\Treatment;
 use App\Utils\ReportFactory;
 use Carbon\Carbon;
 use Filament\Forms\Components\DatePicker;
+use Filament\Forms\Components\Section;
 use Filament\Forms\Components\Select;
 use Filament\Forms\Components\TextInput;
 use Filament\Forms\Concerns\InteractsWithForms;
@@ -54,36 +55,41 @@ class TreatmentsReport extends Page implements HasForms
         $currentMonth = now()->format('m');
 
         return [
-            Select::make('year')
-                ->label('Ano')
-                ->options([
-                    $currentYear => $currentYear,
-                    $currentYear - 1 => $currentYear - 1,
-                    $currentYear - 2 => $currentYear - 2,
-                ])
-                ->default($currentYear)
-                ->required()
-                ->reactive(),
+            Section::make('Período')
+                ->description('Selecione o mês e o ano. Serão considerados os atendimentos lançados do primeiro ao último dia do mês selecionado.')
+                ->columns(2)
+                ->schema([
+                    Select::make('year')
+                        ->label('Ano')
+                        ->options([
+                            $currentYear => $currentYear,
+                            $currentYear - 1 => $currentYear - 1,
+                            $currentYear - 2 => $currentYear - 2,
+                        ])
+                        ->default($currentYear)
+                        ->required()
+                        ->reactive(),
 
-            Select::make('month')
-                ->label('Mês')
-                ->options([
-                    '01' => 'Janeiro',
-                    '02' => 'Fevereiro',
-                    '03' => 'Março',
-                    '04' => 'Abril',
-                    '05' => 'Maio',
-                    '06' => 'Junho',
-                    '07' => 'Julho',
-                    '08' => 'Agosto',
-                    '09' => 'Setembro',
-                    '10' => 'Outubro',
-                    '11' => 'Novembro',
-                    '12' => 'Dezembro',
-                ])
-                ->default($currentMonth)
-                ->required()
-                ->reactive(),
+                    Select::make('month')
+                        ->label('Mês')
+                        ->options([
+                            '01' => 'Janeiro',
+                            '02' => 'Fevereiro',
+                            '03' => 'Março',
+                            '04' => 'Abril',
+                            '05' => 'Maio',
+                            '06' => 'Junho',
+                            '07' => 'Julho',
+                            '08' => 'Agosto',
+                            '09' => 'Setembro',
+                            '10' => 'Outubro',
+                            '11' => 'Novembro',
+                            '12' => 'Dezembro',
+                        ])
+                        ->default($currentMonth)
+                        ->required()
+                        ->reactive(),
+                ]),
 
             Select::make('partner_id')
                 ->columnSpanFull()
@@ -100,7 +106,7 @@ class TreatmentsReport extends Page implements HasForms
                 ->getOptionLabelUsing(fn($value) => DB::table('people')
                     ->where('id', $value)
                     ->select(DB::raw("CONCAT(people.registration, ' - ', people.name) as label"))
-                    ->first()->label),
+                    ->first()?->label ?? ''),
         ];
     }
 
