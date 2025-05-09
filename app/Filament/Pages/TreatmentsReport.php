@@ -40,15 +40,57 @@ class TreatmentsReport extends Page implements HasForms
 
     protected function getFormSchema(): array
     {
+        $anoAtual = now()->year;
+        $mesAtual = now()->format('m');
+
         return [
+            Select::make('year')
+                ->label('Ano')
+                ->options([
+                    $anoAtual => $anoAtual,
+                    $anoAtual - 1 => $anoAtual - 1,
+                    $anoAtual - 2 => $anoAtual - 2,
+                ])
+                ->default($anoAtual)
+                ->reactive(),
+
+            Select::make('month')
+                ->label('Mês')
+                ->options([
+                    '01' => 'Janeiro',
+                    '02' => 'Fevereiro',
+                    '03' => 'Março',
+                    '04' => 'Abril',
+                    '05' => 'Maio',
+                    '06' => 'Junho',
+                    '07' => 'Julho',
+                    '08' => 'Agosto',
+                    '09' => 'Setembro',
+                    '10' => 'Outubro',
+                    '11' => 'Novembro',
+                    '12' => 'Dezembro',
+                ])
+                ->default($mesAtual)
+                ->reactive()
+                ->afterStateUpdated(function ($state, callable $set, callable $get) {
+                    $year = $get('year') ?? now()->year;
+
+                    $start = Carbon::createFromDate($year, $state, 1)->startOfMonth();
+                    $end = Carbon::createFromDate($year, $state, 1)->endOfMonth();
+
+                    $set('start_date', $start->format('Y-m-d'));
+                    $set('end_date', $end->format('Y-m-d'));
+                }),
+
             DatePicker::make('start_date')
                 ->label('Data Inicial')
-                ->required()
-                ->placeholder('Selecione a data inicial'),
+                ->disabled()
+                ->reactive(),
+
             DatePicker::make('end_date')
                 ->label('Data Final')
-                ->required()
-                ->placeholder('Selecione a data final'),
+                ->disabled()
+                ->reactive(),
             Select::make('partner_id')
                 ->columnSpanFull()
                 ->label('Conveniado')
