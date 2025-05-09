@@ -317,40 +317,38 @@ class TreatmentResource extends Resource
                         // Formatar o total como moeda BRL
                         return 'R$ ' . number_format($totalValue, 2, ',', '.');
                     })
-                    ->summarize(Summarizer::make()
-                        ->label('Total Serviços')
-                        ->money('BRL')
-                        ->using(
-                            fn(DatabaseBuilder $query): float =>
-                            $query
-                                ->selectRaw('SUM(value * quantity) as total')->value('total')
-                        ))
-                    // ->summarize([
-                    //     // Total geral
-                    //     Summarizer::make()
-                    //         ->label('Total')
-                    //         ->money('BRL')
-                    //         ->using(
-                    //             fn(DatabaseBuilder $query): float =>
-                    //             DB::table('provided_services')
-                    //                 ->whereIn('treatment_id', $query->pluck('id'))
-                    //                 ->sum('total')
-                    //         ),
+                    // ->summarize(Summarizer::make()
+                    //     ->label('Total Serviços')
+                    //     ->money('BRL')
+                    //     ->using(
+                    //         fn(DatabaseBuilder $query): float =>
+                    //         $query
+                    //             ->selectRaw('SUM(value * quantity) as total')->value('total')
+                    //     ))
+                    ->summarize([
+                        // Total geral
+                        Summarizer::make()
+                            ->label('Total')
+                            ->money('BRL')
+                            ->using(
+                                fn(DatabaseBuilder $query): float =>
+                                $query
+                                    ->selectRaw('SUM(value * quantity) as total')->value('total')
+                            ),
 
-                    //     // Total auditado (treatments.ok = true)
-                    //     Summarizer::make()
-                    //         ->label('Auditado')
-                    //         ->money('BRL')
-                    //         ->color('success')
-                    //         ->using(
-                    //             fn(DatabaseBuilder $query): float =>
-                    //             DB::table('provided_services')
-                    //                 ->join('treatments', 'treatments.id', '=', 'provided_services.treatment_id')
-                    //                 ->whereIn('treatments.id', $query->pluck('id'))
-                    //                 ->where('treatments.ok', true)
-                    //                 ->sum('provided_services.total')
-                    //         ),
-                    // ])
+                        // Total auditado (treatments.ok = true)
+                        Summarizer::make()
+                            ->label('Total Auditado')
+                            ->money('BRL')
+                            ->using(
+                                fn(DatabaseBuilder $query): float =>
+                                $query
+                                    ->join('treatments', 'treatments.id', '=', 'provided_services.treatment_id')
+                                    ->where('treatments.ok', true)
+                                    ->selectRaw('SUM(value * quantity) as total')
+                                    ->value('total') ?? 0
+                            ),
+                    ])
                     ->toggleable(isToggledHiddenByDefault: false),
 
                 ToggleColumn::make('ok')
