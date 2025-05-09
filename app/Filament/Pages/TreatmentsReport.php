@@ -33,6 +33,7 @@ class TreatmentsReport extends Page implements HasForms
     public $end_date;
     public $partner_id;
     public $year;
+    public $month;
 
     public function mount()
     {
