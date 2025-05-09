@@ -89,24 +89,26 @@ class TreatmentsReport extends Page implements HasForms
                         ->default($currentMonth)
                         ->required()
                         ->reactive(),
+
+                    Select::make('partner_id')
+                        ->columnSpanFull()
+                        ->label('Conveniado (profissional ou empresa que realizou o(s) atendimento(s)')
+                        ->options(function () {
+                            return DB::table('people')
+                                ->join('user_people', 'user_people.person_id', '=', 'people.id')
+                                ->where('partner', 1)
+                                ->where('user_people.user_id', auth()->user()->id)
+                                ->select('people.id', DB::raw("CONCAT(people.registration, ' - ', people.name) as label"))
+                                ->pluck('label', 'people.id');
+                        })
+                        ->required()
+                        ->getOptionLabelUsing(fn($value) => DB::table('people')
+                            ->where('id', $value)
+                            ->select(DB::raw("CONCAT(people.registration, ' - ', people.name) as label"))
+                            ->first()?->label ?? ''),
                 ]),
 
-            Select::make('partner_id')
-                ->columnSpanFull()
-                ->label('Conveniado')
-                ->options(function () {
-                    return DB::table('people')
-                        ->join('user_people', 'user_people.person_id', '=', 'people.id')
-                        ->where('partner', 1)
-                        ->where('user_people.user_id', auth()->user()->id)
-                        ->select('people.id', DB::raw("CONCAT(people.registration, ' - ', people.name) as label"))
-                        ->pluck('label', 'people.id');
-                })
-                ->required()
-                ->getOptionLabelUsing(fn($value) => DB::table('people')
-                    ->where('id', $value)
-                    ->select(DB::raw("CONCAT(people.registration, ' - ', people.name) as label"))
-                    ->first()?->label ?? ''),
+
         ];
     }
 
