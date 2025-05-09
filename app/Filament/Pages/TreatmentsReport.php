@@ -103,17 +103,17 @@ class TreatmentsReport extends Page implements HasForms
                     $livewire->end_date = $end->format('Y-m-d');
                 }),
 
-            DatePicker::make('start_date')
-                ->label('Data Inicial')
-                ->readOnly()
-                ->reactive()
-                ->default(fn($get) => $this->start_date),
+            // DatePicker::make('start_date')
+            //     ->label('Data Inicial')
+            //     ->readOnly()
+            //     ->reactive()
+            //     ->default(fn($get) => $this->start_date),
 
-            DatePicker::make('end_date')
-                ->label('Data Final')
-                ->readOnly()
-                ->reactive()
-                ->default(fn($get) => $this->end_date),
+            // DatePicker::make('end_date')
+            //     ->label('Data Final')
+            //     ->readOnly()
+            //     ->reactive()
+            //     ->default(fn($get) => $this->end_date),
 
             Select::make('partner_id')
                 ->columnSpanFull()
