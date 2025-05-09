@@ -50,18 +50,19 @@ class TreatmentsReport extends Page implements HasForms
 
     protected function getFormSchema(): array
     {
-        $anoAtual = now()->year;
-        $mesAtual = now()->format('m');
+        $currentYear = now()->year;
+        $currentMonth = now()->format('m');
 
         return [
             Select::make('year')
                 ->label('Ano')
                 ->options([
-                    $anoAtual => $anoAtual,
-                    $anoAtual - 1 => $anoAtual - 1,
-                    $anoAtual - 2 => $anoAtual - 2,
+                    $currentYear => $currentYear,
+                    $currentYear - 1 => $currentYear - 1,
+                    $currentYear - 2 => $currentYear - 2,
                 ])
-                ->default($anoAtual)
+                ->default($currentYear)
+                ->required()
                 ->reactive(),
 
             Select::make('month')
@@ -80,7 +81,8 @@ class TreatmentsReport extends Page implements HasForms
                     '11' => 'Novembro',
                     '12' => 'Dezembro',
                 ])
-                ->default($mesAtual)
+                ->default($currentMonth)
+                ->required()
                 ->reactive(),
 
             Select::make('partner_id')
