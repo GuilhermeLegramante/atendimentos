@@ -51,10 +51,17 @@ class SyncData extends Command
                         'created_at' => now()
                     ]);
                 } else {
-                    if ($service->value != $value['value']) { // Caso o valor esteja diferente, atualiza o serviço
+                    if ($service->value != $value['value'] || $service->name != $value['name']) { // Caso o valor esteja diferente, atualiza o serviço
                         Service::where('code', $value['code'])
                             ->update(
-                                ['value' => $value['value']]
+                                [
+                                    'code' => $value['code'],
+                                    'name' => $value['name'],
+                                    'value' => (float) $value['value'],
+                                    'titular_value' => (float) $value['titularValue'],
+                                    'dependent_value' => (float) $value['dependentValue'],
+                                    'updated_at' => now()
+                                ]
                             );
                     }
                 }
