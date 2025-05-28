@@ -14,6 +14,7 @@ use Filament\Panel;
 use Filament\PanelProvider;
 use Filament\Support\Colors\Color;
 use Filament\Tables\Columns\TextColumn;
+use Filament\Tables\Table;
 use Filament\Widgets;
 use Hasnayeen\Themes\Http\Middleware\SetTheme;
 use Hasnayeen\Themes\ThemesPlugin;
@@ -40,6 +41,10 @@ class AdminPanelProvider extends PanelProvider
         TextColumn::configureUsing(function (TextColumn $textColumn): void {
             $textColumn
                 ->sortable();
+        });
+
+        Table::configureUsing(function (Table $table) {
+            $table->paginationPageOptions([10, 25, 50, 100]); // Não inclui -1, que é o "Ver todos"
         });
         
         return $panel
