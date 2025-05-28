@@ -354,6 +354,7 @@ class TreatmentResource extends Resource
                 ToggleColumn::make('ok')
                     ->label('Auditado')
                     ->alignCenter()
+                    ->visible(auth()->user()->is_admin)
                     ->sortable()
                     ->toggleable(isToggledHiddenByDefault: false),
                 TextColumn::make('created_at')
