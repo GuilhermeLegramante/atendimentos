@@ -64,6 +64,13 @@ class PersonResource extends Resource
                 Tables\Columns\TextColumn::make('name')
                     ->label('Nome')
                     ->searchable(),
+                Tables\Columns\TextColumn::make('address')
+                    ->label('Endereço')
+                    ->toggleable(isToggledHiddenByDefault: true)
+                    ->searchable(),
+                Tables\Columns\TextColumn::make('phone')
+                    ->toggleable(isToggledHiddenByDefault: true)
+                    ->label('Telefone'),
                 IconColumn::make('partner')
                     ->label('Conveniado')
                     ->alignCenter()
