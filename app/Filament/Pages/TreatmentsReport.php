@@ -16,6 +16,7 @@ use Filament\Pages\Page;
 use Illuminate\Support\Facades\Redirect;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Support\Facades\DB;
+use Leandrocfe\FilamentPtbrFormFields\PhoneNumber;
 
 class TreatmentsReport extends Page implements HasForms
 {
@@ -33,6 +34,9 @@ class TreatmentsReport extends Page implements HasForms
     public $partner_id;
     public $year;
     public $month;
+
+    public $address;
+    public $phone;
 
     public function mount()
     {
@@ -102,19 +106,42 @@ class TreatmentsReport extends Page implements HasForms
                                 ->pluck('label', 'people.id');
                         })
                         ->required()
-                        ->getOptionLabelUsing(fn($value) => DB::table('people')
-                            ->where('id', $value)
-                            ->select(DB::raw("CONCAT(people.registration, ' - ', people.name) as label"))
-                            ->first()?->label ?? ''),
-                ]),
+                        ->reactive()
+                        ->afterStateUpdated(function ($state, callable $set) {
+                            $partner = DB::table('people')->where('id', $state)->first();
+                            $set('address', $partner->address ?? '');
+                            $set('phone', $partner->phone ?? '');
+                        }),
 
+                    TextInput::make('address')
+                        ->label('Endereço do Conveniado')
+                        ->columnSpanFull()
+                        ->required()
+                        ->visible(fn($get) => filled($get('partner_id'))),
 
+                    PhoneNumber::make('phone')
+                        ->label('Telefone para Contato')
+                        ->columnSpanFull()
+                        ->required()
+                        ->visible(fn($get) => filled($get('partner_id'))),
+                ])
         ];
     }
 
     public function submit()
     {
         $data = $this->form->getState();
+
+        // Atualiza os dados do conveniado
+        if (!empty($data['partner_id'])) {
+            DB::table('people')
+                ->where('id', $data['partner_id'])
+                ->update([
+                    'address' => $data['address'],
+                    'phone' => $data['phone'],
+                ]);
+        }
+
         return redirect()->route('treatments-report-pdf', $data);
     }
 }

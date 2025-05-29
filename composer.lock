@@ -3685,12 +3685,12 @@
             "type": "library",
             "extra": {
                 "laravel": {
-                    "providers": [
-                        "Leandrocfe\\FilamentPtbrFormFields\\FilamentPtbrFormFieldsServiceProvider"
-                    ],
                     "aliases": {
                         "FilamentPtbrFormFields": "Leandrocfe\\FilamentPtbrFormFields\\Facades\\FilamentPtbrFormFields"
-                    }
+                    },
+                    "providers": [
+                        "Leandrocfe\\FilamentPtbrFormFields\\FilamentPtbrFormFieldsServiceProvider"
+                    ]
                 }
             },
             "autoload": {

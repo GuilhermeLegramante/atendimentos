@@ -18,5 +18,7 @@ class Person extends Model
         'partner',
         'patient',
         'dependent',
+        'address',
+        'phone',
     ];
 }

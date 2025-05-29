@@ -23,6 +23,22 @@
             </tr>
             <tr>
                 <td style="width: 15%; border: 1px solid black;">
+                    <strong>Endereço</strong>
+                </td>
+                <td style="border: 1px solid black;">
+                    {{ $treatments->first()->partner->address ?? '—' }}
+                </td>
+            </tr>
+            <tr>
+                <td style="width: 15%; border: 1px solid black;">
+                    <strong>Telefone</strong>
+                </td>
+                <td style="border: 1px solid black;">
+                    {{ $treatments->first()->partner->phone ?? '—' }}
+                </td>
+            </tr>
+            <tr>
+                <td style="width: 15%; border: 1px solid black;">
                     <strong>Total de Atendimentos</strong>
                 </td>
                 <td style="border: 1px solid black;">
