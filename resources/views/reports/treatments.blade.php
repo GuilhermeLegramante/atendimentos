@@ -26,7 +26,9 @@
                     <strong>Endereço</strong>
                 </td>
                 <td style="border: 1px solid black;">
-                    {{ strtoupper($treatments->first()->partner->address ?? '—') }}
+                    <strong>
+                        {{ strtoupper($treatments->first()->partner->address ?? '—') }}
+                    </strong>
                 </td>
             </tr>
             <tr>
@@ -34,7 +36,9 @@
                     <strong>Telefone</strong>
                 </td>
                 <td style="border: 1px solid black;">
-                    {{ $treatments->first()->partner->phone ?? '—' }}
+                    <strong>
+                        {{ $treatments->first()->partner->phone ?? '—' }}
+                    </strong>
                 </td>
             </tr>
             <tr>
