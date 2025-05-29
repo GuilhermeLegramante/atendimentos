@@ -26,7 +26,7 @@
                     <strong>Endereço</strong>
                 </td>
                 <td style="border: 1px solid black;">
-                    {{ $treatments->first()->partner->address ?? '—' }}
+                    {{ strtoupper($treatments->first()->partner->address ?? '—') }}
                 </td>
             </tr>
             <tr>
