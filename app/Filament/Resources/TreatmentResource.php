@@ -24,6 +24,7 @@ use Filament\Forms\Components\Toggle;
 use Filament\Forms\Form;
 use Filament\Forms\Get;
 use Filament\Forms\Set;
+use Filament\Notifications\Notification;
 use Filament\Resources\Resource;
 use Filament\Support\Enums\Alignment;
 use Filament\Tables;
@@ -32,6 +33,7 @@ use Leandrocfe\FilamentPtbrFormFields\Money;
 use Illuminate\Database\Eloquent\Builder;
 use Filament\Tables\Actions\Action;
 use Filament\Tables\Actions\ActionGroup;
+use Filament\Tables\Actions\BulkAction;
 use Filament\Tables\Columns\IconColumn;
 use Filament\Tables\Columns\Summarizers\Sum;
 use Filament\Tables\Columns\Summarizers\Summarizer;
@@ -434,6 +436,18 @@ class TreatmentResource extends Resource
             ->bulkActions([
                 Tables\Actions\BulkActionGroup::make([
                     Tables\Actions\DeleteBulkAction::make(),
+                    BulkAction::make('auditAll')
+                        ->label('Auditar')
+                        ->icon('heroicon-o-check-circle')
+                        ->action(fn($records) => $records->each->update(['ok' => true]))
+                        ->requiresConfirmation()
+                        ->color('success')
+                        ->deselectRecordsAfterCompletion()
+                        ->successNotification(
+                            Notification::make()
+                                ->title('Registros atualizados com sucesso!')
+                                ->success()
+                        ),
                 ]),
             ]);
     }
