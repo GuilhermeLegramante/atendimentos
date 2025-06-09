@@ -64,7 +64,7 @@ class SyncPage extends Page
                 if (! $exists) {
                     DB::table('user_people')->insert([
                         'user_id' => $userId,
-                        'people_id' => $peopleId,
+                        'person_id' => $peopleId,
                     ]);
                 }
             }
