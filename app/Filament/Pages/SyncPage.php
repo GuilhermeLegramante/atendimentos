@@ -30,6 +30,8 @@ class SyncPage extends Page
         // Adicione sua lógica de processamento aqui
         $this->processData();
 
+        $this->linkPartnersToAdmins();
+
         // Exiba uma notificação de sucesso
         Notification::make()
             ->title('Sucesso')
@@ -39,6 +41,34 @@ class SyncPage extends Page
 
 
         return Redirect::route('filament.admin.pages.dashboard');
+    }
+
+    protected function linkPartnersToAdmins()
+    {
+        // Pega todos os IDs dos usuários administradores
+        $adminUserIds = DB::table('users')
+            ->where('is_admin', true)
+            ->pluck('id');
+
+        // Pega todos os IDs das pessoas
+        $peopleIds = DB::table('people')->pluck('id');
+
+        // Faz o vínculo evitando duplicatas
+        foreach ($adminUserIds as $userId) {
+            foreach ($peopleIds as $peopleId) {
+                $exists = DB::table('user_people')
+                    ->where('user_id', $userId)
+                    ->where('people_id', $peopleId)
+                    ->exists();
+
+                if (! $exists) {
+                    DB::table('user_people')->insert([
+                        'user_id' => $userId,
+                        'people_id' => $peopleId,
+                    ]);
+                }
+            }
+        }
     }
 
     protected function processData()
