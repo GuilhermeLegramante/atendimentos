@@ -58,7 +58,7 @@ class SyncPage extends Page
             foreach ($peopleIds as $peopleId) {
                 $exists = DB::table('user_people')
                     ->where('user_id', $userId)
-                    ->where('people_id', $peopleId)
+                    ->where('person_id', $peopleId)
                     ->exists();
 
                 if (! $exists) {
