@@ -15,6 +15,8 @@
 
             <h2 class="text-2xl font-bold text-blue-800 mb-6 text-center">📢 Quadro de Avisos</h2>
 
+            <br>
+
             <div class="w-full max-w-4xl mx-auto text-center">
                 <template x-for="(notice, index) in notices" :key="index">
                     <div x-show="activeSlide === index" x-transition:enter="transition ease-out duration-300"
