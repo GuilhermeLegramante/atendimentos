@@ -5,6 +5,7 @@ namespace App\Providers\Filament;
 use App\Filament\Pages\Auth\EditProfile;
 use App\Filament\Pages\Auth\Login;
 use App\Filament\Resources\ActivityResource;
+use App\Filament\Widgets\NoticeCarousel;
 use Filament\Forms\Components\Select;
 use Filament\Http\Middleware\Authenticate;
 use Filament\Http\Middleware\DisableBladeIconComponents;
@@ -46,51 +47,52 @@ class AdminPanelProvider extends PanelProvider
         Table::configureUsing(function (Table $table) {
             $table->paginationPageOptions([10, 25, 50, 100]); // Não inclui -1, que é o "Ver todos"
         });
-        
+
         return $panel
-        ->default()
-        ->id('admin')
-        ->path('admin')
-        ->login(Login::class)
-        ->profile(EditProfile::class)
-        ->colors([
-            'primary' => Color::Amber,
-        ])
-        ->discoverResources(in: app_path('Filament/Resources'), for: 'App\\Filament\\Resources')
-        ->discoverPages(in: app_path('Filament/Pages'), for: 'App\\Filament\\Pages')
-        ->pages([
-            Pages\Dashboard::class,
-        ])
-        ->discoverWidgets(in: app_path('Filament/Widgets'), for: 'App\\Filament\\Widgets')
-        ->widgets([
-            Widgets\AccountWidget::class,
-        ])
-        ->brandName('Atendimentos')
-        ->sidebarCollapsibleOnDesktop()
-        ->brandLogo(asset('img/logo.png'))
-        ->brandLogoHeight(fn () => auth()->check() ? '3rem' : '6rem')
-        ->favicon(asset('img/logo.png'))
-        ->plugins([
-            FilamentProgressbarPlugin::make()->color('#29b'),
-            ThemesPlugin::make(),
-        ])
-        ->resources([
-            config('filament-logger.activity_resource')
-        ])
-        ->middleware([
-            EncryptCookies::class,
-            AddQueuedCookiesToResponse::class,
-            StartSession::class,
-            AuthenticateSession::class,
-            ShareErrorsFromSession::class,
-            VerifyCsrfToken::class,
-            SubstituteBindings::class,
-            DisableBladeIconComponents::class,
-            DispatchServingFilamentEvent::class,
-            SetTheme::class,
-        ])
-        ->authMiddleware([
-            Authenticate::class,
-        ]);
+            ->default()
+            ->id('admin')
+            ->path('admin')
+            ->login(Login::class)
+            ->profile(EditProfile::class)
+            ->colors([
+                'primary' => Color::Amber,
+            ])
+            ->discoverResources(in: app_path('Filament/Resources'), for: 'App\\Filament\\Resources')
+            ->discoverPages(in: app_path('Filament/Pages'), for: 'App\\Filament\\Pages')
+            ->pages([
+                Pages\Dashboard::class,
+            ])
+            ->discoverWidgets(in: app_path('Filament/Widgets'), for: 'App\\Filament\\Widgets')
+            ->widgets([
+                Widgets\AccountWidget::class,
+                NoticeCarousel::class,
+            ])
+            ->brandName('Atendimentos')
+            ->sidebarCollapsibleOnDesktop()
+            ->brandLogo(asset('img/logo.png'))
+            ->brandLogoHeight(fn() => auth()->check() ? '3rem' : '6rem')
+            ->favicon(asset('img/logo.png'))
+            ->plugins([
+                FilamentProgressbarPlugin::make()->color('#29b'),
+                ThemesPlugin::make(),
+            ])
+            ->resources([
+                config('filament-logger.activity_resource')
+            ])
+            ->middleware([
+                EncryptCookies::class,
+                AddQueuedCookiesToResponse::class,
+                StartSession::class,
+                AuthenticateSession::class,
+                ShareErrorsFromSession::class,
+                VerifyCsrfToken::class,
+                SubstituteBindings::class,
+                DisableBladeIconComponents::class,
+                DispatchServingFilamentEvent::class,
+                SetTheme::class,
+            ])
+            ->authMiddleware([
+                Authenticate::class,
+            ]);
     }
 }
