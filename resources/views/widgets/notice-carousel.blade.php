@@ -28,6 +28,8 @@
                 </template>
             </div>
 
+            <br>
+
             <div class="flex justify-center items-center mt-8 gap-4">
                 <button @click="prev"
                     class="bg-blue-100 hover:bg-blue-200 text-blue-800 font-medium py-2 px-4 rounded-lg transition">
