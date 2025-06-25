@@ -5,6 +5,7 @@ namespace App\Filament\Pages;
 use App\Models\Treatment;
 use App\Utils\ReportFactory;
 use Carbon\Carbon;
+use Filament\Actions\Action;
 use Filament\Forms\Components\DatePicker;
 use Filament\Forms\Components\Section;
 use Filament\Forms\Components\Select;
@@ -128,9 +129,11 @@ class TreatmentsReport extends Page implements HasForms
         ];
     }
 
-    public function submit()
+    public function submit($definitive = true)
     {
         $data = $this->form->getState();
+
+        $data['definitive'] = $definitive;
 
         // Atualiza os dados do conveniado
         if (!empty($data['partner_id'])) {
@@ -143,5 +146,25 @@ class TreatmentsReport extends Page implements HasForms
         }
 
         return redirect()->route('treatments-report-pdf', $data);
+    }
+
+    // Quero que esse botão apareça embaixo e não no header
+    protected function getActions(): array
+    {
+        return [
+            Action::make('Gerar Relatório p/ Conferência')
+                ->label('Gerar Relatório p/ Conferência')
+                ->requiresConfirmation()
+                ->modalHeading('Atenção!')
+                ->modalDescription('Este relatório é para simples conferência. Para gerar o relatório a ser entregue clique em "Gerar Relatório".')
+                ->action(fn() => $this->submit(false)),
+            Action::make('Gerar Relatório')
+                ->label('Gerar Relatório')
+                ->color('primary')
+                ->requiresConfirmation()
+                ->modalHeading('Atenção!')
+                ->modalDescription('Após a geração do relatório, não será mais possível editar ou excluir atendimentos lançados no mês.')
+                ->action(fn() => $this->submit()),
+        ];
     }
 }

@@ -29,7 +29,7 @@ class TreatmentController extends Controller
     {
         $start = Carbon::createFromDate($request->year, $request->month, 1)->startOfMonth();
         $end = Carbon::createFromDate($request->year, $request->month, 1)->endOfMonth();
-    
+
         $startDate = $start->format('Y-m-d');
         $endDate = $end->format('Y-m-d');
         $partnerId = $request->partner_id;
@@ -55,6 +55,7 @@ class TreatmentController extends Controller
             'totalServices' => $totalServices,
             'startDate' => $startDate,
             'endDate' => $endDate,
+            'definitive' => $request->definitive,
         ];
 
         return ReportFactory::getBasicPdf('portrait', 'reports.treatments', $args, $fileName);
@@ -74,8 +75,6 @@ class TreatmentController extends Controller
         ];
 
         return ReportFactory::getBasicPdf('portrait', 'reports.treatments-list-model', $args, $fileName);
-
-
     }
 
     public function dentalTreatmentGuide(Request $request)
@@ -93,5 +92,4 @@ class TreatmentController extends Controller
 
         return ReportFactory::getBasicPdf('landscape', 'reports.dental-treatment-guide', $args, $fileName);
     }
-
 }

@@ -1,7 +1,7 @@
 @extends('reports.page')
 
 @section('header')
-    @include('reports.header')
+    @include('reports.header-no-validate')
 @endsection
 
 <style>
@@ -108,35 +108,6 @@
 
 
         <br>
-        {{-- <hr> --}}
-        {{-- <h1>Serviços Prestados</h1> --}}
-        {{-- <table style="width: 100%; margin-top: 1%;" class="striped">
-                <tbody> --}}
-
-        {{-- <tr style="font-size: 10px;">
-                            <td colspan="3" class=""><strong>Serviço:</strong>
-                                {{ $providedService->service->code }} - {{ $providedService->service->name }}
-                            </td>
-                        </tr>
-                        <tr style="font-size: 10px;">
-                            <td colspan="3" class=""><strong>Descrição Detalhada:</strong>
-                                {{ $providedService->description }}
-                            </td>
-                        </tr>
-                        <tr style="font-size: 10px;">
-                            <td class=""><strong>Valor Unitário:</strong>
-                                R$ {{ number_format($providedService->value, 2, ',', '.') }}
-                            </td>
-                            <td class=""><strong>Quantidade:</strong>
-                                {{ $providedService->quantity }}
-                            </td>
-                            <td class=""><strong>Valor Total:</strong>
-                                R$ {{ number_format($providedService->total, 2, ',', '.') }}
-                            </td>
-                        </tr> --}}
-        {{-- <br> --}}
-        {{-- </tbody>
-            </table>  --}}
     @else
         <br>
         <br>
@@ -151,5 +122,7 @@
 @endsection
 
 @section('footer')
-    @include('reports.footer-with-single-sign')
+    @if ($definitive)
+        @include('reports.footer-with-single-sign')
+    @endif
 @endsection
