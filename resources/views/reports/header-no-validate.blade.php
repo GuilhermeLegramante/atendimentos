@@ -8,7 +8,7 @@
             transform: translate(-50%, -50%) rotate(-30deg);
             font-size: 30px;
             color: rgba(200, 0, 0, 0.12);
-            z-index: 0;
+            z-index: 9999;
             pointer-events: none;
             white-space: nowrap;
             width: 100%;
