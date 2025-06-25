@@ -53,7 +53,7 @@
                                     </td>
                                 </tr>
                                 <tr>
-                                    <td>
+                                    <td style="color: red;">
                                         SEM VALIDADE - APENAS P/ CONFERÊNCIA
                                     </td>
                                 </tr>
