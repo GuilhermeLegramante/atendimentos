@@ -14,7 +14,7 @@
             width: 100%;
             text-align: center;
         ">
-            SEM VALIDADE - APENAS PARA CONFERÊNCIA
+            SEM VALIDADE
         </div>
     @endif
 
