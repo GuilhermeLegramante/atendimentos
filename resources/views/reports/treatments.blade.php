@@ -11,6 +11,12 @@
 </style>
 
 @section('content')
+    @if (!$definitive)
+        <h1>
+            SEM VALIDADE - APENAS CONFERÊNCIA
+        </h1>
+    @endif
+
     @if (count($treatments) > 0)
         <table class="striped fit" style="">
             <tr>
