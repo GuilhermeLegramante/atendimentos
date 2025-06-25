@@ -32,11 +32,6 @@
                                     <td style="width: 10%"></td>
                                     <td style="font-size: 16px; font-weight: bold;">{{ $title }}</td>
                                 </tr>
-                                <tr>
-                                    <td>
-                                        SEM VALIDADE - APENAS P/ CONFERÊNCIA
-                                    </td>
-                                </tr>
                             </tbody>
                         </table>
                     </td>
@@ -55,6 +50,11 @@
                                         style="font-size: 10px; height: 10px; text-align: right; vertical-align: bottom;">
                                         <span style="font-weight: bold;">Emitido em:</span>
                                         {{ date('d/m/Y \à\s H:i:s') }}
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>
+                                        SEM VALIDADE - APENAS P/ CONFERÊNCIA
                                     </td>
                                 </tr>
                             </tbody>
