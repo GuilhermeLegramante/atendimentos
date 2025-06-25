@@ -30,7 +30,12 @@
                             <tbody>
                                 <tr>
                                     <td style="width: 10%"></td>
-                                    <td style="font-size: 16px; font-weight: bold;">{{ $title }} (SEM VALIDADE - APENAS P/ CONFERÊNCIA)</td>
+                                    <td style="font-size: 16px; font-weight: bold;">{{ $title }}</td>
+                                </tr>
+                                <tr>
+                                    <td>
+                                        SEM VALIDADE - APENAS P/ CONFERÊNCIA
+                                    </td>
                                 </tr>
                             </tbody>
                         </table>
