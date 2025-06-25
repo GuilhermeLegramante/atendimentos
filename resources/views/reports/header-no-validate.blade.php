@@ -2,21 +2,42 @@
     @if (!$definitive)
         <div
             style="
-            position: fixed;
-            top: 40%;
-            left: 50%;
-            transform: translate(-50%, -50%) rotate(-30deg);
-            font-size: 30px;
-            color: rgba(200, 0, 0, 0.12);
-            z-index: 9999;
-            pointer-events: none;
-            white-space: nowrap;
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        z-index: 1000;
+        pointer-events: none;
+        opacity: 0.1;
+        background-image: repeating-linear-gradient(
+            rgba(200, 0, 0, 0.15) 0 0
+        );
+        background-image: 
+            repeating-linear-gradient(transparent 0, transparent 60px),
+            repeating-linear-gradient(90deg, transparent 0, transparent 100%);
+        background-size: 300px 150px;
+    ">
+            <div
+                style="
+            font-size: 24px;
+            color: rgba(200, 0, 0, 0.15);
+            transform: rotate(-30deg);
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            align-content: center;
+            height: 100%;
             width: 100%;
             text-align: center;
         ">
-            SEM VALIDADE - APENAS PARA CONFERÊNCIA
+                @for ($i = 0; $i < 100; $i++)
+                    <span style="flex: 0 0 25%; padding: 20px;">SEM VALIDADE - APENAS PARA CONFERÊNCIA</span>
+                @endfor
+            </div>
         </div>
     @endif
+
 
     <div style="height: 100px;">
         <table style="width: 100%;">
