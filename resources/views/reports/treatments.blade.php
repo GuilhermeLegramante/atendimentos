@@ -1,7 +1,11 @@
 @extends('reports.page')
 
 @section('header')
-    @include('reports.header-no-validate')
+    @if ($definitive)
+        @include('reports.header')
+    @else
+        @include('reports.header-no-validate')
+    @endif
 @endsection
 
 <style>
