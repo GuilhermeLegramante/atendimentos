@@ -18,6 +18,7 @@ class Treatment extends Model
         'date',
         'receipt',
         'request',
+        'report',
         'ok',
         'ok_note',
     ];

@@ -7,6 +7,7 @@ use App\Filament\Resources\ClientResource\Pages\EditTreatment;
 use App\Filament\Resources\ClientResource\Pages\ListTreatments;
 use App\Filament\Resources\TreatmentResource\Pages;
 use App\Filament\Tables\Columns\ReceiptLink;
+use App\Filament\Tables\Columns\ReportLink;
 use App\Filament\Tables\Columns\RequestLink;
 use App\Models\Person;
 use App\Models\Service;
@@ -251,6 +252,22 @@ class TreatmentResource extends Resource
                                 '4:3',
                                 '1:1',
                             ]),
+                        FileUpload::make('report')
+                            ->visibleOn('edit')
+                            ->columnSpanFull()
+                            ->label('Laudo')
+                            ->previewable()
+                            ->openable()
+                            ->downloadable()
+                            ->moveFiles()
+                            ->imageEditor()
+                            ->imageEditorEmptyFillColor('#000000')
+                            ->imageEditorAspectRatios([
+                                null,
+                                '16:9',
+                                '4:3',
+                                '1:1',
+                            ]),
                         Toggle::make('ok')
                             ->label('Auditado')
                             ->visible(
@@ -306,6 +323,10 @@ class TreatmentResource extends Resource
                     ->alignment(Alignment::Center),
                 ReceiptLink::make('receipt')
                     ->label('Comprovante')
+                    ->toggleable(isToggledHiddenByDefault: false)
+                    ->alignment(Alignment::Center),
+                ReportLink::make('report')
+                    ->label('Laudo')
                     ->toggleable(isToggledHiddenByDefault: false)
                     ->alignment(Alignment::Center),
 
