@@ -286,6 +286,8 @@ class TreatmentResource extends Resource
     public static function table(Table $table): Table
     {
         return $table
+            ->persistFiltersInSession()
+            ->persistSortInSession()
             ->modifyQueryUsing(
                 fn(Builder $query) =>
                 auth()->user()->is_admin
