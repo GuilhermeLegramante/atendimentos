@@ -94,6 +94,11 @@ class PersonResource extends Resource
                     ->alignCenter()
                     ->sortable()
                     ->toggleable(isToggledHiddenByDefault: false),
+                ToggleColumn::make('can_edit_values')
+                    ->label('Alterar valores')
+                    ->alignCenter()
+                    ->sortable()
+                    ->toggleable(isToggledHiddenByDefault: false),
                 Tables\Columns\TextColumn::make('created_at')
                     ->label('Criado em')
                     ->dateTime()

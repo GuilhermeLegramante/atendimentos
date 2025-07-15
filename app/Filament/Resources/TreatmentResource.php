@@ -174,10 +174,19 @@ class TreatmentResource extends Resource
                                 TextInput::make('value')
                                     ->visible(fn(Get $get) => !is_null($get('service_id')))
                                     ->numeric()
-                                    ->afterStateUpdated(function (Set $set, Get $get, Service $service) {
+                                    ->disabled(fn(Get $get) => function () use ($get) {
+                                        $patientId = $get('../../patient_id');
+                                        if (!$patientId) {
+                                            return true; // desabilita se não houver paciente
+                                        }
+
+                                        $person = \App\Models\Person::find($patientId);
+                                        return !$person || !$person->can_edit_values;
+                                    })
+                                    ->afterStateUpdated(function (Set $set, Get $get) {
                                         if (!is_null($get('../../patient_id')) && !is_null($get('service_id'))) {
-                                            $service = Service::find($get('service_id'));
-                                            $person = Person::find($get('../../patient_id'));
+                                            $service = \App\Models\Service::find($get('service_id'));
+                                            $person = \App\Models\Person::find($get('../../patient_id'));
 
                                             if ($person->dependent == 1) {
                                                 $patientPercentual = $service->dependent_value;

@@ -20,5 +20,6 @@ class Person extends Model
         'dependent',
         'address',
         'phone',
+        'can_edit_values',
     ];
 }
