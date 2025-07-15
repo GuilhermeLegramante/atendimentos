@@ -13,6 +13,8 @@ use Filament\Tables\Actions\ActionGroup;
 use Filament\Tables\Columns\IconColumn;
 use Filament\Tables\Columns\ToggleColumn;
 use Filament\Tables\Enums\ActionsPosition;
+use Filament\Tables\Filters\SelectFilter;
+use Filament\Tables\Filters\TernaryFilter;
 use Filament\Tables\Table;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
@@ -111,7 +113,32 @@ class PersonResource extends Resource
                     ->toggleable(isToggledHiddenByDefault: true),
             ])
             ->filters([
-                //
+                SelectFilter::make('vinculo')
+                    ->label('Tipo de Vínculo')
+                    ->options([
+                        'partner' => 'Conveniado',
+                        'patient' => 'Segurado',
+                        'dependent' => 'Dependente',
+                    ])
+                    ->query(function ($query, $state) {
+                        if ($state === 'partner') {
+                            $query->where('partner', true);
+                        } elseif ($state === 'patient') {
+                            $query->where('patient', true);
+                        } elseif ($state === 'dependent') {
+                            $query->where('dependent', true);
+                        }
+                    }),
+
+                TernaryFilter::make('is_active')
+                    ->label('Está Ativo')
+                    ->trueLabel('Somente ativos')
+                    ->falseLabel('Somente inativos'),
+
+                TernaryFilter::make('can_edit_values')
+                    ->label('Pode alterar valores')
+                    ->trueLabel('Pode alterar')
+                    ->falseLabel('Não pode alterar'),
             ])
             ->actions([
                 // ActionGroup::make([
