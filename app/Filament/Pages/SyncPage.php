@@ -114,12 +114,18 @@ class SyncPage extends Page
 
         foreach ($people->json() as $value) {
             if (isset($value['registration'])) {
+                if ($value['seguradoAtivo'] == 1 || $value['dependenteAtivo'] == 1) {
+                    $isActive = 1;
+                } else {
+                    $isActive = 0;
+                }
+
                 Person::updateOrCreate(
                     ['registration' => $value['registration']], // Condição de busca
                     [
                         'name' => $value['name'],
                         'cpf_cnpj' => $value['cpfCnpj'],
-                        'is_active' => $value['isActive'],
+                        'is_active' => $isActive,
                         'partner' => $value['conveniado'],
                         'patient' => $value['segurado'],
                         'dependent' => $value['dependente'],
