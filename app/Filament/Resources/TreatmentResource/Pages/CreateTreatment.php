@@ -19,6 +19,36 @@ class CreateTreatment extends CreateRecord
         return $data;
     }
 
+    protected function afterCreate(): void
+    {
+        $partner = \App\Models\Person::find($this->record->partner_id);
+        $patient = \App\Models\Person::find($this->record->patient_id);
+
+        foreach ($this->record->providedServices as $item) {
+            // Recarrega o serviço
+            $service = \App\Models\Service::find($item->service_id);
+
+            // Só atualiza se o conveniado NÃO pode editar valores
+            if (!$partner || !$partner->can_edit_values) {
+                $defaultValue = $service->value;
+
+                $item->value = $defaultValue;
+
+                $total = (float) $defaultValue * (float) $item->quantity;
+
+                $percentual = $patient && $patient->dependent == 1
+                    ? $service->dependent_value
+                    : $service->titular_value;
+
+                $patientValue = ($total * $percentual) / 100;
+                $item->patient_value = number_format($patientValue, 2, '.', '');
+
+                $item->save();
+            }
+        }
+    }
+
+
     protected function getRedirectUrl(): string
     {
         return route('receipt-pdf', ['treatmentId' => $this->getRecord()->id]);
