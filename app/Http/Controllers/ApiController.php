@@ -44,6 +44,13 @@ class ApiController extends Controller
             });
         }
 
+        // 🔹 Filtro especial: nome do parceiro
+        if ($request->filled('partner_name')) {
+            $query->whereHas('partner', function ($q) use ($request) {
+                $q->where('name', 'like', '%' . $request->partner_name . '%');
+            });
+        }
+
         // 🔹 Filtro por data
         if ($request->filled('data_inicio') && $request->filled('data_fim')) {
             $query->whereBetween('date', [
