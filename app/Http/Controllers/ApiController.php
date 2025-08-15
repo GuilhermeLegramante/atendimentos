@@ -46,14 +46,14 @@ class ApiController extends Controller
 
         // 🔹 Filtro por data
         if ($request->filled('data_inicio') && $request->filled('data_fim')) {
-            $query->whereBetween('created_at', [
+            $query->whereBetween('date', [
                 $request->data_inicio . ' 00:00:00',
                 $request->data_fim . ' 23:59:59'
             ]);
         }
 
         // 🔹 Ordenação padrão
-        $query->orderBy('created_at', 'desc');
+        $query->orderBy('date', 'desc');
 
         return $query->paginate(200);
     }
