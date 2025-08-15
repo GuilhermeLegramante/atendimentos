@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+    <meta charset="UTF-8" />
+    <title>API de Atendimentos - Swagger UI</title>
+    <link rel="stylesheet" type="text/css" href="https://unpkg.com/swagger-ui-dist/swagger-ui.css" />
+    <style>
+        body {
+            margin: 0;
+            background: #fafafa;
+        }
+    </style>
+</head>
+
+<body>
+    <div id="swagger-ui"></div>
+    <script src="https://unpkg.com/swagger-ui-dist/swagger-ui-bundle.js"></script>
+    <script src="https://unpkg.com/swagger-ui-dist/swagger-ui-standalone-preset.js"></script>
+    <script>
+        const spec = {
+            openapi: "3.0.3",
+            info: {
+                title: "API de Atendimentos",
+                version: "1.0.0",
+                description: "Retorna atendimentos com filtros combináveis. Ordenado por `created_at` desc."
+            },
+            servers: [
+                { url: "http://localhost:8000" }
+            ],
+            paths: {
+                "/atendimentos": {
+                    get: {
+                        summary: "Lista atendimentos",
+                        parameters: [
+                            { name: "user_id", in: "query", schema: { type: "integer" }, description: "Filtra por usuário" },
+                            { name: "patient_id", in: "query", schema: { type: "integer" }, description: "Filtra pelo ID do paciente" },
+                            { name: "partner_id", in: "query", schema: { type: "integer" }, description: "Filtra pelo ID do parceiro" },
+                            { name: "date", in: "query", schema: { type: "string", format: "date" }, description: "Data exata do atendimento" },
+                            { name: "receipt", in: "query", schema: { type: "string" }, description: "Valor exato do campo `receipt`" },
+                            { name: "request", in: "query", schema: { type: "string" }, description: "Valor exato do campo `request`" },
+                            { name: "report", in: "query", schema: { type: "string" }, description: "Valor exato do campo `report`" },
+                            { name: "ok", in: "query", schema: { type: "boolean" }, description: "1 para confirmado, 0 para não confirmado" },
+                            { name: "ok_note", in: "query", schema: { type: "string" }, description: "Texto parcial em `ok_note`" },
+                            { name: "created_at", in: "query", schema: { type: "string", format: "date-time" }, description: "Data/hora exata de criação" },
+                            { name: "updated_at", in: "query", schema: { type: "string", format: "date-time" }, description: "Data/hora exata de atualização" },
+                            { name: "service_id", in: "query", schema: { type: "integer" }, description: "Filtra por serviço em providedServices" },
+                            { name: "patient_name", in: "query", schema: { type: "string" }, description: "Busca parcial no nome do paciente" },
+                            { name: "partner_name", in: "query", schema: { type: "string" }, description: "Busca parcial no nome do parceiro" },
+                            { name: "data_inicio", in: "query", schema: { type: "string", format: "date" }, description: "Data inicial do intervalo (created_at)" },
+                            { name: "data_fim", in: "query", schema: { type: "string", format: "date" }, description: "Data final do intervalo (created_at)" },
+                            { name: "page", in: "query", schema: { type: "integer", default: 1 }, description: "Número da página" }
+                        ],
+                        responses: {
+                            "200": {
+                                description: "Lista de atendimentos paginada",
+                                content: {
+                                    "application/json": {
+                                        schema: {
+                                            type: "object",
+                                            properties: {
+                                                current_page: { type: "integer" },
+                                                data: {
+                                                    type: "array",
+                                                    items: {
+                                                        type: "object",
+                                                        properties: {
+                                                            id: { type: "integer" },
+                                                            user_id: { type: "integer" },
+                                                            patient_id: { type: "integer" },
+                                                            partner_id: { type: "integer" },
+                                                            date: { type: "string", format: "date" },
+                                                            receipt: { type: "string" },
+                                                            request: { type: "string" },
+                                                            report: { type: "string" },
+                                                            ok: { type: "boolean" },
+                                                            ok_note: { type: "string" },
+                                                            created_at: { type: "string", format: "date-time" },
+                                                            updated_at: { type: "string", format: "date-time" },
+                                                            patient: { type: "object" },
+                                                            partner: { type: "object" },
+                                                            provided_services: {
+                                                                type: "array",
+                                                                items: {
+                                                                    type: "object",
+                                                                    properties: {
+                                                                        id: { type: "integer" },
+                                                                        service_id: { type: "integer" },
+                                                                        service: { type: "object" }
+                                                                    }
+                                                                }
+                                                            }
+                                                        }
+                                                    }
+                                                },
+                                                per_page: { type: "integer" },
+                                                total: { type: "integer" }
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        };
+
+        window.onload = () => {
+            SwaggerUIBundle({
+                spec: spec,
+                dom_id: '#swagger-ui',
+                presets: [SwaggerUIBundle.presets.apis, SwaggerUIStandalonePreset],
+                layout: "BaseLayout",
+                docExpansion: "none",
+                deepLinking: true
+            });
+        };
+    </script>
+</body>
+
+</html>
