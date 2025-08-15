@@ -37,6 +37,13 @@ class ApiController extends Controller
             });
         }
 
+        // 🔹 Filtro especial: nome do paciente
+        if ($request->filled('patient_name')) {
+            $query->whereHas('patient', function ($q) use ($request) {
+                $q->where('name', 'like', '%' . $request->patient_name . '%');
+            });
+        }
+
         // 🔹 Filtro por data
         if ($request->filled('data_inicio') && $request->filled('data_fim')) {
             $query->whereBetween('created_at', [
