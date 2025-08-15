@@ -35,7 +35,7 @@
                         parameters: [
                             { name: "user_id", in: "query", schema: { type: "integer" }, description: "Filtra por usuário" },
                             { name: "patient_id", in: "query", schema: { type: "integer" }, description: "Filtra pelo ID do paciente" },
-                            { name: "partner_id", in: "query", schema: { type: "integer" }, description: "Filtra pelo ID do parceiro" },
+                            { name: "partner_id", in: "query", schema: { type: "integer" }, description: "Filtra pelo ID do conveniado" },
                             { name: "date", in: "query", schema: { type: "string", format: "date" }, description: "Data exata do atendimento" },
                             { name: "receipt", in: "query", schema: { type: "string" }, description: "Valor exato do campo `receipt`" },
                             { name: "request", in: "query", schema: { type: "string" }, description: "Valor exato do campo `request`" },
@@ -46,7 +46,7 @@
                             { name: "updated_at", in: "query", schema: { type: "string", format: "date-time" }, description: "Data/hora exata de atualização" },
                             { name: "service_id", in: "query", schema: { type: "integer" }, description: "Filtra por serviço em providedServices" },
                             { name: "patient_name", in: "query", schema: { type: "string" }, description: "Busca parcial no nome do paciente" },
-                            { name: "partner_name", in: "query", schema: { type: "string" }, description: "Busca parcial no nome do parceiro" },
+                            { name: "partner_name", in: "query", schema: { type: "string" }, description: "Busca parcial no nome do conveniado" },
                             { name: "data_inicio", in: "query", schema: { type: "string", format: "date" }, description: "Data inicial do intervalo (created_at)" },
                             { name: "data_fim", in: "query", schema: { type: "string", format: "date" }, description: "Data final do intervalo (created_at)" },
                             { name: "page", in: "query", schema: { type: "integer", default: 1 }, description: "Número da página" }
