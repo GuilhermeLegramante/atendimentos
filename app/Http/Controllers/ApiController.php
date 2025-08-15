@@ -7,14 +7,48 @@ use App\Models\Service;
 use App\Models\Treatment;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Http;
+use Illuminate\Support\Facades\Schema;
 
 class ApiController extends Controller
 {
-    public function getTreatments()
+    public function getTreatments(Request $request)
     {
-        return Treatment::with('patient', 'partner', 'providedServices', 'providedServices.service')
-            // ->where('ok', false)
-            ->paginate(200);
+        $query = Treatment::with([
+            'patient',
+            'partner',
+            'providedServices',
+            'providedServices.service'
+        ]);
+
+        // 🔹 Lista de colunas existentes na tabela treatments
+        $columns = Schema::getColumnListing((new Treatment)->getTable());
+
+        // 🔹 Filtros dinâmicos diretos na tabela
+        foreach ($request->all() as $field => $value) {
+            if (in_array($field, $columns) && $value !== null && $value !== '') {
+                $query->where($field, $value);
+            }
+        }
+
+        // 🔹 Filtro especial para service_id (relação)
+        if ($request->filled('service_id')) {
+            $query->whereHas('providedServices', function ($q) use ($request) {
+                $q->where('service_id', $request->service_id);
+            });
+        }
+
+        // 🔹 Filtro por data
+        if ($request->filled('data_inicio') && $request->filled('data_fim')) {
+            $query->whereBetween('created_at', [
+                $request->data_inicio . ' 00:00:00',
+                $request->data_fim . ' 23:59:59'
+            ]);
+        }
+
+        // 🔹 Ordenação padrão
+        $query->orderBy('created_at', 'desc');
+
+        return $query->paginate(200);
     }
 
     public function syncData()
