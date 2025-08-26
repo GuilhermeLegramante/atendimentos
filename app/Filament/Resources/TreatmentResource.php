@@ -493,27 +493,9 @@ class TreatmentResource extends Resource
         }
     }
 
-    // public static function canEdit($record): bool
-    // {
-    //     // Pega o primeiro ProvidedService associado (se houver)
-    //     $providedService = $record->providedServices()->first();
-
-    //     if (! $providedService) {
-    //         // Se não tem nenhum ProvidedService, pode editar
-    //         return true;
-    //     }
-
-    //     // Consulta a API passando o id do ProvidedService
-    //     $response = Http::get('https://sisprem.hardsoftsfa.com.br/web/contracheque/public/verifica-atendimento/' . $providedService->id);
-
-    //     if ($response->successful()) {
-    //         $data = $response->json();
-
-    //         // Se já existe na API, bloqueia edição
-    //         return !$data['existe'];
-    //     }
-
-    //     // fallback: não permitir se a API falhar
-    //     return false;
-    // }
+    public static function canEdit($record): bool
+    {
+        // Se a coluna 'ok (auditado)' for true (ou 1), bloqueia edição
+        return ! $record->ok;
+    }
 }
