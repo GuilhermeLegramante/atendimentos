@@ -492,4 +492,24 @@ class TreatmentResource extends Resource
             return static::getModel()::where('user_id', auth()->user()->id)->count();
         }
     }
+
+    public static function canEdit($record): bool
+    {
+        // Se não tiver ProvidedServices, pode editar
+        if (! $record->providedServices()->exists()) {
+            return true;
+        }
+
+        foreach ($record->providedServices as $providedService) {
+            $response = Http::get('https://sisprem.hardsoftsfa.com.br/web/contracheque/public/verifica-atendimento/' . $providedService->id);
+
+            if ($response->successful() && $response->json('existe') === true) {
+                // Bloqueia edição se qualquer ProvidedService existir
+                return false;
+            }
+        }
+
+        // Se nenhum bloqueou, edição liberada
+        return true;
+    }
 }
