@@ -495,21 +495,25 @@ class TreatmentResource extends Resource
 
     public static function canEdit($record): bool
     {
-        // Se não tiver ProvidedServices, pode editar
-        if (! $record->providedServices()->exists()) {
+        // Pega o primeiro ProvidedService associado (se houver)
+        $providedService = $record->providedServices()->first();
+
+        if (! $providedService) {
+            // Se não tem nenhum ProvidedService, pode editar
             return true;
         }
 
-        foreach ($record->providedServices as $providedService) {
-            $response = Http::get('https://sisprem.hardsoftsfa.com.br/web/contracheque/public/verifica-atendimento/' . $providedService->id);
+        // Consulta a API passando o id do ProvidedService
+        $response = Http::get('https://sisprem.hardsoftsfa.com.br/web/contracheque/public/verifica-atendimento/' . $providedService->id);
 
-            if ($response->successful() && $response->json('existe') === true) {
-                // Bloqueia edição se qualquer ProvidedService existir
-                return false;
-            }
+        if ($response->successful()) {
+            $data = $response->json();
+
+            // Se já existe na API, bloqueia edição
+            return !$data['existe'];
         }
 
-        // Se nenhum bloqueou, edição liberada
-        return true;
+        // fallback: não permitir se a API falhar
+        return false;
     }
 }
