@@ -443,6 +443,7 @@ class TreatmentResource extends Resource
             )
             ->actions([
                 ActionGroup::make([
+                    Tables\Actions\ViewAction::make(),
                     Tables\Actions\EditAction::make(),
                     // ->mutateFormDataUsing(function (array $data): array {
                     //     $data['value'] = $data['value'] / 10;
