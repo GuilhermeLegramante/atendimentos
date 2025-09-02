@@ -6,6 +6,7 @@ use App\Filament\Resources\ClientResource\Pages\CreateTreatment;
 use App\Filament\Resources\ClientResource\Pages\EditTreatment;
 use App\Filament\Resources\ClientResource\Pages\ListTreatments;
 use App\Filament\Resources\TreatmentResource\Pages;
+use App\Filament\Resources\TreatmentResource\Pages\ViewTreatment;
 use App\Filament\Tables\Columns\ReceiptLink;
 use App\Filament\Tables\Columns\ReportLink;
 use App\Filament\Tables\Columns\RequestLink;
@@ -481,6 +482,7 @@ class TreatmentResource extends Resource
             'index' => ListTreatments::route('/'),
             'create' => CreateTreatment::route('/criar'),
             'edit' => EditTreatment::route('/{record}/editar'),
+            'view' => ViewTreatment::route('/{record}'),
         ];
     }
 
