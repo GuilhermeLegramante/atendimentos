@@ -85,6 +85,7 @@ class TreatmentResource extends Resource
                             })
                             ->reactive()
                             ->required(),
+
                         Select::make('partner_id')
                             ->columnSpanFull()
                             ->label('Conveniado')
@@ -99,6 +100,7 @@ class TreatmentResource extends Resource
                             )
                             ->getOptionLabelFromRecordUsing(fn($record) => "{$record->cpf_cnpj} - {$record->name}")
                             ->required(),
+
                         Select::make('patient_id')
                             ->reactive()
                             ->label('Paciente')
@@ -114,6 +116,7 @@ class TreatmentResource extends Resource
                             ->columnSpanFull()
                             ->getOptionLabelFromRecordUsing(fn(Person $record) => "{$record->cpf_cnpj} - {$record->name}")
                             ->required(),
+
                         FileUpload::make('request')
                             ->columnSpanFull()
                             ->label('Solicitação do procedimento')
@@ -130,6 +133,7 @@ class TreatmentResource extends Resource
                                 '4:3',
                                 '1:1',
                             ]),
+                            
                         Repeater::make('providedServices')
                             ->reactive()
                             ->live()

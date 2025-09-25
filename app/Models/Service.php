@@ -16,11 +16,17 @@ class Service extends Model
         'value',
         'titular_value',
         'dependent_value',
+        'waiting_days',
         'is_active'
     ];
 
     public function tratments(): HasMany
     {
         return $this->hasMany(Treatment::class);
+    }
+
+    public function authorizations()
+    {
+        return $this->belongsToMany(Authorization::class);
     }
 }

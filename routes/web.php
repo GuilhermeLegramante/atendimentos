@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\ApiController;
+use App\Http\Controllers\AuthorizationController;
 use App\Http\Controllers\TreatmentController;
 use App\Models\Person;
 use App\Models\Signal;
@@ -25,6 +26,8 @@ Route::middleware(['auth'])->group(function () {
     Route::get('/relatorio-atendimentos', [TreatmentController::class, 'treatmentsReport'])->name('treatments-report-pdf');
     Route::get('/modelo-relatorio-atendimentos', [TreatmentController::class, 'treatmentsListModel'])->name('treatments-list-model-pdf');
     Route::get('/guia-tratamento-odontologico', [TreatmentController::class, 'dentalTreatmentGuide'])->name('dental-treatment-guide-pdf');
+
+    Route::get('/guia-de-autorizacao/{id}', [AuthorizationController::class, 'getPdf'])->name('authorization-pdf');
 });
 
 /**

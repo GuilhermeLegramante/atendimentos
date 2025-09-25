@@ -48,7 +48,6 @@ class CreateTreatment extends CreateRecord
         }
     }
 
-
     protected function getRedirectUrl(): string
     {
         return route('receipt-pdf', ['treatmentId' => $this->getRecord()->id]);
