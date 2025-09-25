@@ -14,4 +14,5 @@
     - Modelo de relatório de consultas
 - 2.4.1 (25/03/2025)
     - Correção de bug ao excluir paciente e serviço no select (form de atendimento)
-    
+- 2.5.0 (25/09/2025)
+    - Geração de Autorizações de Atendimentos
