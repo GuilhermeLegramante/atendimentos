@@ -20,7 +20,7 @@ class NoticeResource extends Resource
 {
     protected static ?string $model = Notice::class;
 
-    protected static ?string $navigationIcon = 'heroicon-o-rectangle-stack';
+    protected static ?string $navigationIcon = 'heroicon-o-bell';
 
     protected static ?string $modelLabel = 'aviso';
 
