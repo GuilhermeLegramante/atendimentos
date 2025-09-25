@@ -133,7 +133,7 @@ class TreatmentResource extends Resource
                                 '4:3',
                                 '1:1',
                             ]),
-                            
+
                         Repeater::make('providedServices')
                             ->reactive()
                             ->live()
@@ -460,7 +460,10 @@ class TreatmentResource extends Resource
                         ->url(fn(Treatment $record): string => route('receipt-pdf', $record->id))
                         ->openUrlInNewTab(),
                     Tables\Actions\DeleteAction::make(),
-                ]),
+                ])
+                    ->label('Ações')
+                    ->icon('heroicon-o-cog-6-tooth')
+                    ->color('gray'),
             ], position: ActionsPosition::BeforeColumns)
             ->bulkActions([
                 Tables\Actions\BulkActionGroup::make([
