@@ -1,18 +1,18 @@
 @extends('reports.master')
 
 @php
-$this_title = ucwords(strtolower($title));
+    $this_title = mb_strtoupper($title, 'UTF-8');
 @endphp
 
 @section('titulo', $this_title)
 
 @section('body')
 
-<body>
-    @yield('header')
+    <body>
+        @yield('header')
 
-    @yield('content')
+        @yield('content')
 
-    @yield('footer')
-</body>
+        @yield('footer')
+    </body>
 @endsection
