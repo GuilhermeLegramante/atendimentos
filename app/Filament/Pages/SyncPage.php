@@ -95,7 +95,7 @@ class SyncPage extends Page
                         'created_at' => now()
                     ]);
                 } else {
-                    if ($service->value != $value['value'] || $service->name != $value['name']) { // Caso o valor esteja diferente, atualiza o serviço
+                    if ($service->value != $value['value'] || $service->titular_value != $value['titularValue'] || $service->name != $value['name']) { // Caso o valor esteja diferente, atualiza o serviço
                         Service::where('code', $value['code'])
                             ->update(
                                 [
