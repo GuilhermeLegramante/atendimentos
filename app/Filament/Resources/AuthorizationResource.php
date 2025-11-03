@@ -254,7 +254,7 @@ class AuthorizationResource extends Resource
             ->actions([
                 ActionGroup::make([
                     // Tables\Actions\ViewAction::make(),
-                    // Tables\Actions\EditAction::make(),
+                    Tables\Actions\EditAction::make(),
                     Action::make('report')
                         ->label('Gerar PDF')
                         ->icon('heroicon-o-document-text')
