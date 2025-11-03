@@ -83,26 +83,18 @@ class AuthorizationResource extends Resource
 
                     $set('services_selected', $merged->toArray());
                 })
-                ->afterStateHydrated(function ($state, callable $set, callable $get, $record) {
-                    // Só recalcula serviços se for uma nova autorização
-                    if (! $record) {
-                        $set('services_selected', AuthorizationResource::calculateServices($state, $get('patient_id')));
-                    } else {
-                        // Mantém os dados originais do banco (incluindo status)
-                        $set('services_selected', $record->services_selected ?? []);
-                    }
+                ->afterStateHydrated(function ($state, callable $set, $get) {
+                    // Preenche ao abrir o edit
+                    $set('services_selected', AuthorizationResource::calculateServices($state, $get('patient_id')));
                 }),
 
             Forms\Components\Repeater::make('services_selected')
                 ->addable(false)
                 ->label('Serviços Selecionados')
-                ->default(
-                    fn($get, $record) => $record?->services_selected
-                        ?? self::calculateServices(
-                            $record ? $record->services->pluck('id')->toArray() : [],
-                            $record?->patient_id
-                        )
-                )
+                ->default(fn($get, $record) => self::calculateServices(
+                    $record ? $record->services->pluck('id')->toArray() : [],
+                    $record?->patient_id
+                ))
                 ->schema([
                     Forms\Components\TextInput::make('service_name')
                         ->label('Serviço')
