@@ -152,12 +152,12 @@ class TreatmentsReport extends Page implements HasForms
     protected function getActions(): array
     {
         return [
-            Action::make('Gerar Relatório p/ Conferência')
-                ->label('Gerar Relatório p/ Conferência')
-                ->requiresConfirmation()
-                ->modalHeading('Atenção!')
-                ->modalDescription('Este relatório é para simples conferência. Para gerar o relatório a ser entregue clique em "Gerar Relatório".')
-                ->action(fn() => $this->submit(false)),
+            // Action::make('Gerar Relatório p/ Conferência')
+            //     ->label('Gerar Relatório p/ Conferência')
+            //     ->requiresConfirmation()
+            //     ->modalHeading('Atenção!')
+            //     ->modalDescription('Este relatório é para simples conferência. Para gerar o relatório a ser entregue clique em "Gerar Relatório".')
+            //     ->action(fn() => $this->submit(false)),
             Action::make('Gerar Relatório')
                 ->label('Gerar Relatório')
                 ->color('primary')
