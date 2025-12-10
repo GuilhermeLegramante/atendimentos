@@ -339,6 +339,7 @@ class TreatmentResource extends Resource
 
                 TextColumn::make('providedServices.total')
                     ->label('Valor dos Serviços')
+                    ->sortable(false)
                     ->formatStateUsing(function ($record) {
                         // Somar os valores do relacionamento
                         $totalValue = $record->providedServices->sum(function ($service) {
