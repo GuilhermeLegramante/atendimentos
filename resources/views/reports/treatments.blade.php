@@ -47,7 +47,7 @@
             </tr>
             <tr>
                 <td style="width: 15%; border: 1px solid black;">
-                    <strong>Total de Atendimentos</strong>
+                    <strong>Atendimentos</strong>
                 </td>
                 <td style="border: 1px solid black;">
                     <strong>{{ count($treatments) }}</strong>
@@ -84,8 +84,8 @@
                     <th style="width: 15%; background-color:#f2f2f2; color: black; border: 1px solid black;">Valor Total
                     </th>
                     <th style="width: 15%; background-color:#f2f2f2; color: black; border: 1px solid black;">Valor Total
-                        para
-                        o Segurado</th>
+                        p/
+                        o Seg.</th>
                 </tr>
             </thead>
             <tbody>
