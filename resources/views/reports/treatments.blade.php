@@ -16,7 +16,7 @@
 
 @section('content')
     @if (count($treatments) > 0)
-        <table class="striped fit" style="">
+        <table class="striped fit" style="font-size: 14px;">
             <tr>
                 <td style="width: 15%; border: 1px solid black;">
                     <strong>Conveniado</strong>
