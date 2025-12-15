@@ -83,7 +83,7 @@
                     <th style="width: 40%; background-color:#f2f2f2; color: black; border: 1px solid black;">Paciente</th>
                     <th style="width: 15%; background-color:#f2f2f2; color: black; border: 1px solid black;">Valor Total
                     </th>
-                    <th style="width: 15%; background-color:#f2f2f2; color: black; border: 1px solid black;">Valor Total
+                    <th style="width: 15%; background-color:#f2f2f2; color: black; border: 1px solid black;">Total
                         p/
                         o Seg.</th>
                 </tr>
