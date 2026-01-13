@@ -118,6 +118,7 @@ class UserResource extends Resource
                 IconColumn::make('is_admin')
                     ->label('Admin')
                     ->alignCenter()
+                    ->sortable()
                     ->toggleable(isToggledHiddenByDefault: false)
                     ->boolean(),
                 Tables\Columns\TextColumn::make('created_at')
