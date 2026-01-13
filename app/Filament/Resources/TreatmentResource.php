@@ -363,10 +363,10 @@ class TreatmentResource extends Resource
                             ->money('BRL')
                             ->using(
                                 fn(DatabaseBuilder $query): float =>
-                                $query
-                                    ->selectRaw('SUM(value * quantity) as total')->value('total')
+                                (float) $query
+                                    ->selectRaw('COALESCE(SUM(value * quantity), 0) as total')
+                                    ->value('total')
                             ),
-
                         // Total auditado (treatments.ok = true)
                         Summarizer::make()
                             ->label('Total Auditado')
