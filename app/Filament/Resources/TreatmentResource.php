@@ -388,11 +388,13 @@ class TreatmentResource extends Resource
                     ->visible(auth()->user()->is_admin)
                     ->sortable()
                     ->toggleable(isToggledHiddenByDefault: false),
+
                 TextColumn::make('created_at')
                     ->label('Criado em')
                     ->dateTime()
                     ->sortable()
                     ->toggleable(isToggledHiddenByDefault: true),
+                    
                 TextColumn::make('updated_at')
                     ->label('Editado em')
                     ->dateTime()
