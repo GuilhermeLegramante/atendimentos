@@ -13,7 +13,7 @@ class PersonPolicy
      */
     public function viewAny(User $user): bool
     {
-        return $user->is_admin;
+        return $user->is_admin || $user->view_people;
     }
 
     /**
@@ -21,7 +21,7 @@ class PersonPolicy
      */
     public function view(User $user, Person $person): bool
     {
-        return $user->is_admin;
+        return $user->is_admin || $user->view_people;
     }
 
     /**

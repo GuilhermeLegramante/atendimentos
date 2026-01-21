@@ -27,13 +27,13 @@ class PersonResource extends Resource
 
     protected static ?string $recordTitleAttribute = 'name';
 
-    protected static ?string $modelLabel = 'pessoa';
+    protected static ?string $modelLabel = 'segurado';
 
-    protected static ?string $pluralModelLabel = 'pessoas';
+    protected static ?string $pluralModelLabel = 'segurados';
 
     protected static ?string $navigationGroup = 'Parâmetros';
 
-    protected static ?string $slug = 'pessoa';
+    protected static ?string $slug = 'segurado';
 
     public static function form(Form $form): Form
     {

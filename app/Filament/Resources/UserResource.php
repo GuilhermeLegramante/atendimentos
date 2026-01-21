@@ -54,14 +54,17 @@ class UserResource extends Resource
                             ->label('Nome')
                             ->unique(ignoreRecord: true)
                             ->required(),
+
                         TextInput::make('username')
                             ->label('Login')
                             ->unique(ignoreRecord: true)
                             ->required(),
+
                         TextInput::make('email')
                             ->label('E-mail')
                             ->required()
                             ->email(),
+
                         TextInput::make('password')
                             ->label('Senha')
                             ->password()
@@ -71,22 +74,32 @@ class UserResource extends Resource
                             ->dehydrateStateUsing(fn($state) => Hash::make($state))
                             ->same('passwordConfirmation')
                             ->validationAttribute('senha'),
+
                         TextInput::make('passwordConfirmation')
                             ->label(__('filament-panels::pages/auth/register.form.password_confirmation.label'))
                             ->password()
                             ->required()
                             ->revealable()
                             ->dehydrated(false),
+
                         Toggle::make('is_admin')
                             ->label('Administrador')
                             ->inline(false)
                             ->onIcon('heroicon-m-bolt')
                             ->offIcon('heroicon-m-user'),
+
                         Toggle::make('is_manager')
                             ->label('Gerente')
                             ->inline(false)
                             ->onIcon('heroicon-m-bolt')
                             ->offIcon('heroicon-m-user'),
+
+                        Toggle::make('view_people')
+                            ->label('Ver Segurados')
+                            ->inline(false)
+                            ->onIcon('heroicon-m-bolt')
+                            ->offIcon('heroicon-m-user'),
+
                         Select::make('partners')
                             ->columnSpanFull()
                             ->label('Conveniados')
