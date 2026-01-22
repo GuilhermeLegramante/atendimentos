@@ -114,6 +114,7 @@ class PersonResource extends Resource
                     ->label('Alterar valores')
                     ->alignCenter()
                     ->sortable()
+                    ->visible(fn() => ! Auth::user()?->view_people)
                     ->toggleable(isToggledHiddenByDefault: false)
                     ->disabled(fn() => ! Auth::user()?->is_admin),
 
