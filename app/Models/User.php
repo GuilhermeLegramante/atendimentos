@@ -54,4 +54,13 @@ class User extends Authenticatable
     {
         return $this->belongsToMany(Person::class, 'user_people');
     }
+
+    /**
+     * Bloqueia usuários com perfil somente visualização,
+     * exceto quando forem gerentes.
+     */
+    public function canAccessReports(): bool
+    {
+        return ! $this->view_people || $this->is_manager;
+    }
 }
