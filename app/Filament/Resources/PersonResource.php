@@ -59,53 +59,64 @@ class PersonResource extends Resource
                     ->label('Inscrição Municipal')
                     ->alignCenter()
                     ->searchable(),
+                    
                 Tables\Columns\TextColumn::make('cpf_cnpj')
                     ->label('CPF ou CNPJ')
                     ->alignCenter()
                     ->searchable(),
+
                 Tables\Columns\TextColumn::make('name')
                     ->label('Nome')
                     ->searchable(),
+
                 Tables\Columns\TextColumn::make('address')
                     ->label('Endereço')
                     ->toggleable(isToggledHiddenByDefault: true)
                     ->searchable(),
+
                 Tables\Columns\TextColumn::make('phone')
                     ->toggleable(isToggledHiddenByDefault: true)
                     ->label('Telefone'),
+
                 IconColumn::make('partner')
                     ->label('Conveniado')
                     ->alignCenter()
                     ->sortable()
                     ->toggleable(isToggledHiddenByDefault: false)
                     ->boolean(),
+
                 IconColumn::make('patient')
                     ->label('Segurado')
                     ->alignCenter()
                     ->sortable()
                     ->toggleable(isToggledHiddenByDefault: false)
                     ->boolean(),
+
                 IconColumn::make('dependent')
                     ->label('Dependente')
                     ->alignCenter()
                     ->sortable()
                     ->toggleable(isToggledHiddenByDefault: false)
                     ->boolean(),
-                ToggleColumn::make('is_active')
+
+                IconColumn::make('is_active')
                     ->label('Ativo')
                     ->alignCenter()
                     ->sortable()
                     ->toggleable(isToggledHiddenByDefault: false),
-                ToggleColumn::make('can_edit_values')
+
+                IconColumn::make('can_edit_values')
                     ->label('Alterar valores')
                     ->alignCenter()
                     ->sortable()
                     ->toggleable(isToggledHiddenByDefault: false),
+
                 Tables\Columns\TextColumn::make('created_at')
                     ->label('Criado em')
                     ->dateTime()
                     ->sortable()
                     ->toggleable(isToggledHiddenByDefault: true),
+
                 Tables\Columns\TextColumn::make('updated_at')
                     ->label('Editado em')
                     ->dateTime()
