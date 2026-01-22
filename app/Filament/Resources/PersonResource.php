@@ -59,6 +59,7 @@ class PersonResource extends Resource
                 Tables\Columns\TextColumn::make('registration')
                     ->label('Inscrição Municipal')
                     ->alignCenter()
+                    ->visible(fn() => ! Auth::user()?->view_people)
                     ->searchable(),
 
                 Tables\Columns\TextColumn::make('cpf_cnpj')
