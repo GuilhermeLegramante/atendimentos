@@ -18,6 +18,7 @@ use Filament\Tables\Filters\TernaryFilter;
 use Filament\Tables\Table;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
+use Illuminate\Support\Facades\Auth;
 
 class PersonResource extends Resource
 {
@@ -106,12 +107,13 @@ class PersonResource extends Resource
                     ->boolean()
                     ->toggleable(isToggledHiddenByDefault: false),
 
-                IconColumn::make('can_edit_values')
+
+                ToggleColumn::make('can_edit_values')
                     ->label('Alterar valores')
                     ->alignCenter()
                     ->sortable()
-                    ->boolean()
-                    ->toggleable(isToggledHiddenByDefault: false),
+                    ->toggleable(isToggledHiddenByDefault: false)
+                    ->disabled(fn() => ! Auth::user()?->is_admin),
 
                 Tables\Columns\TextColumn::make('created_at')
                     ->label('Criado em')
