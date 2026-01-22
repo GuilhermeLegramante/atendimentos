@@ -59,11 +59,11 @@ class DentalTreatmentGuide extends Page implements HasForms
 
     public static function canAccess(): bool
     {
-        return auth()->user()?->view_people === false;
+        return ! auth()->user()?->view_people;
     }
 
     public static function shouldRegisterNavigation(): bool
     {
-        return auth()->user()?->view_people === false;
+        return ! auth()->user()?->view_people;
     }
 }
