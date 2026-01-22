@@ -100,13 +100,12 @@ class PersonResource extends Resource
                     ->toggleable(isToggledHiddenByDefault: false)
                     ->boolean(),
 
-                IconColumn::make('is_active')
+                ToggleColumn::make('is_active')
                     ->label('Ativo')
                     ->alignCenter()
                     ->sortable()
-                    ->boolean()
-                    ->toggleable(isToggledHiddenByDefault: false),
-
+                    ->toggleable(isToggledHiddenByDefault: false)
+                    ->disabled(fn() => ! Auth::user()?->is_admin),
 
                 ToggleColumn::make('can_edit_values')
                     ->label('Alterar valores')
