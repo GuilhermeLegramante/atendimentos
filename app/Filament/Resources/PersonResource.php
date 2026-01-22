@@ -84,6 +84,7 @@ class PersonResource extends Resource
                     ->alignCenter()
                     ->sortable()
                     ->toggleable(isToggledHiddenByDefault: false)
+                    ->visible(fn() => ! Auth::user()?->view_people) // esconde para os hospitais que só vão ver se está ativo
                     ->boolean(),
 
                 IconColumn::make('patient')
@@ -91,6 +92,7 @@ class PersonResource extends Resource
                     ->alignCenter()
                     ->sortable()
                     ->toggleable(isToggledHiddenByDefault: false)
+                    ->visible(fn() => ! Auth::user()?->view_people)
                     ->boolean(),
 
                 IconColumn::make('dependent')
@@ -98,6 +100,7 @@ class PersonResource extends Resource
                     ->alignCenter()
                     ->sortable()
                     ->toggleable(isToggledHiddenByDefault: false)
+                    ->visible(fn() => ! Auth::user()?->view_people)
                     ->boolean(),
 
                 ToggleColumn::make('is_active')
