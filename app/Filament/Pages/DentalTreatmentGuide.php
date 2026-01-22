@@ -56,4 +56,14 @@ class DentalTreatmentGuide extends Page implements HasForms
 
         return redirect()->route('dental-treatment-guide-pdf', $data);
     }
+
+    public static function canAccess(): bool
+    {
+        return auth()->user()?->view_people === false;
+    }
+
+    public static function shouldRegisterNavigation(): bool
+    {
+        return auth()->user()?->view_people === false;
+    }
 }
