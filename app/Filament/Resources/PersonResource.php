@@ -59,7 +59,7 @@ class PersonResource extends Resource
                     ->label('Inscrição Municipal')
                     ->alignCenter()
                     ->searchable(),
-                    
+
                 Tables\Columns\TextColumn::make('cpf_cnpj')
                     ->label('CPF ou CNPJ')
                     ->alignCenter()
@@ -103,12 +103,14 @@ class PersonResource extends Resource
                     ->label('Ativo')
                     ->alignCenter()
                     ->sortable()
+                    ->boolean()
                     ->toggleable(isToggledHiddenByDefault: false),
 
                 IconColumn::make('can_edit_values')
                     ->label('Alterar valores')
                     ->alignCenter()
                     ->sortable()
+                    ->boolean()
                     ->toggleable(isToggledHiddenByDefault: false),
 
                 Tables\Columns\TextColumn::make('created_at')
