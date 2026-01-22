@@ -8,11 +8,13 @@ use App\Models\Authorization;
 use App\Models\Notice;
 use App\Models\Person;
 use App\Models\Service;
+use App\Models\Treatment;
 use App\Policies\ActivityPolicy;
 use App\Policies\AuthorizationPolicy;
 use App\Policies\NoticePolicy;
 use App\Policies\PersonPolicy;
 use App\Policies\ServicePolicy;
+use App\Policies\TreatmentPolicy;
 use Illuminate\Foundation\Support\Providers\AuthServiceProvider as ServiceProvider;
 use Spatie\Activitylog\Models\Activity;
 
@@ -30,7 +32,7 @@ class AuthServiceProvider extends ServiceProvider
         Person::class => PersonPolicy::class,
         Notice::class => NoticePolicy::class,
         Authorization::class => AuthorizationPolicy::class,
-
+        Treatment::class => TreatmentPolicy::class,
     ];
 
     /**
