@@ -114,7 +114,7 @@ class SyncPage extends Page
 
         foreach ($people->json() as $value) {
             if (isset($value['registration'])) {
-               $isActive = (int) ($value['seguradoAtivo'] || $value['dependenteAtivo']);
+                $isActive = (int) ($value['seguradoAtivo'] || $value['dependenteAtivo']);
 
                 Person::updateOrCreate(
                     ['registration' => $value['registration']], // Condição de busca
@@ -129,5 +129,15 @@ class SyncPage extends Page
                 );
             }
         }
+    }
+
+    public static function canAccess(): bool
+    {
+        return auth()->user()?->canAccessReports() ?? false;
+    }
+
+    public static function shouldRegisterNavigation(): bool
+    {
+        return auth()->user()?->canAccessReports() ?? false;
     }
 }

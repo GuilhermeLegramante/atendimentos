@@ -167,4 +167,14 @@ class TreatmentsReport extends Page implements HasForms
                 ->action(fn() => $this->submit()),
         ];
     }
+
+    public static function canAccess(): bool
+    {
+        return auth()->user()?->canAccessReports() ?? false;
+    }
+
+    public static function shouldRegisterNavigation(): bool
+    {
+        return auth()->user()?->canAccessReports() ?? false;
+    }
 }

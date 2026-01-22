@@ -56,5 +56,14 @@ class TreatmentsListModelPage extends Page implements HasForms
         return redirect()->route('treatments-list-model-pdf', $data);
     }
 
+    public static function canAccess(): bool
+    {
+        return auth()->user()?->canAccessReports() ?? false;
+    }
+
+    public static function shouldRegisterNavigation(): bool
+    {
+        return auth()->user()?->canAccessReports() ?? false;
+    }
 
 }
