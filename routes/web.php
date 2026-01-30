@@ -29,15 +29,15 @@ Route::middleware(['auth'])->group(function () {
 
     Route::get('/guia-de-autorizacao/{id}', [AuthorizationController::class, 'getPdf'])->name('authorization-pdf');
 
-    Route::get('/admin/backup-download/{file}', function ($file) {
-        abort_unless(auth()->check(), 403);
+    // Route::get('/admin/backup-download/{file}', function ($file) {
+    //     abort_unless(auth()->check(), 403);
 
-        $path = storage_path('app/backups/' . basename($file));
+    //     $path = storage_path('app/backups/' . basename($file));
 
-        abort_unless(file_exists($path), 404);
+    //     abort_unless(file_exists($path), 404);
 
-        return response()->download($path);
-    });
+    //     return response()->download($path);
+    // });
 });
 
 /**
