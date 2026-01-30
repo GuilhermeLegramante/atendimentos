@@ -122,9 +122,11 @@ class TreatmentResource extends Resource
                             ->label('Solicitação do procedimento')
                             ->hint('Anexe o arquivo digitalizado ou uma foto da solicitação')
                             ->previewable()
-                            ->openable()
+                            ->acceptedFileTypes([
+                                'image/*',
+                                'application/pdf',
+                            ])
                             ->downloadable()
-                            ->moveFiles()
                             ->imageEditor()
                             ->imageEditorEmptyFillColor('#000000')
                             ->imageEditorAspectRatios([
@@ -241,14 +243,16 @@ class TreatmentResource extends Resource
                             ->columnSpanFull()
                             ->columns(3)
                             ->label('Serviços prestados'),
+
                         FileUpload::make('receipt')
                             ->visibleOn('edit')
                             ->columnSpanFull()
+                            ->acceptedFileTypes([
+                                'image/*',
+                                'application/pdf',
+                            ])
                             ->label('Comprovante')
                             ->previewable()
-                            ->openable()
-                            ->downloadable()
-                            ->moveFiles()
                             ->imageEditor()
                             ->imageEditorEmptyFillColor('#000000')
                             ->imageEditorAspectRatios([
@@ -257,14 +261,17 @@ class TreatmentResource extends Resource
                                 '4:3',
                                 '1:1',
                             ]),
+
                         FileUpload::make('report')
                             ->visibleOn('edit')
+                            ->acceptedFileTypes([
+                                'image/*',
+                                'application/pdf',
+                            ])
                             ->columnSpanFull()
                             ->label('Laudo')
                             ->previewable()
-                            ->openable()
                             ->downloadable()
-                            ->moveFiles()
                             ->imageEditor()
                             ->imageEditorEmptyFillColor('#000000')
                             ->imageEditorAspectRatios([
@@ -394,7 +401,7 @@ class TreatmentResource extends Resource
                     ->dateTime()
                     ->sortable()
                     ->toggleable(isToggledHiddenByDefault: true),
-                    
+
                 TextColumn::make('updated_at')
                     ->label('Editado em')
                     ->dateTime()
