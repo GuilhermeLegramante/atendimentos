@@ -13,13 +13,13 @@ use Illuminate\Support\Facades\Route;
 use Livewire\Livewire;
 use Symfony\Component\DomCrawler\Crawler;
 
-Livewire::setScriptRoute(function ($handle) {
-    return Route::get('/atendimentos/public/livewire/livewire.js', $handle);
-});
+// Livewire::setScriptRoute(function ($handle) {
+//     return Route::get('/atendimentos/public/livewire/livewire.js', $handle);
+// });
 
-Livewire::setUpdateRoute(function ($handle) {
-    return Route::post('/atendimentos/public/livewire/update', $handle);
-});
+// Livewire::setUpdateRoute(function ($handle) {
+//     return Route::post('/atendimentos/public/livewire/update', $handle);
+// });
 
 Route::middleware(['auth'])->group(function () {
     Route::get('/comprovante-de-atendimento/{treatmentId}', [TreatmentController::class, 'getReceipt'])->name('receipt-pdf');
