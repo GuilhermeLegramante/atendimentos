@@ -1,31 +1,47 @@
+############################################
+# SEGURANÇA – BLOQUEIOS CRÍTICOS
+############################################
+
+# Bloqueia execução de qualquer PHP/PHAR
+# exceto o index.php
+<FilesMatch "\.(php|phar)$">
+    Require all denied
+</FilesMatch>
+
+<Files index.php>
+    Require all granted
+</Files>
+
+# Bloqueia acesso a arquivos sensíveis
+<FilesMatch "\.(env|log|bak|sql|sqlite|yml|yaml|json|xml|ini|conf)$">
+    Require all denied
+</FilesMatch>
+
+# Desativa listagem de diretórios
+Options -Indexes
+
+
+############################################
+# LARAVEL – REWRITE PADRÃO
+############################################
 <IfModule mod_rewrite.c>
     <IfModule mod_negotiation.c>
-        Options -MultiViews -Indexes
+        Options -MultiViews
     </IfModule>
 
     RewriteEngine On
 
-    # Handle Authorization Header
+    # Authorization header (JWT / API)
     RewriteCond %{HTTP:Authorization} .
     RewriteRule .* - [E=HTTP_AUTHORIZATION:%{HTTP:Authorization}]
 
-    # Redirect Trailing Slashes If Not A Folder...
+    # Remove trailing slash (exceto pastas reais)
     RewriteCond %{REQUEST_FILENAME} !-d
     RewriteCond %{REQUEST_URI} (.+)/$
     RewriteRule ^ %1 [L,R=301]
 
-    # Send Requests To Front Controller...
+    # Front Controller
     RewriteCond %{REQUEST_FILENAME} !-d
     RewriteCond %{REQUEST_FILENAME} !-f
     RewriteRule ^ index.php [L]
-
-    # Bloqueia execução PHP fora do index
-    <FilesMatch "\.(php|phar)$">
-        Require all denied
-    </FilesMatch>
-
-    <Files index.php>
-        Require all granted
-    </Files>
 </IfModule>
-
