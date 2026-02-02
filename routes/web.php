@@ -21,6 +21,7 @@ use Symfony\Component\DomCrawler\Crawler;
 //     return Route::post('/atendimentos/public/livewire/update', $handle);
 // });
 
+
 Route::middleware(['auth'])->group(function () {
     Route::get('/comprovante-de-atendimento/{treatmentId}', [TreatmentController::class, 'getReceipt'])->name('receipt-pdf');
     Route::get('/relatorio-atendimentos', [TreatmentController::class, 'treatmentsReport'])->name('treatments-report-pdf');
