@@ -93,9 +93,13 @@
                         <td style="border: 1px solid black;">
                             {{ $authorization->patient->name ?? 'Não informado' }}
                         </td>
-                        <td style="border: 1px solid black;">
+                        <td style="border: 1px solid black; padding: 6px;">
                             @if ($authorization->services->isNotEmpty())
-                                {{ $authorization->services->pluck('name')->join(', ') }}
+                                <ul style="margin: 0; padding-left: 16px;">
+                                    @foreach ($authorization->services as $service)
+                                        <li>{{ $service->name }}</li>
+                                    @endforeach
+                                </ul>
                             @else
                                 —
                             @endif
