@@ -2,6 +2,7 @@
 
 namespace App\Filament\Pages;
 
+use Carbon\Carbon;
 use Filament\Forms\Components\DatePicker;
 use Filament\Forms\Components\Select;
 use Filament\Forms\Concerns\InteractsWithForms;
@@ -29,6 +30,12 @@ class AuthorizationReport extends Page implements HasForms
     public static function getNavigationGroup(): ?string
     {
         return 'Relatórios';
+    }
+
+    public function mount()
+    {
+        $this->start_date = Carbon::now()->startOfMonth()->toDateString();
+        $this->finish_date = Carbon::today()->toDateString();
     }
 
     protected function getFormSchema(): array
