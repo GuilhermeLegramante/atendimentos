@@ -9,6 +9,8 @@ use App\Models\Service;
 use Filament\Forms;
 use Illuminate\Database\Eloquent\Builder;
 use Filament\Forms\Components\Select;
+use Filament\Forms\Components\TextInput;
+use Filament\Forms\Components\Toggle;
 use Filament\Tables;
 use Filament\Resources\Resource;
 use Filament\Tables\Actions\Action;
@@ -30,6 +32,24 @@ class AuthorizationResource extends Resource
     public static function form(Forms\Form $form): Forms\Form
     {
         return $form->schema([
+            // Select::make('partner_id')
+            //     ->columnSpanFull()
+            //     ->label('Conveniado (quem solicitou o exame ou procedimento)')
+            //     ->relationship(
+            //         name: 'partner',
+            //         titleAttribute: 'name',
+            //         modifyQueryUsing: fn(Builder $query) => $query
+            //             ->join('user_people', 'user_people.person_id', 'people.id')
+            //             ->where('partner', 1)
+            //             ->where('user_people.user_id', auth()->user()->id)
+            //             ->select('people.id', 'people.registration', 'people.name'),
+            //     )
+            //     ->getOptionLabelFromRecordUsing(fn($record) => "{$record->cpf_cnpj} - {$record->name}"),
+
+            Toggle::make('is_not_partner')
+                ->label('Parceiro não conveniado ao SISPREM')
+                ->reactive(),
+
             Select::make('partner_id')
                 ->columnSpanFull()
                 ->label('Conveniado (quem solicitou o exame ou procedimento)')
@@ -39,10 +59,22 @@ class AuthorizationResource extends Resource
                     modifyQueryUsing: fn(Builder $query) => $query
                         ->join('user_people', 'user_people.person_id', 'people.id')
                         ->where('partner', 1)
-                        ->where('user_people.user_id', auth()->user()->id)
-                        ->select('people.id', 'people.registration', 'people.name'),
+                        ->where('user_people.user_id', auth()->id())
+                        ->select('people.id', 'people.registration', 'people.name', 'people.cpf_cnpj'),
                 )
-                ->getOptionLabelFromRecordUsing(fn($record) => "{$record->cpf_cnpj} - {$record->name}"),
+                ->getOptionLabelFromRecordUsing(
+                    fn($record) => "{$record->cpf_cnpj} - {$record->name}"
+                )
+                ->searchable()
+                ->visible(fn($get) => ! $get('is_not_partner'))
+                ->required(fn($get) => ! $get('is_not_partner')),
+
+            TextInput::make('requester_name')
+                ->columnSpanFull()
+                ->label('Nome do solicitante (não conveniado)')
+                ->placeholder('Informe o nome do médico / clínica / solicitante')
+                ->visible(fn($get) => $get('is_not_partner'))
+                ->required(fn($get) => $get('partner_nao_conveniado')),
 
             Select::make('patient_id')
                 ->reactive()
@@ -191,9 +223,19 @@ class AuthorizationResource extends Resource
                 TextColumn::make('patient.name')
                     ->label('Paciente'),
 
-                TextColumn::make('partner.name')
-                    ->label('Conveniado')
-                    ->default('-'),
+                // TextColumn::make('partner.name')
+                //     ->label('Conveniado')
+                //     ->default('-'),
+
+                TextColumn::make('requester')
+                    ->label('Solicitante')
+                    ->getStateUsing(
+                        fn($record) =>
+                        $record->partner
+                            ? $record->partner->name
+                            : $record->requester_name
+                    )
+                    ->searchable(),
 
                 TextColumn::make('created_at')
                     ->label('Criado em')

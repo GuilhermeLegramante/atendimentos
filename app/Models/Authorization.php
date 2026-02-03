@@ -13,6 +13,7 @@ class Authorization extends Model
         'patient_id',
         'partner_id',
         'observations',
+        'requester_name',
     ];
 
     public function user(): BelongsTo

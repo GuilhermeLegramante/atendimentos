@@ -15,7 +15,7 @@
         <thead>
             <tr>
                 <th>Data da Autorização</th>
-                <th>Conveniado</th>
+                <th>Solicitante</th>
                 <th>Paciente</th>
             </tr>
         </thead>
@@ -25,8 +25,7 @@
                     {{ date('d/m/Y', strtotime($authorization->created_at)) }}
                 </td>
                 <td>
-                    {{ $authorization->partner?->name ?? '-' }}
-                    {{-- O conveniado é opcional --}}
+                    {{ $authorization->partner?->name ?? ($authorization->requester_name ?? '-') }}
                 </td>
                 <td>
                     {{ $authorization->patient->name }}
