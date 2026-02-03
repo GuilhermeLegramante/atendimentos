@@ -70,11 +70,10 @@
             @endif
         </table>
 
-        {{-- Tabela de autorizações --}}
-        <table class="striped fit" style="width: 100%; margin-top: 10px; border: 1px solid black; font-size: 14px;">
+        <table style="width: 100%; border: 1px solid black; border-collapse: collapse; font-size: 14px;">
             <thead>
                 <tr>
-                    <th colspan="5" style="background-color:#f2f2f2; border: 1px solid black;">
+                    <th colspan="3" style="background-color:#f2f2f2; border: 1px solid black;">
                         Autorizações Realizadas
                     </th>
                 </tr>
