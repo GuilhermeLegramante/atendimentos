@@ -46,6 +46,7 @@ class AuthorizationController extends Controller
         $args = [
             'title' => 'RELATÓRIO DE AUTORIZAÇÕES',
             'authorizations' => $authorizations,
+            'type' => $type,
         ];
 
         return ReportFactory::getBasicPdf(
