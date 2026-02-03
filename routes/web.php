@@ -30,6 +30,9 @@ Route::middleware(['auth'])->group(function () {
 
     Route::get('/guia-de-autorizacao/{id}', [AuthorizationController::class, 'getPdf'])->name('authorization-pdf');
 
+    Route::get('/relatorio-de-autorizacoes', [AuthorizationController::class, 'getReport'])->name('authorization-report-pdf');
+
+
     // Route::get('/admin/backup-download/{file}', function ($file) {
     //     abort_unless(auth()->check(), 403);
 
