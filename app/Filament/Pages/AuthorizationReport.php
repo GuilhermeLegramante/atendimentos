@@ -21,7 +21,7 @@ class AuthorizationReport extends Page implements HasForms
     protected static ?string $slug = 'relatorio-de-autorizacoes';
 
     public $data = [];
-    public $partner_id;
+    public $requester;
 
     public static function getNavigationGroup(): ?string
     {
