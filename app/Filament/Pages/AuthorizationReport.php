@@ -76,7 +76,7 @@ class AuthorizationReport extends Page implements HasForms
 
     public function submit()
     {
-        [$type, $value] = explode(':', $this->form->getState()['requester'], 2);
+        [$type, $value] = explode(':', $this->data['requester'], 2);
 
         return redirect()->route('authorization-report-pdf', [
             'type' => $type,

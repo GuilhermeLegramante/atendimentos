@@ -4,8 +4,7 @@
 
         <br>
         <x-filament::button type="submit" form="submit">
-            Gerar Modelo
+            Gerar Relatório
         </x-filament::button>
     </form>
 </x-filament::page>
-
