@@ -25,6 +25,7 @@ class AuthorizationController extends Controller
 
     public function getReport(Request $request)
     {
+        dd($request->get('requester'));
         $type  = $request->get('type');
         $value = $request->get('value');
 
