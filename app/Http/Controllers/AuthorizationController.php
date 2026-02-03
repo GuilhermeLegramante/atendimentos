@@ -25,9 +25,7 @@ class AuthorizationController extends Controller
 
     public function getReport(Request $request)
     {
-        dd($request->get('requester'));
-        $type  = $request->get('type');
-        $value = $request->get('value');
+        [$type, $value] = explode(':', $request->get('requester'), 2);
 
         $fileName = 'RELATORIO_DE_AUTORIZACOES_' . date('Y-m-d') . '.pdf';
 
