@@ -114,5 +114,5 @@
 @endsection
 
 @section('footer')
-    @include('reports.footer-with-single-sign')
+    {{-- @include('reports.footer-with-single-sign') --}}
 @endsection
