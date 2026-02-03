@@ -73,28 +73,28 @@
         <table style="width: 100%; border: 1px solid black; border-collapse: collapse; font-size: 14px;">
             <thead>
                 <tr>
-                    <th colspan="3" style="background-color:#f2f2f2; border: 1px solid black;">
+                    <th colspan="3" style="background-color:#f2f2f2; border: 1px solid black; padding: 8px;">
                         Autorizações Realizadas
                     </th>
                 </tr>
                 <tr>
-                    <th style="border: 1px solid black;">Data</th>
-                    <th style="border: 1px solid black;">Paciente</th>
-                    <th style="border: 1px solid black;">Procedimento</th>
+                    <th style="border: 1px solid black; padding: 8px;">Data</th>
+                    <th style="border: 1px solid black; padding: 8px;">Paciente</th>
+                    <th style="border: 1px solid black; padding: 8px;">Procedimento</th>
                 </tr>
             </thead>
             <tbody>
                 @foreach ($authorizations as $authorization)
                     <tr>
-                        <td style="border: 1px solid black;">
+                        <td style="border: 1px solid black; padding: 8px;">
                             {{ optional($authorization->created_at)->format('d/m/Y') }}
                         </td>
-                        <td style="border: 1px solid black;">
+                        <td style="border: 1px solid black; padding: 8px;">
                             {{ $authorization->patient->name ?? 'Não informado' }}
                         </td>
-                        <td style="border: 1px solid black; padding: 6px;">
+                        <td style="border: 1px solid black; padding: 8px;">
                             @if ($authorization->services->isNotEmpty())
-                                <ul style="margin: 0; padding-left: 16px;">
+                                <ul style="margin: 0; padding-left: 18px;">
                                     @foreach ($authorization->services as $service)
                                         <li>{{ $service->name }}</li>
                                     @endforeach
