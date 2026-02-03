@@ -32,7 +32,7 @@ class AuthorizationResource extends Resource
         return $form->schema([
             Select::make('partner_id')
                 ->columnSpanFull()
-                ->label('Conveniado')
+                ->label('Conveniado (quem solicitou o exame ou procedimento)')
                 ->relationship(
                     name: 'partner',
                     titleAttribute: 'name',
