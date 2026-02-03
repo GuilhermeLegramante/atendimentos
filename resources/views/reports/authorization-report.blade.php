@@ -82,7 +82,6 @@
                     <th style="border: 1px solid black;">Data</th>
                     <th style="border: 1px solid black;">Paciente</th>
                     <th style="border: 1px solid black;">Procedimento</th>
-                    <th style="border: 1px solid black;">Solicitante</th>
                 </tr>
             </thead>
             <tbody>
@@ -95,10 +94,11 @@
                             {{ $authorization->patient->name ?? 'Não informado' }}
                         </td>
                         <td style="border: 1px solid black;">
-                            {{ $authorization->procedure_name ?? '—' }}
-                        </td>
-                        <td style="border: 1px solid black;">
-                            {{ $authorization->partner?->name ?? $authorization->requester_name }}
+                            @if ($authorization->services->isNotEmpty())
+                                {{ $authorization->services->pluck('name')->join(', ') }}
+                            @else
+                                —
+                            @endif
                         </td>
                     </tr>
                 @endforeach

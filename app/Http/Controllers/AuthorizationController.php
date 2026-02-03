@@ -29,7 +29,7 @@ class AuthorizationController extends Controller
 
         $fileName = 'RELATORIO_DE_AUTORIZACOES_' . date('Y-m-d') . '.pdf';
 
-        $query = Authorization::with('partner')
+        $query = Authorization::with('partner', 'services')
             ->orderBy('created_at');
 
         if ($type === 'partner') {
