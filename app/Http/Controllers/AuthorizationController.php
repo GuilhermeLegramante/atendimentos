@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Authorization;
 use App\Models\Person;
 use App\Utils\ReportFactory;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 
 class AuthorizationController extends Controller
@@ -27,11 +28,15 @@ class AuthorizationController extends Controller
     {
         [$type, $value] = explode(':', $request->get('requester'), 2);
 
+        $startDate  = $request->get('start_date');
+        $finishDate = $request->get('finish_date');
+
         $fileName = 'RELATORIO_DE_AUTORIZACOES_' . date('Y-m-d') . '.pdf';
 
-        $query = Authorization::with('partner', 'services')
+        $query = Authorization::with(['partner', 'patient', 'services'])
             ->orderBy('created_at');
 
+        // 🔹 Filtro por solicitante
         if ($type === 'partner') {
             $query->where('partner_id', $value);
         }
@@ -41,12 +46,22 @@ class AuthorizationController extends Controller
                 ->where('requester_name', $value);
         }
 
+        // 📅 Filtro por período
+        if ($startDate && $finishDate) {
+            $query->whereBetween('created_at', [
+                Carbon::parse($startDate)->startOfDay(),
+                Carbon::parse($finishDate)->endOfDay(),
+            ]);
+        }
+
         $authorizations = $query->get();
 
         $args = [
-            'title' => 'RELATÓRIO DE AUTORIZAÇÕES',
+            'title'          => 'RELATÓRIO DE AUTORIZAÇÕES',
             'authorizations' => $authorizations,
-            'type' => $type,
+            'type'           => $type,
+            'startDate'      => $startDate,
+            'finishDate'     => $finishDate,
         ];
 
         return ReportFactory::getBasicPdf(

@@ -64,7 +64,7 @@
                     </td>
                     <td style="border: 1px solid black;">
                         {{ date('d/m/Y', strtotime($startDate)) }} a
-                        {{ date('d/m/Y', strtotime($endDate)) }}
+                        {{ date('d/m/Y', strtotime($finishDate)) }}
                     </td>
                 </tr>
             @endif

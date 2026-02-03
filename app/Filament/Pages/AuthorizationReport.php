@@ -2,6 +2,7 @@
 
 namespace App\Filament\Pages;
 
+use Filament\Forms\Components\DatePicker;
 use Filament\Forms\Components\Select;
 use Filament\Forms\Concerns\InteractsWithForms;
 use Filament\Forms\Contracts\HasForms;
@@ -22,6 +23,8 @@ class AuthorizationReport extends Page implements HasForms
 
     public $data = [];
     public $requester;
+    public $start_date;
+    public $finish_date;
 
     public static function getNavigationGroup(): ?string
     {
@@ -69,7 +72,18 @@ class AuthorizationReport extends Page implements HasForms
                     ];
                 })
                 ->required()
-                ->searchable()
+                ->searchable(),
+
+            DatePicker::make('start_date')
+                ->label('Data inicial')
+                ->required()
+                ->maxDate(now()),
+
+            DatePicker::make('finish_date')
+                ->label('Data final')
+                ->required()
+                ->maxDate(now())
+                ->afterOrEqual('start_date'),
         ];
     }
 
