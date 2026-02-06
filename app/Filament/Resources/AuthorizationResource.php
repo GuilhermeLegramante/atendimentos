@@ -95,7 +95,11 @@ class AuthorizationResource extends Resource
             Forms\Components\Select::make('services')
                 ->label('Serviços')
                 ->multiple()
-                ->relationship('services', 'name')
+                ->relationship(
+                    'services',
+                    'name',
+                    fn($query) => $query->where('is_active', true)
+                )
                 ->getOptionLabelFromRecordUsing(fn(Service $record) => "{$record->code} - {$record->name}")
                 ->required()
                 ->columnSpanFull()
