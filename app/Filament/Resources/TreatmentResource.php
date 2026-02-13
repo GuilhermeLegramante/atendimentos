@@ -413,6 +413,10 @@ class TreatmentResource extends Resource
                 SelectFilter::make('partner')
                     ->label('Conveniado')
                     ->searchable()
+                    ->getOptionLabelFromRecordUsing(
+                        fn($record) =>
+                        "{$record->cpf_cnpj} - {$record->name}"
+                    )
                     ->relationship('partner', 'name'),
                 Filter::make('date')
                     ->form([
