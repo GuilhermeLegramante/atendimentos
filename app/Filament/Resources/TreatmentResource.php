@@ -412,12 +412,16 @@ class TreatmentResource extends Resource
                 TernaryFilter::make('ok')->label('Auditado'),
                 SelectFilter::make('partner')
                     ->label('Conveniado')
+                    ->relationship(
+                        'partner',
+                        'name',
+                        fn($query) => $query->where('partner', true)
+                    )
                     ->searchable()
                     ->getOptionLabelFromRecordUsing(
                         fn($record) =>
-                        "{$record->cpf_cnpj} - {$record->name}"
-                    )
-                    ->relationship('partner', 'name'),
+                        "{$record->name} - {$record->cpf_cnpj}"
+                    ),
                 Filter::make('date')
                     ->form([
                         DatePicker::make('created_from')
