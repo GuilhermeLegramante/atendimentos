@@ -5,6 +5,7 @@ namespace App\Filament\Pages;
 use Carbon\Carbon;
 use Filament\Forms\Components\DatePicker;
 use Filament\Forms\Components\Select;
+use Filament\Forms\Components\Toggle;
 use Filament\Forms\Concerns\InteractsWithForms;
 use Filament\Forms\Contracts\HasForms;
 use Filament\Pages\Page;
@@ -91,6 +92,10 @@ class AuthorizationReport extends Page implements HasForms
                 ->required()
                 ->maxDate(now())
                 ->afterOrEqual('start_date'),
+
+            Toggle::make('show_details')
+                ->label('Mostrar detalhamento das autorizações')
+                ->default(true),
         ];
     }
 

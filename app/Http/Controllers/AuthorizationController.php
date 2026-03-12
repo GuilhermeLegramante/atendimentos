@@ -62,11 +62,18 @@ class AuthorizationController extends Controller
 
         $authorizations = $query->get();
 
+        // Criar o resumo agrupado
+        $summary = $authorizations->groupBy(function ($item) {
+            return $item->partner->name ?? ($item->requester_name ?? 'Outros');
+        })->map->count();
+
         $args = [
             'title'          => 'RELATÓRIO DE AUTORIZAÇÕES',
             'authorizations' => $authorizations,
-            'type'           => $type,         // Passa o tipo (partner, manual ou null)
-            'requester'      => $requesterRaw, // Passa o valor bruto para a View saber se é "Todos"
+            'summary'        => $summary, // Novo dado
+            'showDetails'    => $request->boolean('show_details'), // Novo filtro
+            'type'           => $type,
+            'requester'      => $requesterRaw,
             'startDate'      => $startDate,
             'finishDate'     => $finishDate,
         ];
