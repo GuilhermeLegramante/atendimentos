@@ -27,6 +27,7 @@ class AuthorizationReport extends Page implements HasForms
     public $requester;
     public $start_date;
     public $finish_date;
+    public $show_details = true;
 
     public static function getNavigationGroup(): ?string
     {
