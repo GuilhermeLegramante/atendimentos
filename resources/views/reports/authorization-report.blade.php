@@ -3,12 +3,57 @@
 @section('header')
     @include('reports.header')
 @endsection
-
 <style>
+    /* Estilo global para reduzir a fonte e compactar espaços */
+    body {
+        font-size: 10px;
+        /* Fonte bem pequena para relatórios densos */
+    }
+
+    table {
+        width: 100%;
+        border-collapse: collapse;
+        margin-bottom: 10px;
+    }
+
+    th,
+    td {
+        border: 1px solid #000;
+        padding: 3px 5px;
+        /* Reduz o respiro interno das células */
+        word-wrap: break-word;
+    }
+
     .striped tr:nth-child(even) {
-        background-color: #f0f0f0;
+        background-color: #f9f9f9;
+    }
+
+    .header-table td {
+        padding: 2px 4px;
+    }
+
+    ul {
+        margin: 0;
+        padding-left: 12px;
+    }
+
+    li {
+        list-style-type: none;
+        /* Remove a bolinha para ganhar espaço lateral */
+        border-bottom: 1px solid #eee;
+        /* Linha sutil separando serviços */
+    }
+
+    li:last-child {
+        border-bottom: none;
     }
 </style>
+
+@extends('reports.page')
+
+@section('header')
+    @include('reports.header')
+@endsection
 
 @section('content')
     @if ($authorizations->count() > 0)
