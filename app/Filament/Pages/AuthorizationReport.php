@@ -78,7 +78,7 @@ class AuthorizationReport extends Page implements HasForms
                         'Solicitantes não conveniados' => $manualRequesters,
                     ];
                 })
-                ->required()
+                // ->required() Comentado para permitir gerar o relatório sem filtro de solicitante
                 ->searchable(),
 
             DatePicker::make('start_date')

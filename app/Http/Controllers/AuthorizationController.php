@@ -26,7 +26,14 @@ class AuthorizationController extends Controller
 
     public function getReport(Request $request)
     {
-        [$type, $value] = explode(':', $request->get('requester'), 2);
+        $requesterRaw = $request->get('requester');
+        $type = null;
+        $value = null;
+
+        // 1️⃣ Só tenta separar se houver um valor selecionado
+        if (!empty($requesterRaw)) {
+            [$type, $value] = explode(':', $requesterRaw, 2);
+        }
 
         $startDate  = $request->get('start_date');
         $finishDate = $request->get('finish_date');
@@ -36,15 +43,14 @@ class AuthorizationController extends Controller
         $query = Authorization::with(['partner', 'patient', 'services'])
             ->orderBy('created_at');
 
-        // 🔹 Filtro por solicitante
+        // 2️⃣ Lógica de Filtro por Solicitante (Dinâmica)
         if ($type === 'partner') {
             $query->where('partner_id', $value);
-        }
-
-        if ($type === 'manual') {
+        } elseif ($type === 'manual') {
             $query->whereNull('partner_id')
                 ->where('requester_name', $value);
         }
+        // Se $type for null, ele pula os filtros e traz todos os registros
 
         // 📅 Filtro por período
         if ($startDate && $finishDate) {
@@ -59,7 +65,8 @@ class AuthorizationController extends Controller
         $args = [
             'title'          => 'RELATÓRIO DE AUTORIZAÇÕES',
             'authorizations' => $authorizations,
-            'type'           => $type,
+            'type'           => $type,         // Passa o tipo (partner, manual ou null)
+            'requester'      => $requesterRaw, // Passa o valor bruto para a View saber se é "Todos"
             'startDate'      => $startDate,
             'finishDate'     => $finishDate,
         ];
