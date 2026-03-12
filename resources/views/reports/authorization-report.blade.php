@@ -15,7 +15,7 @@
 
         {{-- TABELA DE RESUMO POR CONVENIADO (Sempre visível) --}}
         <h4 style="margin-bottom: 5px;">Resumo por Solicitante</h4>
-        <table style="width: 100%; margin-bottom: 20px;">
+        <table class="striped" style="width: 100%; margin-bottom: 20px;">
             <thead>
                 <tr style="background-color: #eee;">
                     <th style="text-align: left;">Solicitante / Conveniado</th>
