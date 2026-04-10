@@ -201,6 +201,7 @@ class TreatmentResource extends Resource
                                     })
                                     ->live(debounce: 500)
                                     ->label('Valor Unitário'),
+                                    
                                 TextInput::make('quantity')
                                     ->visible(fn(Get $get) => !is_null($get('service_id')))
                                     ->label('Quantidade')
