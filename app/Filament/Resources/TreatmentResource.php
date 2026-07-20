@@ -283,7 +283,7 @@ class TreatmentResource extends Resource
                             ]),
 
                         Toggle::make('ok')
-                            ->label('Auditado__')
+                            ->label('Auditado')
                             ->visible(
                                 fn(string $operation): string => $operation === 'edit' && auth()->user()->is_admin
                             )
