@@ -407,6 +407,13 @@ class TreatmentResource extends Resource
                     ->sortable()
                     ->toggleable(isToggledHiddenByDefault: false),
 
+                ToggleColumn::make('canceled')
+                    ->label('Cancelado / Glosado')
+                    ->alignCenter()
+                    ->visible(auth()->user()->is_admin)
+                    ->sortable()
+                    ->toggleable(isToggledHiddenByDefault: false),
+
                 TextColumn::make('created_at')
                     ->label('Criado em')
                     ->dateTime()
