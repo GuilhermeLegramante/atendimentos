@@ -290,7 +290,7 @@ class TreatmentResource extends Resource
                             ->inline(false),
 
                         Toggle::make('canceled')
-                            ->label('Cancelado / Glosado')
+                            ->label('Glosa')
                             ->live()
                             ->visible(
                                 fn(string $operation): string => $operation === 'edit' && auth()->user()->is_admin
@@ -408,7 +408,7 @@ class TreatmentResource extends Resource
                     ->toggleable(isToggledHiddenByDefault: false),
 
                 ToggleColumn::make('canceled')
-                    ->label('Cancelado / Glosado')
+                    ->label('Glosa')
                     ->alignCenter()
                     ->visible(auth()->user()->is_admin)
                     ->sortable()
@@ -475,7 +475,7 @@ class TreatmentResource extends Resource
                     ->label('Auditado')
                     ->collapsible(),
                 Group::make('canceled')
-                    ->label('Cancelado / Glosado')
+                    ->label('Glosa')
                     ->collapsible(),
             ])
             ->deferFilters()
