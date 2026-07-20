@@ -293,7 +293,7 @@ class TreatmentResource extends Resource
                             ->label('Cancelado / Glosado')
                             ->live()
                             ->visible(
-                                fn(string $operation, Get $get): string => $operation === 'edit' && auth()->user()->is_admin && $get('ok') === true
+                                fn(string $operation): string => $operation === 'edit' && auth()->user()->is_admin
                             )
                             ->inline(false),
 
