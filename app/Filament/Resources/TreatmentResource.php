@@ -291,6 +291,7 @@ class TreatmentResource extends Resource
 
                         Toggle::make('canceled')
                             ->label('Cancelado / Glosado')
+                            ->live()
                             ->visible(
                                 fn(string $operation, Get $get): string => $operation === 'edit' && auth()->user()->is_admin && $get('ok') === true
                             )
@@ -465,6 +466,9 @@ class TreatmentResource extends Resource
                     ->collapsible(),
                 Group::make('ok')
                     ->label('Auditado')
+                    ->collapsible(),
+                Group::make('canceled')
+                    ->label('Cancelado / Glosado')
                     ->collapsible(),
             ])
             ->deferFilters()
