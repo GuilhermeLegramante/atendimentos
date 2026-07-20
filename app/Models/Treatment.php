@@ -21,10 +21,12 @@ class Treatment extends Model
         'report',
         'ok',
         'ok_note',
+        'canceled',
     ];
 
     protected $casts = [
         'ok' => 'boolean',
+        'canceled' => 'boolean',
     ];
 
     public function providedServices(): HasMany

@@ -201,7 +201,7 @@ class TreatmentResource extends Resource
                                     })
                                     ->live(debounce: 500)
                                     ->label('Valor Unitário'),
-                                    
+
                                 TextInput::make('quantity')
                                     ->visible(fn(Get $get) => !is_null($get('service_id')))
                                     ->label('Quantidade')
@@ -281,12 +281,21 @@ class TreatmentResource extends Resource
                                 '4:3',
                                 '1:1',
                             ]),
+
                         Toggle::make('ok')
                             ->label('Auditado')
                             ->visible(
                                 fn(string $operation): string => $operation === 'edit' && auth()->user()->is_admin
                             )
                             ->inline(false),
+
+                        Toggle::make('canceled')
+                            ->label('Cancelado / Glosado')
+                            ->visible(
+                                fn(string $operation, Get $get): string => $operation === 'edit' && auth()->user()->is_admin && $get('ok') === true
+                            )
+                            ->inline(false),
+
                         Textarea::make('ok_note')
                             ->visible(
                                 fn(string $operation): string => $operation === 'edit' && auth()->user()->is_admin
