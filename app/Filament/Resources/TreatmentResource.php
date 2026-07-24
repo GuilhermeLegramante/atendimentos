@@ -17,6 +17,7 @@ use Carbon\Carbon;
 use Filament\Forms;
 use Filament\Forms\Components\DatePicker;
 use Filament\Forms\Components\FileUpload;
+use Filament\Forms\Components\Placeholder;
 use Filament\Forms\Components\Repeater;
 use Filament\Forms\Components\Section;
 use Filament\Forms\Components\Select;
@@ -244,6 +245,20 @@ class TreatmentResource extends Resource
                             ->columnSpanFull()
                             ->columns(3)
                             ->label('Serviços prestados'),
+
+                        Placeholder::make('total_services')
+                            ->label('Total Geral')
+                            ->content(function (Get $get) {
+
+                                $total = collect($get('providedServices') ?? [])
+                                    ->sum(function ($item) {
+                                        return ((float) ($item['value'] ?? 0))
+                                            * ((float) ($item['quantity'] ?? 0));
+                                    });
+
+                                return 'R$ ' . number_format($total, 2, ',', '.');
+                            })
+                            ->live(),
 
                         FileUpload::make('receipt')
                             ->visibleOn('edit')
