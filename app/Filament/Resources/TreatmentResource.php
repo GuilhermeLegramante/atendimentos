@@ -521,7 +521,7 @@ class TreatmentResource extends Resource
             ], position: ActionsPosition::BeforeColumns)
             ->bulkActions([
                 Tables\Actions\BulkActionGroup::make([
-                    Tables\Actions\DeleteBulkAction::make(),
+                    // Tables\Actions\DeleteBulkAction::make(),
                     BulkAction::make('auditAll')
                         ->label('Auditar')
                         ->icon('heroicon-o-check-circle')
