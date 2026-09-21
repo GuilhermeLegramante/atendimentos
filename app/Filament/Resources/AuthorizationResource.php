@@ -137,6 +137,21 @@ class AuthorizationResource extends Resource
                         ->columnSpanFull()
                         ->disabled(),
 
+                    Forms\Components\TextInput::make('service_value')
+                        ->label('Valor do Serviço')
+                        ->hint('Valor do serviço')
+                        ->disabled(),
+
+                    Forms\Components\TextInput::make('titular_value')
+                        ->label('Valor p/ Titular')
+                        ->hint('Valor do serviço para o titular')
+                        ->disabled(),
+
+                    Forms\Components\TextInput::make('dependent_value')
+                        ->label('Valor p/ Dependente')
+                        ->hint('Valor do serviço para o dependente')
+                        ->disabled(),
+
                     Forms\Components\TextInput::make('waiting_days')
                         ->label('Dias de Carência')
                         ->hint('Dias de carência configurados para o serviço')
@@ -201,6 +216,9 @@ class AuthorizationResource extends Resource
             return [
                 'service_id' => $service->id,
                 'service_name' => $service->name,
+                'service_value' => $service->value,
+                'titular_value' => $service->titular_value,
+                'dependent_value' => $service->dependent_value,
                 'waiting_days' => $service->waiting_days,
                 'status' => $canAuthorize,
                 'days_remaining' => $daysRemaining > 0 ? $daysRemaining : 0,
