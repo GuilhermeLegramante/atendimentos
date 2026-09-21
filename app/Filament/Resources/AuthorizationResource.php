@@ -187,6 +187,19 @@ class AuthorizationResource extends Resource
                 ->hidden(fn($get) => empty($get('services_selected')))
                 ->dehydrated(),
 
+            Forms\Components\Placeholder::make('total_services_value')
+                ->label('Valor Total da Autorização (Segurado)')
+                ->content(function ($get) {
+                    $services = $get('services_selected') ?? [];
+
+                    // Soma todos os valores numéricos brutos do array 'raw_calculated_value'
+                    $total = collect($services)->sum('raw_calculated_value');
+
+                    return 'R$ ' . number_format($total, 2, ',', '.');
+                })
+                ->columnSpanFull()
+                ->hidden(fn($get) => empty($get('services_selected'))),
+
 
             Forms\Components\Textarea::make('observations')
                 ->label('Observações')
@@ -199,7 +212,6 @@ class AuthorizationResource extends Resource
     {
         if (! $patientId) return [];
 
-        // Busca o paciente para verificar se ele é dependente ou titular
         $patient = \App\Models\Person::find($patientId);
         $isDependent = $patient && ($patient->dependent == 1);
 
@@ -225,22 +237,18 @@ class AuthorizationResource extends Resource
                 $canAuthorize = $daysSinceLast >= $service->waiting_days;
             }
 
-            // 1. Pega a porcentagem correta (ex: 30 ou 70) com base se é dependente ou titular
             $percentageForPatient = $isDependent ? $service->dependent_value : $service->titular_value;
-
-            // 2. Calcula o valor em dinheiro aplicando a porcentagem sobre o valor do serviço ($service->value)
-            // Exemplo: 150.00 * (70 / 100) = 105.00
             $calculatedValue = $service->value * ($percentageForPatient / 100);
 
-            // Função auxiliar para formatar em Reais (R$)
             $formatMoney = fn($value) => 'R$ ' . number_format($value ?? 0, 2, ',', '.');
 
             return [
                 'service_id' => $service->id,
                 'service_name' => $service->name,
                 'service_value' => $formatMoney($service->value),
-                'titular_value' => $formatMoney($calculatedValue), // Exibe o valor calculado em Reais com base na porcentagem
-                'dependent_value' => $formatMoney($service->value * ($service->dependent_value / 100)), // Caso queira exibir o cálculo de dependente também
+                'titular_value' => $formatMoney($calculatedValue),
+                'raw_calculated_value' => $calculatedValue, // <--- Guardamos o valor numérico para o somatório
+                'dependent_value' => $formatMoney($service->value * ($service->dependent_value / 100)),
                 'waiting_days' => $service->waiting_days,
                 'status' => $canAuthorize,
                 'days_remaining' => $daysRemaining > 0 ? $daysRemaining : 0,
