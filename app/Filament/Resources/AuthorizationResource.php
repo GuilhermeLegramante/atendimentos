@@ -193,7 +193,12 @@ class AuthorizationResource extends Resource
     {
         if (! $patientId) return [];
 
-        return collect($serviceIds)->map(function ($id) use ($patientId) {
+        // Busca o paciente para verificar se ele é dependente ou titular
+        $patient = \App\Models\Person::find($patientId);
+        $isDependent = $patient && property_exists($patient, 'dependent') && $patient->dependent == 1;
+        // Nota: ajuste a verificação acima conforme o campo exato que define se é dependente na sua tabela 'people' (ex: $patient->dependent == 1 ou verificação de parentesco/holder_id)
+
+        return collect($serviceIds)->map(function ($id) use ($patientId, $isDependent) {
             $service = \App\Models\Service::find($id);
             if (! $service) return [];
 
@@ -215,15 +220,18 @@ class AuthorizationResource extends Resource
                 $canAuthorize = $daysSinceLast >= $service->waiting_days;
             }
 
+            // Define qual valor usar com base no tipo de paciente (Titular vs Dependente)
+            $serviceValueForPatient = $isDependent ? $service->dependent_value : $service->titular_value;
+
             // Função auxiliar dentro do map para formatar em Reais
             $formatMoney = fn($value) => 'R$ ' . number_format($value ?? 0, 2, ',', '.');
 
             return [
                 'service_id' => $service->id,
                 'service_name' => $service->name,
-                'service_value' => $formatMoney($service->value),       // Ficará ex: R$ 150,00
-                'titular_value' => $formatMoney($service->titular_value), // Ficará ex: R$ 100,00
-                'dependent_value' => $formatMoney($service->dependent_value), // Ficará ex: R$ 80,00
+                'service_value' => $formatMoney($service->value),
+                'titular_value' => $formatMoney($serviceValueForPatient), // Agora exibe o valor correto (Segurado ou Dependente)
+                'dependent_value' => $formatMoney($service->dependent_value),
                 'waiting_days' => $service->waiting_days,
                 'status' => $canAuthorize,
                 'days_remaining' => $daysRemaining > 0 ? $daysRemaining : 0,
