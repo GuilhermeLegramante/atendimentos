@@ -131,33 +131,26 @@ class AuthorizationResource extends Resource
                     $record ? $record->services->pluck('id')->toArray() : [],
                     $record?->patient_id
                 ))
+                // IMPORTANTE: Define a chave do item do repeater baseada no service_id para não misturar valores
+                ->itemHiding(false)
                 ->schema([
+                    Forms\Components\TextInput::make('service_id') // Guardar o ID oculto ou visível se precisar
+                        ->hidden(),
+
                     Forms\Components\TextInput::make('service_name')
                         ->label('Serviço')
                         ->columnSpanFull()
                         ->disabled(),
 
-
-
-                    // Forms\Components\TextInput::make('dependent_value')
-                    //     ->label('Valor p/ Dependente')
-                    //     ->hint('Valor do serviço para o dependente')
-                    //     ->disabled(),
-
-                    // Forms\Components\TextInput::make('waiting_days')
-                    //     ->label('Dias de Carência')
-                    //     ->hint('Dias de carência configurados para o serviço')
-                    //     ->disabled(),
-
                     Forms\Components\TextInput::make('days_remaining')
                         ->label('Dias Restantes')
                         ->hint('Dias restantes para o fim da carência')
-                        ->disabled(), // Pode deixar habilitado se quiser edição
+                        ->disabled(),
 
                     Forms\Components\TextInput::make('last_service_date')
                         ->label('Último atendimento')
                         ->hint('Data do último atendimento do paciente neste serviço')
-                        ->disabled(), // Pode deixar habilitado se quiser edição
+                        ->disabled(),
 
                     Forms\Components\TextInput::make('service_value')
                         ->label('Valor do Serviço')
@@ -171,7 +164,7 @@ class AuthorizationResource extends Resource
 
                     Forms\Components\Toggle::make('status')
                         ->label('Status')
-                        ->default(fn($get) => $get('status')) // <-- garante pegar o valor inicial
+                        ->default(fn($get) => $get('status'))
                         ->onColor('success')
                         ->offColor('danger')
                         ->inline(false)
@@ -182,6 +175,7 @@ class AuthorizationResource extends Resource
                 ->hidden(fn($get) => empty($get('services_selected')))
                 ->dehydrated(),
 
+
             Forms\Components\Textarea::make('observations')
                 ->label('Observações')
                 ->rows(4)
@@ -191,16 +185,17 @@ class AuthorizationResource extends Resource
 
     public static function calculateServices(array $serviceIds, ?int $patientId): array
     {
-        if (! $patientId) return [];
+        if (! $patientId || empty($serviceIds)) return [];
 
-        // Busca o paciente para verificar se ele é dependente ou titular
         $patient = \App\Models\Person::find($patientId);
-        $isDependent = $patient && property_exists($patient, 'dependent') && $patient->dependent == 1;
-        // Nota: ajuste a verificação acima conforme o campo exato que define se é dependente na sua tabela 'people' (ex: $patient->dependent == 1 ou verificação de parentesco/holder_id)
+        // Ajuste conforme a regra do seu banco para saber se é dependente
+        $isDependent = $patient && isset($patient->dependent) && $patient->dependent == 1;
 
-        return collect($serviceIds)->map(function ($id) use ($patientId, $isDependent) {
+        $results = [];
+
+        foreach ($serviceIds as $id) {
             $service = \App\Models\Service::find($id);
-            if (! $service) return [];
+            if (! $service) continue;
 
             $lastProvidedService = \App\Models\ProvidedService::whereHas('treatment', function ($query) use ($patientId) {
                 $query->where('patient_id', $patientId);
@@ -220,26 +215,29 @@ class AuthorizationResource extends Resource
                 $canAuthorize = $daysSinceLast >= $service->waiting_days;
             }
 
-            // Define qual valor usar com base no tipo de paciente (Titular vs Dependente)
+            // Define o valor correto baseado no paciente (Segurado ou Dependente)
             $serviceValueForPatient = $isDependent ? $service->dependent_value : $service->titular_value;
 
-            // Função auxiliar dentro do map para formatar em Reais
             $formatMoney = fn($value) => 'R$ ' . number_format($value ?? 0, 2, ',', '.');
 
-            return [
+            // Usamos o próprio ID do serviço como chave do array para o Repeater isolar o estado de cada linha
+            // O Filament usa as chaves do array para mapear os componentes internos
+            $results[$id] = [
                 'service_id' => $service->id,
                 'service_name' => $service->name,
                 'service_value' => $formatMoney($service->value),
-                'titular_value' => $formatMoney($serviceValueForPatient), // Agora exibe o valor correto (Segurado ou Dependente)
+                'titular_value' => $formatMoney($serviceValueForPatient),
                 'dependent_value' => $formatMoney($service->dependent_value),
                 'waiting_days' => $service->waiting_days,
                 'status' => $canAuthorize,
                 'days_remaining' => $daysRemaining > 0 ? $daysRemaining : 0,
                 'last_service_date' => $lastDate ? $lastDate->format('d/m/Y') : null,
             ];
-        })->toArray();
-    }
+        }
 
+        return $results;
+    }
+    
     public static function table(Tables\Table $table): Tables\Table
     {
         return $table
