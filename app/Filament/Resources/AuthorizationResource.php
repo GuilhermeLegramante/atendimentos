@@ -137,20 +137,17 @@ class AuthorizationResource extends Resource
                         ->columnSpanFull()
                         ->disabled(),
 
-                    Forms\Components\TextInput::make('service_value')
+                    Forms\Components\Placeholder::make('service_value')
                         ->label('Valor do Serviço')
-                        ->hint('Valor do serviço')
-                        ->disabled(),
+                        ->content(fn($get) => 'R$ ' . number_format($get('service_value') ?? 0, 2, ',', '.')),
 
-                    Forms\Components\TextInput::make('titular_value')
+                    Forms\Components\Placeholder::make('titular_value')
                         ->label('Valor p/ Titular')
-                        ->hint('Valor do serviço para o titular')
-                        ->disabled(),
+                        ->content(fn($get) => 'R$ ' . number_format($get('titular_value') ?? 0, 2, ',', '.')),
 
-                    Forms\Components\TextInput::make('dependent_value')
+                    Forms\Components\Placeholder::make('dependent_value')
                         ->label('Valor p/ Dependente')
-                        ->hint('Valor do serviço para o dependente')
-                        ->disabled(),
+                        ->content(fn($get) => 'R$ ' . number_format($get('dependent_value') ?? 0, 2, ',', '.')),
 
                     Forms\Components\TextInput::make('waiting_days')
                         ->label('Dias de Carência')
