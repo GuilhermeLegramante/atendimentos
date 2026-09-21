@@ -189,7 +189,7 @@ class AuthorizationResource extends Resource
 
             // Totalizador do Valor Geral dos Serviços
             Forms\Components\Placeholder::make('total_services_value')
-                ->label('Valor Total dos Serviços (Tabela)')
+                ->label('Valor Total dos Serviços')
                 ->content(function ($get) {
                     $services = $get('services_selected') ?? [];
                     $total = collect($services)->sum('raw_service_value');
