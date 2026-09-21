@@ -187,14 +187,23 @@ class AuthorizationResource extends Resource
                 ->hidden(fn($get) => empty($get('services_selected')))
                 ->dehydrated(),
 
+            // Totalizador do Valor Geral dos Serviços
             Forms\Components\Placeholder::make('total_services_value')
-                ->label('Valor Total da Autorização (Segurado)')
+                ->label('Valor Total dos Serviços (Tabela)')
                 ->content(function ($get) {
                     $services = $get('services_selected') ?? [];
+                    $total = collect($services)->sum('raw_service_value');
+                    return 'R$ ' . number_format($total, 2, ',', '.');
+                })
+                ->columnSpanFull()
+                ->hidden(fn($get) => empty($get('services_selected'))),
 
-                    // Soma todos os valores numéricos brutos do array 'raw_calculated_value'
+            // Totalizador do Valor para o Segurado
+            Forms\Components\Placeholder::make('total_segurado_value')
+                ->label('Valor Total para o Segurado')
+                ->content(function ($get) {
+                    $services = $get('services_selected') ?? [];
                     $total = collect($services)->sum('raw_calculated_value');
-
                     return 'R$ ' . number_format($total, 2, ',', '.');
                 })
                 ->columnSpanFull()
@@ -246,8 +255,9 @@ class AuthorizationResource extends Resource
                 'service_id' => $service->id,
                 'service_name' => $service->name,
                 'service_value' => $formatMoney($service->value),
+                'raw_service_value' => $service->value, // <--- Valor numérico bruto do serviço para somar
                 'titular_value' => $formatMoney($calculatedValue),
-                'raw_calculated_value' => $calculatedValue, // <--- Guardamos o valor numérico para o somatório
+                'raw_calculated_value' => $calculatedValue, // <--- Valor numérico bruto para o segurado para somar
                 'dependent_value' => $formatMoney($service->value * ($service->dependent_value / 100)),
                 'waiting_days' => $service->waiting_days,
                 'status' => $canAuthorize,
