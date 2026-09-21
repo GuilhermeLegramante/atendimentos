@@ -137,17 +137,20 @@ class AuthorizationResource extends Resource
                         ->columnSpanFull()
                         ->disabled(),
 
-                    Forms\Components\Placeholder::make('service_value')
+                    Forms\Components\TextInput::make('service_value')
                         ->label('Valor do Serviço')
-                        ->content(fn($get) => 'R$ ' . number_format($get('service_value') ?? 0, 2, ',', '.')),
+                        ->hint('Valor do serviço')
+                        ->disabled(),
 
-                    Forms\Components\Placeholder::make('titular_value')
+                    Forms\Components\TextInput::make('titular_value')
                         ->label('Valor p/ Titular')
-                        ->content(fn($get) => 'R$ ' . number_format($get('titular_value') ?? 0, 2, ',', '.')),
+                        ->hint('Valor do serviço para o titular')
+                        ->disabled(),
 
-                    Forms\Components\Placeholder::make('dependent_value')
+                    Forms\Components\TextInput::make('dependent_value')
                         ->label('Valor p/ Dependente')
-                        ->content(fn($get) => 'R$ ' . number_format($get('dependent_value') ?? 0, 2, ',', '.')),
+                        ->hint('Valor do serviço para o dependente')
+                        ->disabled(),
 
                     Forms\Components\TextInput::make('waiting_days')
                         ->label('Dias de Carência')
@@ -210,12 +213,15 @@ class AuthorizationResource extends Resource
                 $canAuthorize = $daysSinceLast >= $service->waiting_days;
             }
 
+            // Função auxiliar dentro do map para formatar em Reais
+            $formatMoney = fn($value) => 'R$ ' . number_format($value ?? 0, 2, ',', '.');
+
             return [
                 'service_id' => $service->id,
                 'service_name' => $service->name,
-                'service_value' => $service->value,
-                'titular_value' => $service->titular_value,
-                'dependent_value' => $service->dependent_value,
+                'service_value' => $formatMoney($service->value),       // Ficará ex: R$ 150,00
+                'titular_value' => $formatMoney($service->titular_value), // Ficará ex: R$ 100,00
+                'dependent_value' => $formatMoney($service->dependent_value), // Ficará ex: R$ 80,00
                 'waiting_days' => $service->waiting_days,
                 'status' => $canAuthorize,
                 'days_remaining' => $daysRemaining > 0 ? $daysRemaining : 0,
