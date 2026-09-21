@@ -105,22 +105,27 @@ class AuthorizationResource extends Resource
                 ->columnSpanFull()
                 ->reactive()
                 ->afterStateUpdated(function ($state, callable $set, callable $get) {
+                    // Pega o estado atual do repeater para não perder o 'status' que o usuário alterou manualmente
                     $currentServices = collect($get('services_selected') ?? []);
-                    $newServices = collect(self::calculateServices($state, $get('patient_id')));
 
-                    // Mantém o status atual sempre que possível
+                    // Recarrega todos os serviços selecionados do zero com base nos IDs atuais ($state)
+                    $newServices = collect(self::calculateServices($state ?? [], $get('patient_id')));
+
+                    // Mescla apenas o status anterior (caso o usuário tenha ativado/desativado a autorização)
                     $merged = $newServices->map(function ($service) use ($currentServices) {
+                        // Procura se esse serviço já estava no repeater antes
                         $existing = $currentServices->firstWhere('service_id', $service['service_id']);
-                        if ($existing) {
-                            $service['status'] = $existing['status']; // preserva status alterado pelo usuário
+                        if ($existing && isset($existing['status'])) {
+                            $service['status'] = $existing['status']; // Mantém o status que o usuário escolheu
                         }
                         return $service;
                     });
 
+                    // Atualiza o repeater com os novos valores limpios do banco
                     $set('services_selected', $merged->toArray());
                 })
                 ->afterStateHydrated(function ($state, callable $set, $get) {
-                    // Preenche ao abrir o edit
+                    // Preenche ao abrir a edição (edit)
                     $set('services_selected', AuthorizationResource::calculateServices($state, $get('patient_id')));
                 }),
 
@@ -182,8 +187,8 @@ class AuthorizationResource extends Resource
                 ->hidden(fn($get) => empty($get('services_selected')))
                 ->dehydrated(),
 
-            
-                Forms\Components\Textarea::make('observations')
+
+            Forms\Components\Textarea::make('observations')
                 ->label('Observações')
                 ->rows(4)
                 ->columnSpanFull(),
