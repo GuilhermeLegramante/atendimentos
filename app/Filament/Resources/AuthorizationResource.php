@@ -137,25 +137,17 @@ class AuthorizationResource extends Resource
                         ->columnSpanFull()
                         ->disabled(),
 
-                    Forms\Components\TextInput::make('service_value')
-                        ->label('Valor do Serviço')
-                        ->hint('Valor do serviço')
-                        ->disabled(),
 
-                    Forms\Components\TextInput::make('titular_value')
-                        ->label('Valor p/ Titular')
-                        ->hint('Valor do serviço para o titular')
-                        ->disabled(),
 
-                    Forms\Components\TextInput::make('dependent_value')
-                        ->label('Valor p/ Dependente')
-                        ->hint('Valor do serviço para o dependente')
-                        ->disabled(),
+                    // Forms\Components\TextInput::make('dependent_value')
+                    //     ->label('Valor p/ Dependente')
+                    //     ->hint('Valor do serviço para o dependente')
+                    //     ->disabled(),
 
-                    Forms\Components\TextInput::make('waiting_days')
-                        ->label('Dias de Carência')
-                        ->hint('Dias de carência configurados para o serviço')
-                        ->disabled(),
+                    // Forms\Components\TextInput::make('waiting_days')
+                    //     ->label('Dias de Carência')
+                    //     ->hint('Dias de carência configurados para o serviço')
+                    //     ->disabled(),
 
                     Forms\Components\TextInput::make('days_remaining')
                         ->label('Dias Restantes')
@@ -166,6 +158,16 @@ class AuthorizationResource extends Resource
                         ->label('Último atendimento')
                         ->hint('Data do último atendimento do paciente neste serviço')
                         ->disabled(), // Pode deixar habilitado se quiser edição
+
+                    Forms\Components\TextInput::make('service_value')
+                        ->label('Valor do Serviço')
+                        ->hint('Valor do serviço')
+                        ->disabled(),
+
+                    Forms\Components\TextInput::make('titular_value')
+                        ->label('Valor p/ Segurado')
+                        ->hint('Valor do serviço para o segurado')
+                        ->disabled(),
 
                     Forms\Components\Toggle::make('status')
                         ->label('Status')
