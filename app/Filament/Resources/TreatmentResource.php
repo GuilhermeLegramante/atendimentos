@@ -422,22 +422,26 @@ class TreatmentResource extends Resource
                     ->sortable()
                     ->toggleable(isToggledHiddenByDefault: false),
 
-                // Para o Admin: Exibe o Toggle interativo
+                // 1. Para o Administrador: Toggle interativo
                 ToggleColumn::make('canceled')
                     ->label('Glosa')
                     ->alignCenter()
                     ->visible(fn(): bool => auth()->user()->is_admin)
-                    ->sortable(),
+                    ->sortable()
+                    ->toggleable(isToggledHiddenByDefault: false),
 
-                // Para o Não-Admin: Exibe o Badge com a cor, o status e o Tooltip da justificativa no mesmo local
-                TextColumn::make('canceled')
+                // 2. Para o Não-Admin: Texto/Badge com Tooltip da justificativa
+                // Usamos 'canceled_status' como identificador da coluna, mas mapeamos o valor do banco 'canceled'
+                TextColumn::make('canceled_status')
+                    ->getStateUsing(fn($record) => $record->canceled) // Pega o valor real do campo 'canceled'
                     ->label('Glosa')
                     ->formatStateUsing(fn($state) => $state ? 'Glosado' : 'Ativo')
                     ->badge()
                     ->color(fn($state): string => $state ? 'danger' : 'success')
                     ->alignCenter()
                     ->visible(fn(): bool => !auth()->user()->is_admin)
-                    ->tooltip(fn($record): ?string => $record->ok_note),
+                    ->tooltip(fn($record): ?string => $record->ok_note)
+                    ->toggleable(isToggledHiddenByDefault: false),
 
                 // Se o admin quiser ver o texto resumido direto na coluna (opcional):
                 TextColumn::make('ok_note')
