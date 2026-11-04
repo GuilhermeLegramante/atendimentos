@@ -445,7 +445,7 @@ class TreatmentResource extends Resource
                     ->label('Justificativa')
                     ->limit(30)
                     ->tooltip(fn(TextColumn $column): ?string => $column->getState())
-                    ->toggleable(isToggledHiddenByDefault: true), // Fica oculto por padrão, o usuário exibe se quiser
+                    ->toggleable(isToggledHiddenByDefault: false),
 
                 TextColumn::make('created_at')
                     ->label('Criado em')
