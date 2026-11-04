@@ -429,29 +429,7 @@ class TreatmentResource extends Resource
                     ->sortable()
                     ->toggleable(isToggledHiddenByDefault: false),
 
-                // 2. STATUS APENAS LEITURA (Para Não-Admin na visualização/edição)
-                Placeholder::make('canceled_status')
-                    ->label('Status da Glosa')
-                    ->visible(fn(): bool => ! auth()->user()->is_admin)
-                    ->content(function ($record) {
-                        if (! $record) return '-';
-
-                        return $record->canceled
-                            ? new \Illuminate\Support\HtmlString('<span style="color: #ef4444; font-weight: bold; background: #fee2e2; padding: 4px 8px; border-radius: 6px;">Glosado</span>')
-                            : new \Illuminate\Support\HtmlString('<span style="color: #22c55e; font-weight: bold; background: #dcfce7; padding: 4px 8px; border-radius: 6px;">Não Glosado</span>');
-                    }),
-
-                // 3. JUSTIFICATIVA COM TOOLTIP OU HINT (Para não poluir com Textarea)
-                Placeholder::make('ok_note_display')
-                    ->label('Justificativa da Auditoria / Glosa')
-                    ->visible(fn($record): bool => ! auth()->user()->is_admin && ! empty($record?->ok_note))
-                    ->content(fn($record) => $record?->ok_note ?? 'Nenhuma observação registrada.')
-                    ->hint('Informado pela auditoria'),
-
-                Textarea::make('ok_note')
-                    ->label('Observação da auditoria')
-                    ->columnSpanFull()
-                    ->visible(fn(string $operation): bool => $operation === 'edit' && auth()->user()->is_admin),
+                
 
                 TextColumn::make('created_at')
                     ->label('Criado em')
