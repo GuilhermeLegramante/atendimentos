@@ -310,8 +310,6 @@ class TreatmentResource extends Resource
                             )->columnSpanFull()
                             ->label('Observação da auditoria'),
 
-
-
                         Toggle::make('canceled')
                             ->label('Glosa')
                             ->live()
@@ -321,11 +319,15 @@ class TreatmentResource extends Resource
                             ->inline(false),
 
                         Textarea::make('partner_note')
-                            ->visible(
-                                fn(string $operation): string => $operation === 'edit'
-                            )->columnSpanFull()
+                            ->label('Justificativa do Conveniado')
+                            ->columnSpanFull()
                             ->hint('Preencher somente se o atendimento for glosado')
-                            ->label('Justificativa do Conveniado'),
+                            ->visible(
+                                fn(string $operation, ?Treatment $record): bool =>
+                                $operation === 'edit' && $record && $record->canceled
+                            )
+                            ->disabled(fn(): bool => auth()->user()->is_admin) // Se quiser que admin apenas visualize ou edite conforme sua regra
+                            ->dehydrated(fn(): bool => !auth()->user()->is_admin), // Garante que salva corretamente
 
 
                     ])
