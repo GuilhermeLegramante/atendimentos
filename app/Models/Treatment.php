@@ -22,6 +22,7 @@ class Treatment extends Model
         'ok',
         'ok_note',
         'canceled',
+        'partner_note',
     ];
 
     protected $casts = [

@@ -304,6 +304,14 @@ class TreatmentResource extends Resource
                             )
                             ->inline(false),
 
+                        Textarea::make('ok_note')
+                            ->visible(
+                                fn(string $operation): string => $operation === 'edit' && auth()->user()->is_admin
+                            )->columnSpanFull()
+                            ->label('Observação da auditoria'),
+
+
+
                         Toggle::make('canceled')
                             ->label('Glosa')
                             ->live()
@@ -312,11 +320,14 @@ class TreatmentResource extends Resource
                             )
                             ->inline(false),
 
-                        Textarea::make('ok_note')
+                        Textarea::make('partner_note')
                             ->visible(
-                                fn(string $operation): string => $operation === 'edit' && auth()->user()->is_admin
+                                fn(string $operation): string => $operation === 'edit'
                             )->columnSpanFull()
-                            ->label('Observação da auditoria'),
+                            ->hint('Preencher somente se o atendimento for glosado')
+                            ->label('Justificativa do Conveniado'),
+
+
                     ])
             ]);
     }
@@ -446,7 +457,13 @@ class TreatmentResource extends Resource
 
                 // Se o admin quiser ver o texto resumido direto na coluna (opcional):
                 TextColumn::make('ok_note')
-                    ->label('Justificativa da Auditoria')
+                    ->label('Observações da Auditoria')
+                    ->limit(30)
+                    ->tooltip(fn(TextColumn $column): ?string => $column->getState())
+                    ->toggleable(isToggledHiddenByDefault: false),
+
+                TextColumn::make('partner_note')
+                    ->label('Justificativa do Conveniado')
                     ->limit(30)
                     ->tooltip(fn(TextColumn $column): ?string => $column->getState())
                     ->toggleable(isToggledHiddenByDefault: false),
