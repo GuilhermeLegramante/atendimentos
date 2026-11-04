@@ -439,6 +439,7 @@ class TreatmentResource extends Resource
                     ->badge()
                     ->color(fn($state): string => $state ? 'danger' : 'success')
                     ->alignCenter()
+                    ->sortable(false)
                     ->visible(fn(): bool => !auth()->user()->is_admin)
                     ->tooltip(fn($record): ?string => $record->ok_note)
                     ->toggleable(isToggledHiddenByDefault: false),
