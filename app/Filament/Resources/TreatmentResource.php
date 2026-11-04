@@ -426,12 +426,7 @@ class TreatmentResource extends Resource
                     ])
                     ->toggleable(isToggledHiddenByDefault: false),
 
-                ToggleColumn::make('ok')
-                    ->label('Auditado')
-                    ->alignCenter()
-                    ->visible(auth()->user()->is_admin)
-                    ->sortable()
-                    ->toggleable(isToggledHiddenByDefault: false),
+
 
                 // 1. Para o Administrador: Toggle interativo
                 ToggleColumn::make('canceled')
@@ -440,6 +435,8 @@ class TreatmentResource extends Resource
                     ->visible(fn(): bool => auth()->user()->is_admin)
                     ->sortable()
                     ->toggleable(isToggledHiddenByDefault: false),
+
+
 
                 // 2. Para o Não-Admin: Texto/Badge com Tooltip da justificativa
                 // Usamos 'canceled_status' como identificador da coluna, mas mapeamos o valor do banco 'canceled'
@@ -455,6 +452,19 @@ class TreatmentResource extends Resource
                     ->tooltip(fn($record): ?string => $record->ok_note)
                     ->toggleable(isToggledHiddenByDefault: false),
 
+                TextColumn::make('partner_note')
+                    ->label('Justificativa do Conveniado')
+                    ->limit(30)
+                    ->tooltip(fn(TextColumn $column): ?string => $column->getState())
+                    ->toggleable(isToggledHiddenByDefault: false),
+
+                ToggleColumn::make('ok')
+                    ->label('Auditado')
+                    ->alignCenter()
+                    ->visible(auth()->user()->is_admin)
+                    ->sortable()
+                    ->toggleable(isToggledHiddenByDefault: false),
+
                 // Se o admin quiser ver o texto resumido direto na coluna (opcional):
                 TextColumn::make('ok_note')
                     ->label('Observações da Auditoria')
@@ -462,11 +472,6 @@ class TreatmentResource extends Resource
                     ->tooltip(fn(TextColumn $column): ?string => $column->getState())
                     ->toggleable(isToggledHiddenByDefault: false),
 
-                TextColumn::make('partner_note')
-                    ->label('Justificativa do Conveniado')
-                    ->limit(30)
-                    ->tooltip(fn(TextColumn $column): ?string => $column->getState())
-                    ->toggleable(isToggledHiddenByDefault: false),
 
                 TextColumn::make('created_at')
                     ->label('Criado em')
