@@ -446,7 +446,7 @@ class TreatmentResource extends Resource
 
                 // Se o admin quiser ver o texto resumido direto na coluna (opcional):
                 TextColumn::make('ok_note')
-                    ->label('Justificativa')
+                    ->label('Justificativa da Auditoria')
                     ->limit(30)
                     ->tooltip(fn(TextColumn $column): ?string => $column->getState())
                     ->toggleable(isToggledHiddenByDefault: false),
