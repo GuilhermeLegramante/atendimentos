@@ -472,7 +472,6 @@ class TreatmentResource extends Resource
                     ->tooltip(fn(TextColumn $column): ?string => $column->getState())
                     ->toggleable(isToggledHiddenByDefault: false),
 
-
                 TextColumn::make('created_at')
                     ->label('Criado em')
                     ->dateTime()
