@@ -431,7 +431,7 @@ class TreatmentResource extends Resource
 
                 // Coluna de status da Glosa para usuários não-admin (com Tooltip para mostrar o texto da justificativa ao passar o mouse)
                 TextColumn::make('canceled')
-                    ->label('Glosa')
+                    ->label('Status')
                     ->formatStateUsing(fn($state) => $state ? 'Glosado' : 'Ativo')
                     ->badge()
                     ->color(fn($state): string => $state ? 'danger' : 'success')
