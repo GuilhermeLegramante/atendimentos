@@ -422,22 +422,21 @@ class TreatmentResource extends Resource
                     ->sortable()
                     ->toggleable(isToggledHiddenByDefault: false),
 
-                // ToggleColumn::make('canceled')
-                //     ->label('Glosa')
-                //     ->alignCenter()
-                //     ->visible(auth()->user()->is_admin)
-                //     ->sortable()
-                //     ->toggleable(isToggledHiddenByDefault: false),
+                // Para o Admin: Exibe o Toggle interativo
+                ToggleColumn::make('canceled')
+                    ->label('Glosa')
+                    ->alignCenter()
+                    ->visible(fn(): bool => auth()->user()->is_admin)
+                    ->sortable(),
 
-                // Coluna de status da Glosa para usuários não-admin (com Tooltip para mostrar o texto da justificativa ao passar o mouse)
+                // Para o Não-Admin: Exibe o Badge com a cor, o status e o Tooltip da justificativa no mesmo local
                 TextColumn::make('canceled')
-                    ->label('Status')
+                    ->label('Glosa')
                     ->formatStateUsing(fn($state) => $state ? 'Glosado' : 'Ativo')
                     ->badge()
                     ->color(fn($state): string => $state ? 'danger' : 'success')
                     ->alignCenter()
-                    // ->visible(fn(): bool => !auth()->user()->is_admin)
-                    // Mostra o ok_note diretamente ao passar o mouse, sem poluir a tabela
+                    ->visible(fn(): bool => !auth()->user()->is_admin)
                     ->tooltip(fn($record): ?string => $record->ok_note),
 
                 // Se o admin quiser ver o texto resumido direto na coluna (opcional):
