@@ -422,12 +422,12 @@ class TreatmentResource extends Resource
                     ->sortable()
                     ->toggleable(isToggledHiddenByDefault: false),
 
-                // ToggleColumn::make('canceled')
-                //     ->label('Glosa')
-                //     ->alignCenter()
-                //     ->visible(auth()->user()->is_admin)
-                //     ->sortable()
-                //     ->toggleable(isToggledHiddenByDefault: false),
+                ToggleColumn::make('canceled')
+                    ->label('Glosa')
+                    ->alignCenter()
+                    ->visible(auth()->user()->is_admin)
+                    ->sortable()
+                    ->toggleable(isToggledHiddenByDefault: false),
 
                 // Coluna de status da Glosa para usuários não-admin (com Tooltip para mostrar o texto da justificativa ao passar o mouse)
                 TextColumn::make('canceled')
